@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sorgulat.com/";
 export const getRequest = async <T>(
     url: string,
 ): Promise<T | any> => {

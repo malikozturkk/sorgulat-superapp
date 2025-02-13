@@ -6,18 +6,24 @@ export const getRequest = async <T>(
         'Content-Type': 'application/json',
     }
 
-    const response = await fetch(`${baseUrl}${url}`, {
-        method: 'GET',
-        headers,
-    })
+    try {
+        const response = await fetch(`${baseUrl}${url}`, {
+            method: 'GET',
+            headers,
+        })
 
-    const res = await response.json()
+        const res = await response.json()
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${res.message}`)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${res.message}`)
+        }
+
+        return res
     }
-
-    return res
+    catch (error) {
+        console.error("API Request Error:", error);
+        return null;
+    }
 }
 
 // export const postRequest = async <T>(

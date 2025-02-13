@@ -15,6 +15,11 @@ export default async function Home() {
     const getCitiesTimezones = await getRequest("/api/timezones/cities")
     const getCountriesTimezones = await getRequest("/api/timezones/countries")
     const randomItemClass = "bg-white hover:bg-primary text-black hover:text-white text-black font-extrabold px-3 text-2xl md:text-5xl"
+    if (!getCitiesTimezones || !getCountriesTimezones) {
+        return (
+            <div>veri alınamadı</div>
+        )
+    }
     const randomIndexes = getRandomIndexes(getCitiesTimezones.length);
     return (
         <div className="flex justify-center bg-[#333] py-4">

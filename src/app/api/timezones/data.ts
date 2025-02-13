@@ -3,6 +3,7 @@ export interface TimezoneData {
     slug: string
     timezone: string;
     country?: string
+    selected?: boolean
 }
 
 export interface PopulerCities {

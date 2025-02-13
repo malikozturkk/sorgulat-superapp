@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { cities } from "../data";
+import { getRandomIndexes } from "@/utils/generator";
 
 export async function GET() {
-    return NextResponse.json(cities);
+    const selectedIndexes = getRandomIndexes(cities.length);
+    return NextResponse.json(
+        cities.map((city, index) => ({
+            ...city,
+            selected: selectedIndexes.has(index),
+        }))
+    );
 }

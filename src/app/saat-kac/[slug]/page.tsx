@@ -1,4 +1,4 @@
-import LiveClock from "@/components/LiveClock";
+import LiveClock from "@/components/Timezone/LiveClock";
 import { TimeData } from "@/app/api/timezones/data";
 import { getRequest } from "@/utils/api";
 

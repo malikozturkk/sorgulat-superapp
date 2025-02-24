@@ -1,4 +1,4 @@
-const baseUrl = process.env.API_URL || "https://sorgulat.com/";
+const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "https://sorgulat.com/";
 export const getRequest = async <T>(
     url: string,
 ): Promise<T | any> => {

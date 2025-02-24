@@ -4,5 +4,6 @@
 
 body {
   color: #333;
+  cursor: pointer;
   font-family: TimeTraveler, Arial, Helvetica, sans-serif
 }

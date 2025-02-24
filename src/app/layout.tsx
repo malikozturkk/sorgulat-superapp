@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Head from "next/head";
-import Script from "next/script";
+import AdSense from "@/components/AdSense";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,14 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <Script
-          async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4912331234184158"
-          crossOrigin="anonymous"
-        />
-      </Head>
+      <head>
+        <AdSense pId="4912331234184158" />
+      </head>
       <body>
         <Navbar />
         {children}

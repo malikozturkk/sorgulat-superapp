@@ -62,7 +62,8 @@ export async function GET(req: Request) {
                     name: city.name,
                     hour: Number(cityDate.find(p => p.type === "hour")?.value || 0),
                     minute: Number(cityDate.find(p => p.type === "minute")?.value || 0),
-                    dateTime: new Date(now.toLocaleString("en-US", { timeZone })).toISOString(),
+                    // dateTime: new Date(now.toLocaleString("en-US", { timeZone })).toISOString(),
+                    dateTime: new Date("2025-02-24T20:11:08.000Z"),
                     selected: city.slug === name
                 };
             })

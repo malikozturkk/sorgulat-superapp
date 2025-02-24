@@ -7,3 +7,10 @@ body {
   cursor: pointer;
   font-family: TimeTraveler, Arial, Helvetica, sans-serif
 }
+
+@layer utilities {
+  ::selection {
+    background-color: #646ecb;
+    color: white;
+  }
+}

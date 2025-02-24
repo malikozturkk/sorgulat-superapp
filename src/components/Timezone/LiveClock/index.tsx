@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 
 export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
+    const [clientData, setClientData] = useState(initialTime)
     const [currentTime, setCurrentTime] = useState<Date>(new Date(initialTime.dateTime));
     const [fullScreen, setFullScreen] = useState<boolean>(false);
 
@@ -22,13 +23,14 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
         const fetchTime = async () => {
             const response: TimeData = await getRequest(`/api/timezones/${initialTime.timezone.slug}`);
             setCurrentTime(new Date(response.dateTime));
+            setClientData(response)
         };
 
-        const fetchInterval = setInterval(fetchTime, 60000);
+        const fetchInterval = setInterval(fetchTime, 10000);
         return () => clearInterval(fetchInterval);
     }, []);
 
-    const date = new Date(initialTime.dateTime);
+    const date = new Date(clientData.dateTime);
 
     const formattedDate = new Intl.DateTimeFormat('tr-TR', {
         day: 'numeric',
@@ -42,7 +44,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
             <button
                 className={`transition-all duration-300 
                 ${fullScreen
-                        ? "fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white z-50 p-8"
+                        ? "fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white z-50 p-6 md:p-8"
                         : "flex flex-col items-center justify-center text-xl p-4 border rounded-lg shadow-md mx-4 max-w-7xl sm:mx-6 lg:mx-8"
                     }`}
                 onClick={() => setFullScreen(!fullScreen)}
@@ -61,7 +63,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     </div>
                 }
                 <div className='w-full'>
-                    <h1 className='font-extrabold text-xl md:text-4xl'>{initialTime.timezone.name}, <span className='font-normal'>{initialTime.locationText} saat kaç</span></h1>
+                    <h1 className='font-extrabold text-xl md:text-4xl'>{clientData.timezone.name}, <span className='font-normal'>{clientData.locationText} saat kaç</span></h1>
                 </div>
                 <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "15vw" }}>
                     {padZero(currentTime.getHours())}:{padZero(currentTime.getMinutes())}:
@@ -71,10 +73,8 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
             </button>
             {!fullScreen && (
                 <ul className='flex gap-3 justify-end flex-wrap mx-4 max-w-7xl sm:mx-6 lg:mx-8'>
-                    {initialTime?.populerCities?.map((city: PopulerCities) => {
+                    {clientData?.populerCities?.map((city: PopulerCities) => {
                         const populerCurrentTime = new Date(city.dateTime)
-                        console.log(city.dateTime, "city.dateTime malik1")
-                        console.log(city, "city malik2")
                         return (
                             <Link href={`/saat-kac/${city.slug}`} className='text-center text-xl' key={city.name}>
                                 <li className={`px-5 py-2 hover:bg-primary hover:text-white ${city.selected ? "bg-primary text-white" : "bg-[#eee]"}`}>

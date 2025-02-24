@@ -51,8 +51,9 @@ export async function GET(req: Request) {
             timezone: found,
             locationText: `${found.country || found.name}’${suffix}`,
             populerCities: cities.slice(0, 5).map(city => {
+                const timeZone = city.timezone
                 const cityDate = new Intl.DateTimeFormat("en-US", {
-                    timeZone: city.timezone,
+                    timeZone,
                     hour: "2-digit",
                     minute: "2-digit"
                 }).formatToParts(now);
@@ -61,7 +62,7 @@ export async function GET(req: Request) {
                     name: city.name,
                     hour: Number(cityDate.find(p => p.type === "hour")?.value || 0),
                     minute: Number(cityDate.find(p => p.type === "minute")?.value || 0),
-                    dateTime: new Date(now.toLocaleString("en-US", { timeZone: city.timezone })).toISOString(),
+                    dateTime: new Date(now.toLocaleString("en-US", { timeZone })).toISOString() || "malik",
                     selected: city.slug === name
                 };
             })

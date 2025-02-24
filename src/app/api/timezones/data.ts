@@ -11,6 +11,7 @@ export interface PopulerCities {
     name: string
     hour: number
     minute: number
+    dateTime: string;
     selected: boolean
 }
 

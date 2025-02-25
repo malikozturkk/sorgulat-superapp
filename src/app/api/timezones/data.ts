@@ -3,7 +3,7 @@ export interface TimezoneData {
     slug: string
     timezone: string;
     country?: string
-    selected?: boolean
+    type?: "5xl" | "3xl" | "xl" | "base"
 }
 
 export interface PopulerCities {

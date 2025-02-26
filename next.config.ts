@@ -7,10 +7,6 @@ const nextConfig: NextConfig = {
         source: "/rss.xml",
         destination: "/rss",
       },
-      {
-        source: "/sitemap.xml",
-        destination: "/sitemap",
-      },
     ];
   },
 };

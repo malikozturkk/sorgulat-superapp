@@ -11,9 +11,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <AdSense pId="4912331234184158" />
-      </head>
       <body>
         <Navbar />
         {children}

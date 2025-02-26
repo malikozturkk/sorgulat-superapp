@@ -22,15 +22,12 @@ export default function RootLayout({
   );
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const slug = params.slug || ''
   const pathname = slug ? `/${slug}` : '/'
   const metadata = metadataConfig[pathname as keyof typeof metadataConfig] || defaultMetadata
   return {
+    metadataBase: new URL('https://sorgulat.com/'),
     title: metadata?.title,
     description: metadata?.description,
     icons: {

@@ -2,6 +2,11 @@ import { getRequest } from "@/utils/api";
 import { TimeData, TimezoneData } from "../api/timezones/data";
 import LiveClock from "@/components/Timezone/LiveClock";
 import RandomItems from "@/components/Timezone/RandomItems";
+import { generateMetadata } from '../layout'
+
+export const metadata = async () => {
+    return await generateMetadata({ params: { slug: 'saat-kac' } })
+}
 
 export default async function Home() {
     try {

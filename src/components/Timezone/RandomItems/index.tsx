@@ -16,7 +16,7 @@ const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
     <Link
         key={`/saat-kac/${timezone.name}`}
         href={`/saat-kac/${timezone?.slug}/`}
-        style={{ lineHeight: timezone.type === "5xl" ? "1.375" : "1.5rem" }}
+        style={{ lineHeight: timezone.type === "5xl" ? "1.375" : timezone.type === "3xl" ? "2.5rem" : "1.5rem" }}
         className={getClassName(timezone?.type || "base")}
     >
         {timezone?.name}

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import AdSense from "@/components/AdSense";
 import { defaultMetadata, metadataConfig } from "./metadataConfig";
 
 export default function RootLayout({

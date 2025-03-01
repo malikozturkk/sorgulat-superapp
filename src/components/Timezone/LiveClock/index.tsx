@@ -1,5 +1,5 @@
 'use client';
-import { PopulerCities, TimeData } from '@/app/api/timezones/data';
+import { TimeData, PopulerCities } from '@/app/saat-kac/types/Timezone.types';
 import { getRequest } from '@/utils/api';
 import { padZero } from '@/utils/formatter';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
 
     useEffect(() => {
         const fetchTime = async () => {
-            const response: TimeData = await getRequest(`/api/timezones/${initialTime.timezone.slug}`);
+            const response: TimeData = await getRequest(`/timezones/${initialTime.timezone.slug}`);
             setCurrentTime(new Date(response.dateTime));
             setClientData(response)
         };
@@ -63,7 +63,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     </div>
                 }
                 <div className='w-full'>
-                    <h1 className='font-extrabold text-xl md:text-4xl'>{clientData.timezone.name}, <span className='font-normal'>{clientData.locationText} saat kaç</span></h1>
+                    <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}, <span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
                 </div>
                 <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "15vw" }}>
                     {padZero(currentTime.getHours())}:{padZero(currentTime.getMinutes())}:

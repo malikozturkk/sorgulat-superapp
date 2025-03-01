@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRequest } from "@/utils/api";
-import { TimezoneData } from "../api/timezones/data";
+import { TimezoneData } from "../saat-kac/types/Timezone.types";
 
 export async function GET() {
     try {
@@ -10,8 +10,8 @@ export async function GET() {
         ];
 
         const [cities, countries]: [TimezoneData[], TimezoneData[]] = await Promise.all([
-            getRequest("/api/timezones/cities"),
-            getRequest("/api/timezones/countries"),
+            getRequest("/timezones/city"),
+            getRequest("/timezones/country"),
         ]);
 
         const dynamicUrls = [

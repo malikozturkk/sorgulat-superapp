@@ -1,5 +1,5 @@
 "use client"
-import { TimezoneData } from "@/app/api/timezones/data";
+import { TimezoneData, IRandomItems } from "@/app/saat-kac/types/Timezone.types";
 import Link from "next/link";
 
 const getClassName = (type: string) => {
@@ -22,11 +22,6 @@ const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
         {timezone?.name}
     </Link>
 );
-
-interface IRandomItems {
-    getCitiesTimezones: TimezoneData[]
-    getCountriesTimezones: TimezoneData[]
-}
 
 const RandomItems = ({ getCitiesTimezones, getCountriesTimezones }: IRandomItems) => {
     return (

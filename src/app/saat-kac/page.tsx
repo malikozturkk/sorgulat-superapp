@@ -13,7 +13,7 @@ export default async function Home() {
         const [getCitiesTimezones, getCountriesTimezones, getTurkeyData]: [TimezoneData[], TimezoneData[], TimeData] = await Promise.all([
             getRequest("/timezones/city"),
             getRequest("/timezones/country"),
-            getRequest("/timezones/turkiye"),
+            getRequest("/timezones/istanbul"),
         ]);
         return (
             <div className="flex flex-col items-center gap-5 md:gap-10">

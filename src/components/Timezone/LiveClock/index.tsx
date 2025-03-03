@@ -66,20 +66,24 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}, <span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
                 </div>
                 <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "15vw" }}>
-                    {padZero(currentTime.getHours())}:{padZero(currentTime.getMinutes())}:
-                    {padZero(currentTime.getSeconds())}
+                    {new Intl.DateTimeFormat('tr-TR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZone: clientData?.timezone.timezone,
+                    }).format(currentTime)}
                 </time>
                 <p className='text-4xl w-full text-right'>{formattedDate}</p>
             </button>
             {!fullScreen && (
                 <ul className='flex gap-3 justify-end flex-wrap mx-4 max-w-7xl sm:mx-6 lg:mx-8'>
                     {clientData?.populerCities?.map((city: PopulerCities) => {
-                        const populerCurrentTime = new Date(city.dateTime)
                         return (
-                            <Link href={`/saat-kac/${city.slug}`} className='text-center text-xl' key={city.name}>
-                                <li className={`px-5 py-2 hover:bg-primary hover:text-white ${city.selected ? "bg-primary text-white" : "bg-[#eee]"}`}>
+                            <Link href={`/saat-kac/${city.slug}`} className='text-center text-base md:text-xl' key={city.name}>
+                                <li className={`px-4 py-1.5 md:px-5 md:py-2 hover:bg-primary hover:text-white ${city.selected ? "bg-primary text-white" : "bg-[#eee]"}`}>
                                     <b>{city.name}</b>
-                                    <p>{padZero(populerCurrentTime.getHours())}:{padZero(populerCurrentTime.getMinutes())}</p>
+                                    <p>{padZero(city.hour)}:{padZero(city.minute)}</p>
                                 </li>
                             </Link>
                         )

@@ -10,7 +10,8 @@ export const getRequest = async <T>(
         const response = await fetch(`${baseUrl}${url}`, {
             method: 'GET',
             headers,
-        })
+            cache: 'no-store',
+        });
 
         const res = await response.json()
 

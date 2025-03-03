@@ -4,6 +4,8 @@ import LiveClock from "@/components/Timezone/LiveClock";
 import RandomItems from "@/components/Timezone/RandomItems";
 import { generateMetadata } from '../layout'
 
+export const dynamic = "force-dynamic";
+
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'saat-kac' } })
 }

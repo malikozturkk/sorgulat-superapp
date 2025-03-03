@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getRequest } from "@/utils/api";
 import { TimezoneData } from "../saat-kac/types/Timezone.types";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
     try {
         const staticPages = [

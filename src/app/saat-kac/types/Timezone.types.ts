@@ -31,6 +31,9 @@ export type TimeData = {
     dstActive: boolean;
     locationText: string
     populerCities: PopulerCities[]
+    sunrise: string;
+    sunset: string;
+    sunsetDifference: string
 };
 
 export interface IRandomItems {

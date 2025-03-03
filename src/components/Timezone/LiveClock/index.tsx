@@ -63,7 +63,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     </div>
                 }
                 <div className='w-full'>
-                    <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}, <span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
+                    <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}'<span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
                 </div>
                 <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "15vw" }}>
                     {new Intl.DateTimeFormat('tr-TR', {

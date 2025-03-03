@@ -43,10 +43,10 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
     return (
         <div className='flex flex-col gap-4 w-full'>
             <button
-                className={`transition-all duration-300 gap-2 md:gap-4 relative
+                className={`transition-all duration-300 gap-2 md:gap-4
                 ${fullScreen
                         ? "fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white z-50 p-6 md:p-8"
-                        : "flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary mx-4 max-w-7xl sm:mx-6 lg:mx-8"
+                        : "flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary mx-4 max-w-7xl sm:mx-6 lg:mx-8 relative"
                     }`}
                 onClick={() => setFullScreen(!fullScreen)}
             >

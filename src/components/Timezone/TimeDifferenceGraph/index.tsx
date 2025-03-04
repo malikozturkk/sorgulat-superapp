@@ -40,7 +40,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime })
                 const left = city.offset < 0 ? `calc(50% - ${width})` : "50%";
 
                 return (
-                    <div key={city.name} className="group flex items-center w-full max-w-4xl hover:bg-[#333] transition justify-between sm:justify-normal">
+                    <div key={city.name} className="group flex items-center w-full hover:bg-[#333] transition justify-between sm:justify-normal">
                         <Link href={`/saat-kac/${city.slug}`} target="_blank" className="w-40 text-right pr-2 border-b border-black group-hover:border-primary cursor-pointer">
                             {city.name}
                         </Link>

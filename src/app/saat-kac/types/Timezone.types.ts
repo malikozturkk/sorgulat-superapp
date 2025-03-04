@@ -40,3 +40,19 @@ export interface IRandomItems {
     getCitiesTimezones: TimezoneData[]
     getCountriesTimezones: TimezoneData[]
 }
+
+interface Destination {
+    name: string;
+    slug: string;
+    timezone: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+    offset: number;
+}
+
+export interface DifferenceData {
+    from: string;
+    locationText: string;
+    destinations: Destination[];
+}

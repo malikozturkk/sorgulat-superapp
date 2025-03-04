@@ -13,8 +13,8 @@ export const metadata = async () => {
 export default async function Home() {
     try {
         const [getCitiesTimezones, getCountriesTimezones, getTurkeyData]: [TimezoneData[], TimezoneData[], TimeData] = await Promise.all([
-            getRequest("/timezones/city"),
-            getRequest("/timezones/country"),
+            getRequest("/timezones/city?limit=45"),
+            getRequest("/timezones/country?limit=45"),
             getRequest("/timezones/istanbul"),
         ]);
         return (

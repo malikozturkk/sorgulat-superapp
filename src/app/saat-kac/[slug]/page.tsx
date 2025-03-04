@@ -3,6 +3,7 @@ import { DifferenceData, TimeData } from "../types/Timezone.types";
 import { getRequest } from "@/utils/api";
 import TimeDifferenceGraph from "@/components/Timezone/TimeDifferenceGraph";
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
+import AllCitiesByCountry from "@/components/Timezone/AllCitiesByCountry";
 
 type Params = Promise<{ slug: string }>;
 
@@ -59,6 +60,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
             <>
                 <LiveClock initialTime={getTime} />
                 <TimeDifferenceGraph differenceTime={differenceTime} />
+                <AllCitiesByCountry allCities={getTime.allCities} />
             </>
         );
     }

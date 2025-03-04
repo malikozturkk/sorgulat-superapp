@@ -12,7 +12,7 @@ const getClassName = (type: string) => {
     return classMap[type] || "px-1 text-white hover:bg-primary font-normal text-sm md:text-base";
 };
 
-const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
+export const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
     <Link
         key={`/saat-kac/${timezone.name}`}
         href={`/saat-kac/${timezone?.slug}/`}
@@ -26,7 +26,7 @@ const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
 const RandomItems = ({ getCitiesTimezones, getCountriesTimezones }: IRandomItems) => {
     return (
         <div className="flex justify-center bg-[#333] py-4 w-full">
-            <div style={{ width: "75vw" }} className="flex flex-col items-center gap-4">
+            <div style={{ width: "85vw" }} className="flex flex-col items-center gap-4">
                 <div className="flex gap-6 flex-wrap items-center">
                     {getCitiesTimezones.map((timezone) => (
                         <TimezoneLink key={timezone.name} timezone={timezone} />

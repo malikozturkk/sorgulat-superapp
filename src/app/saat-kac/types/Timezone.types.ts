@@ -34,6 +34,7 @@ export type TimeData = {
     sunrise: string;
     sunset: string;
     sunsetDifference: string
+    allCities: TimezoneData[]
 };
 
 export interface IRandomItems {

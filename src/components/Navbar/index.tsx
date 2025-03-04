@@ -9,8 +9,8 @@ const Navbar = () => {
     const items = [
         { href: "/", title: "Anasayfa" },
         { href: "/saat-kac", title: "Saat Kaç ?" },
-        { href: "/iftara-ne-kadar-kaldi", title: "İftara Ne Kadar Kaldı ?" },
-        { href: "/akaryakit-fiyatlari", title: "Akaryakıt Fiyatları" },
+        // { href: "/iftara-ne-kadar-kaldi", title: "İftara Ne Kadar Kaldı ?" },
+        // { href: "/akaryakit-fiyatlari", title: "Akaryakıt Fiyatları" },
     ];
     return (
         <header className={`${open ? "pb-6" : ""} bg-white lg:pb-0 mb-3 md:mb-5`}>

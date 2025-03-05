@@ -41,7 +41,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
     }).format(date);
 
     return (
-        <div className='flex flex-col gap-4 w-full'>
+        <div className='flex flex-col gap-4 w-full mx-auto max-w-7xl'>
             <button
                 className={`transition-all duration-300 gap-2 md:gap-4
                 ${fullScreen
@@ -66,7 +66,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}'<span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
                     {!fullScreen && clientData?.timezone?.name !== clientData.timezone.country && (<div className='font-extrabold text-xs p-1 absolute -right-4 -top-4 bg-primary text-white rounded-full md:p-2 md:text-xl'>{clientData.timezone.country}</div>)}
                 </div>
-                <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "15vw" }}>
+                <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "12vw" }}>
                     {new Intl.DateTimeFormat('tr-TR', {
                         hour: '2-digit',
                         minute: '2-digit',

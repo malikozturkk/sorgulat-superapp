@@ -25,8 +25,8 @@ export const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
 
 const RandomItems = ({ getCitiesTimezones, getCountriesTimezones }: IRandomItems) => {
     return (
-        <div className="flex justify-center bg-[#333] py-4 w-full">
-            <div style={{ width: "85vw" }} className="flex flex-col items-center gap-4">
+        <div className="flex justify-center bg-[#333] py-4 w-full px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center gap-4 mx-auto max-w-7xl">
                 <div className="flex gap-6 flex-wrap items-center">
                     {getCitiesTimezones.map((timezone) => (
                         <TimezoneLink key={timezone.name} timezone={timezone} />

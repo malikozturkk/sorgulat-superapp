@@ -23,7 +23,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
     useEffect(() => {
         const fetchTime = async () => {
             const response: TimeData = await getRequest(`/timezones/${initialTime.timezone.slug}`);
-            setCurrentTime(new Date(response.dateTime));
+            setCurrentTime(new Date(response?.dateTime || Date.now()));
             setClientData(response)
         };
 

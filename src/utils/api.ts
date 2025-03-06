@@ -23,7 +23,7 @@ export const getRequest = async <T>(
     }
     catch (error) {
         console.error("API Request Error:", error);
-        return null;
+        throw error
     }
 }
 

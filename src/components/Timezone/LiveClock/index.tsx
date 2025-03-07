@@ -85,19 +85,24 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                 {initialTime.sunset} ({initialTime.sunsetDifference})
             </summary>
             {!fullScreen && (
-                <ul className='flex gap-3 justify-end flex-wrap mx-4 max-w-7xl sm:mx-6 lg:mx-8'>
-                    {clientData?.populerCities?.map((city: PopulerCities) => {
-                        return (
-                            <Link href={`/saat-kac/${city.slug}`} className='text-center text-base md:text-xl' key={city.name}>
-                                <li className={`px-4 py-1.5 md:px-5 md:py-2 hover:bg-primary hover:text-white ${city.selected ? "bg-primary text-white" : "bg-[#eee]"}`}>
-                                    <b>{city.name}</b>
-                                    <p>{padZero(city.hour)}:{padZero(city.minute)}</p>
-                                </li>
-                            </Link>
-                        )
-                    })}
-                </ul>
-            )}
+  <ul className="flex gap-3 justify-end flex-wrap mx-4 max-w-7xl sm:mx-6 lg:mx-8">
+    {clientData?.populerCities?.map((city: PopulerCities) => (
+      <li
+        key={city.name}
+        className={`px-4 py-1.5 md:px-5 md:py-2 hover:bg-primary hover:text-white ${
+          city.selected ? "bg-primary text-white" : "bg-[#eee]"
+        }`}
+      >
+        <Link href={`/saat-kac/${city.slug}`} className="block text-center text-base md:text-xl">
+          <b>{city.name}</b>
+          <p>
+            {padZero(city.hour)}:{padZero(city.minute)}
+          </p>
+        </Link>
+      </li>
+            ))}
+        </ul>
+        )}
         </div>
     );
 }

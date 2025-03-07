@@ -60,7 +60,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
         return (
             <>
                 <LiveClock initialTime={getTime} />
-                <TimeDifferenceGraph differenceTime={differenceTime} />
+                <TimeDifferenceGraph differenceTime={differenceTime} initialTime={getTime} />
                 {getTime.allCities && getTime.allCities.length > 0 &&
                     <AllCitiesByCountry allCities={getTime.allCities} />
                 }

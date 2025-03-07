@@ -1,11 +1,12 @@
-import { DifferenceData } from "@/app/saat-kac/types/Timezone.types";
+import { DifferenceData, TimeData } from "@/app/saat-kac/types/Timezone.types";
 import Link from "next/link";
 
 interface ITimeDifferenceGraph {
     differenceTime: DifferenceData
+    initialTime: TimeData
 }
 
-const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime }) => {
+const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, initialTime }) => {
     return (
         <div className="px-4 py-8 mx-auto mt-8 md:mt-16 sm:px-6 sm:py-10 lg:px-8 lg:py-12 bg-[#222] w-full text-white text-lg font-semibold">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -61,6 +62,18 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime })
                         </div>
                     );
                 })}
+            </div>
+            <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+                <h2 className="mt-5 mb-3 md:mt-10 md:mb-5 text-4xl font-extrabold text-primary leading-10">
+                    <span>{differenceTime.from} için güneşin doğuşu, güneşin batışı, gün uzunluğu ve güneş zamanı bilgisi</span>
+                </h2>
+                <ul className="pl-6 pb-5 text-lg" style={{listStyle: "square"}}>
+                    <li>Güneşin doğuşu: {initialTime.sunrise}</li>
+                    <li>Güneşin batışı: {initialTime.sunset}</li>
+                    <li>Gün uzuluğu: {initialTime.sunsetDifference}</li>
+                    <li>Öğlen vakti: {initialTime.noonTime}</li>
+                    <li>{differenceTime.from} {differenceTime.locationText}ki yerel saat {Math.abs(initialTime.noonDifferenceMin) + " dakika"} {initialTime.noonDifferenceMin === 0 ? "durumunda" : initialTime.noonDifferenceMin > 0 ? "ötesinde" : "gerisinde"} öğlen vaktidir.</li>
+                </ul>
             </div>
         </div>
     );

@@ -23,11 +23,25 @@ const Navbar = () => {
 
                     <div>
                         <SearchForm />
-                        <button onClick={() => setOpen(!open)} type="button" className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-[#f3f4f6] hover:bg-[#f3f4f6]">
-                            <svg width={40} height={40} xmlns="http://www.w3.org/2000/svg" fill="#646ecb" color="#646ecb" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16" />
-                            </svg>
+                        <button
+                        onClick={() => setOpen(!open)}
+                        type="button"
+                        className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-[#f3f4f6] hover:bg-[#f3f4f6]"
+                        aria-label="Menüyü aç/kapat"
+                        >
+                        <svg
+                            width={40}
+                            height={40}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#646ecb"
+                            color="#646ecb"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16" />
+                        </svg>
                         </button>
+
                     </div>
                     <div className="hidden lg:flex lg:items-center lg:space-x-10">
                         {items.map((item, index) => (

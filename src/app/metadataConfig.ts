@@ -1,6 +1,7 @@
 export const defaultMetadata = {
     title: 'Saat Kaç | Sorgulat',
     description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+    robots: "index, follow",
     keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com',
     authors: [
         {
@@ -15,6 +16,7 @@ export const defaultGenerateMetadata = () => {
     return {
         title: defaultMetadata?.title,
         description: defaultMetadata?.description,
+        robots: "index, follow",
         icons: defaultMetadata?.icon,
         authors: [
             {
@@ -52,6 +54,7 @@ export const metadataConfig = {
     '/saat-kac': {
         title: 'Saat Kaç | Sorgulat',
         description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+        robots: "index, follow",
         keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com',
         authors: [
             {

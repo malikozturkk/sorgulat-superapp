@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     metadataBase: new URL('https://sorgulat.com/'),
     title: metadata?.title,
     description: metadata?.description,
+    robots: "index, follow",
     icons: {
       icon: metadata?.icon,
       apple: metadata?.icon,

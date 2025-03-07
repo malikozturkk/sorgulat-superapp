@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: Params }) {
         return {
             title: `${name} saat kaç? | Sorgulat`,
             description: `Anlık olarak ${name} saatini öğrenin, popüler şehirlerle saat farkını keşfedin ve güneşin doğuş/batış saatlerini görüntüleyin.`,
+            robots: "index, follow",
             keywords: `saat kac, ${name} saat kac, populer sehirlerde saat kac, saati sorgula`,
             authors: [
                 {

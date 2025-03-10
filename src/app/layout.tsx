@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { defaultMetadata, metadataConfig } from "./metadataConfig";
+import AdSense from "@/components/AdSense";
 
 export default function RootLayout({
   children,
@@ -10,6 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <AdSense pId="4912331234184158" />
+      </head>
       <body>
         <Navbar />
         {children}

@@ -18,7 +18,7 @@ const Navbar = () => {
             <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <nav className="flex items-center justify-between relative">
                     <Link href="/" title="Logo" className="flex-shrink-0 py-5 flex font-semibold text-xl">
-                        <Image src="/icons/logo.svg" width={173.5} height={58.5} alt="Sorgulat Logo" />
+                        <Image src="/icons/logo.svg" width={173.5} height={58.5} className="w-[86.75px] h-[29.25px] md:w-[173.5px] md:h-[58.5px]" alt="Sorgulat Logo" />
                     </Link>
 
                     <div>
@@ -30,8 +30,8 @@ const Navbar = () => {
                         aria-label="Menüyü aç/kapat"
                         >
                         <svg
-                            width={40}
-                            height={40}
+                            width={20}
+                            height={20}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="#646ecb"
                             color="#646ecb"

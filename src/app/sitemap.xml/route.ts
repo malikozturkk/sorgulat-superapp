@@ -9,6 +9,8 @@ export async function GET() {
         const staticPages = [
             "https://sorgulat.com/",
             "https://sorgulat.com/saat-kac",
+            "https://sorgulat.com/gizlilik",
+            "https://sorgulat.com/iletisim",
         ];
 
         const [cities, countries]: [TimezoneData[], TimezoneData[]] = await Promise.all([

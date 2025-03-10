@@ -64,4 +64,30 @@ export const metadataConfig = {
         ],
         icon: '/favicon.ico',
     },
+    '/gizlilik': {
+        title: 'Gizlilik Koşulları | Sorgulat',
+        description: 'Kullanım şartları / Gizlilik politikası / Reklam Politikası | Sorgulat',
+        robots: "index, follow",
+        keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com, gizlilik kosullari, gizlilik koşulları, sorgulat gizlilik koşulları',
+        authors: [
+            {
+                name: 'Gizlilik Koşulları | Sorgulat',
+                url: 'https://www.sorgulat.com/gizlilik',
+            },
+        ],
+        icon: '/favicon.ico',
+    },
+    '/iletisim': {
+        title: 'İletişim | Sorgulat',
+        description: 'İletişim | Sorgulat',
+        robots: "index, follow",
+        keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com, iletisim, iletişim, sorgulat iletişim',
+        authors: [
+            {
+                name: 'İletişim | Sorgulat',
+                url: 'https://www.sorgulat.com/iletisim',
+            },
+        ],
+        icon: '/favicon.ico',
+    },
 }

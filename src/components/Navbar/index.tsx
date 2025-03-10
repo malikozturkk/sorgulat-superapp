@@ -17,7 +17,7 @@ const Navbar = () => {
         <header className={`${open ? "pb-6" : ""} bg-white lg:pb-0 mb-3 md:mb-5`}>
             <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <nav className="flex items-center justify-between relative">
-                    <Link href="/" title="Logo" className="flex-shrink-0 p-5 flex font-semibold text-xl">
+                    <Link href="/" title="Logo" className="flex-shrink-0 py-5 flex font-semibold text-xl">
                         <Image src="/icons/logo.svg" width={173.5} height={58.5} alt="Sorgulat Logo" />
                     </Link>
 

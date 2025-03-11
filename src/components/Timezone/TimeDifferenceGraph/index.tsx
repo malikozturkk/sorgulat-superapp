@@ -63,11 +63,11 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                     );
                 })}
             </div>
-            <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+            <div className="mx-auto max-w-7xl p-4 pb-0 sm:p-6 sm:pb-0 lg:p-8 lg:pb-0">
                 <h2 className="mt-5 mb-3 md:mt-10 md:mb-5 text-4xl font-extrabold text-primary leading-10">
                     <span>{differenceTime.from} için güneşin doğuşu, güneşin batışı, gün uzunluğu ve güneş zamanı bilgisi</span>
                 </h2>
-                <ul className="pl-6 pb-5 text-lg" style={{listStyle: "square"}}>
+                <ul className="pl-6 text-lg" style={{listStyle: "square"}}>
                     <li>Güneşin doğuşu: {initialTime.sunrise}</li>
                     <li>Güneşin batışı: {initialTime.sunset}</li>
                     <li>Gün uzuluğu: {initialTime.sunsetDifference}</li>

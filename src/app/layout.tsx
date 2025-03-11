@@ -44,24 +44,23 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       },
     ],
     openGraph: {
-      title: 'Saat Kaç | Sorgulat',
-      description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
-      url: 'https://www.sorgulat.com',
-      images:
-        '/images/open-graph.png',
-      type: 'website',
-      siteName: 'Sorgulat',
+      title: metadata?.openGraph?.title || 'Saat Kaç | Sorgulat',
+      description: metadata?.openGraph?.description || 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+      url: metadata?.openGraph?.url || 'https://www.sorgulat.com',
+      images: metadata?.openGraph?.images || '/images/open-graph.png',
+      type: metadata?.openGraph?.type || 'website',
+      siteName: metadata?.openGraph?.siteName || 'Sorgulat',
     },
     twitter: {
-      card: 'summary_large_image',
-      title: 'Sorgulat | Saat Kaç',
-      description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
-      images: '/images/open-graph.png',
-      site: '@Sorgulat',
+      card: metadata?.twitter?.card || 'summary_large_image',
+      title: metadata?.twitter?.title || 'Sorgulat | Saat Kaç',
+      description: metadata?.twitter?.description || 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+      images: metadata?.twitter?.images || '/images/open-graph.png',
+      site: metadata?.twitter?.site || '@Sorgulat',
     },
     alternates: {
-      canonical: "/images/open-graph.png",
-      types: {
+      canonical: metadata?.alternates?.canonical || "/images/open-graph.png",
+      types: metadata?.alternates?.types ||  {
         "application/opensearchdescription+xml": "/opensearch.xml",
         "application/rss+xml": "https://sorgulat.com/rss.xml",
       },

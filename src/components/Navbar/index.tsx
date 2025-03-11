@@ -10,6 +10,7 @@ const Navbar = () => {
     const items = [
         { href: "/", title: "Anasayfa" },
         { href: "/saat-kac", title: "Saat Kaç ?" },
+        { href: "/ip-sorgulama", title: "Ip Sorgulama" },
         // { href: "/iftara-ne-kadar-kaldi", title: "İftara Ne Kadar Kaldı ?" },
         // { href: "/akaryakit-fiyatlari", title: "Akaryakıt Fiyatları" },
     ];

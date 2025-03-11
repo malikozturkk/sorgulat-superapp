@@ -11,6 +11,7 @@ export async function GET() {
             "https://sorgulat.com/saat-kac",
             "https://sorgulat.com/gizlilik",
             "https://sorgulat.com/iletisim",
+            "https://sorgulat.com/ip-sorgulama",
         ];
 
         const [cities, countries]: [TimezoneData[], TimezoneData[]] = await Promise.all([

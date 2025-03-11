@@ -79,6 +79,16 @@ const Footer: React.FC = () => {
                   Saat Kaç
                 </Link>
               </li>
+              <li>
+                <Link
+                  title="Ip Sorgulama"
+                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
+                  href="/ip-sorgulama"
+                  aria-label="Visit Ip Sorgulama"
+                >
+                  Ip Sorgulama
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

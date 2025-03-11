@@ -1,3 +1,31 @@
+interface MetadataConfig {
+    title: string;
+    description: string;
+    robots: string;
+    keywords: string;
+    authors: { name: string; url: string }[];
+    icon: string;
+    openGraph?: {
+      title: string;
+      description: string;
+      url: string;
+      images: string;
+      type: 'website' | 'article';
+      siteName: string;
+    };
+    twitter?: {
+      card: 'summary_large_image' | 'summary' | 'player' | 'app';
+      title: string;
+      description: string;
+      images: string;
+      site: string;
+    };
+    alternates?: {
+      canonical: string;
+      types: Record<string, string>;
+    };
+  }
+
 export const defaultMetadata = {
     title: 'Saat Kaç | Sorgulat',
     description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
@@ -50,7 +78,7 @@ export const defaultGenerateMetadata = () => {
     }
 }
 
-export const metadataConfig = {
+export const metadataConfig: Record<string, MetadataConfig> = {
     '/saat-kac': {
         title: 'Saat Kaç | Sorgulat',
         description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
@@ -90,4 +118,40 @@ export const metadataConfig = {
         ],
         icon: '/favicon.ico',
     },
+    "/ip-sorgulama": {
+        title: "IP Sorgulama | Sorgulat",
+        description: "IP adresinizin konum, ülke, şehir, saat dilimi, ISP ve diğer bilgilerini anında sorgulayın. Türkiye ve dünya genelindeki IP adreslerini analiz edin.",
+        robots: "index, follow",
+        keywords: "IP sorgulama, IP adresi bul, IP konumu, IP bilgileri, IP'den şehir bul, IP adresi analizi, IP adresi Türkiye, Superonline IP sorgu, IP adresinden konum bulma, IP adresi detayları",
+        authors: [
+            {
+                "name": "İletişim | Sorgulat",
+                "url": "https://www.sorgulat.com/iletisim"
+            }
+        ],
+        icon: '/favicon.ico',
+        openGraph: {
+            title: 'IP Sorgulama | Sorgulat',
+            description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin. Hangi şehirde olduğunuzu bulun ve IP bilgilerinizi analiz edin.',
+            url: 'https://www.sorgulat.com/ip-sorgulama',
+            images:
+              '/images/open-graph-ip.png',
+            type: 'website',
+            siteName: 'Sorgulat',
+          },
+          twitter: {
+            card: 'summary_large_image',
+            title: 'IP Sorgulama | Sorgulat',
+            description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin.',
+            images: '/images/open-graph-ip.png',
+            site: '@Sorgulat',
+          },
+          alternates: {
+            canonical: "/images/open-graph-ip.png",
+            types: {
+              "application/opensearchdescription+xml": "/opensearch.xml",
+              "application/rss+xml": "https://sorgulat.com/rss.xml",
+            },
+          },
+    }
 }

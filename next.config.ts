@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    domains: ['ipapi.co']
+  },
   swcMinify: true,
 };
 

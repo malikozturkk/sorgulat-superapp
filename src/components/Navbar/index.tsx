@@ -11,6 +11,7 @@ const Navbar = () => {
         { href: "/", title: "Anasayfa" },
         { href: "/saat-kac", title: "Saat Kaç ?" },
         { href: "/ip-sorgulama", title: "Ip Sorgulama" },
+        { href: "/pasaport", title: "Pasaport" },
         // { href: "/iftara-ne-kadar-kaldi", title: "İftara Ne Kadar Kaldı ?" },
         // { href: "/akaryakit-fiyatlari", title: "Akaryakıt Fiyatları" },
     ];

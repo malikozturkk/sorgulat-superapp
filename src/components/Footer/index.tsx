@@ -89,6 +89,16 @@ const Footer: React.FC = () => {
                   Ip Sorgulama
                 </Link>
               </li>
+              <li>
+                <Link
+                  title="Pasaport"
+                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
+                  href="/pasaport"
+                  aria-label="Visit Pasaport"
+                >
+                  Pasaport
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

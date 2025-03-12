@@ -125,8 +125,8 @@ export const metadataConfig: Record<string, MetadataConfig> = {
         keywords: "IP sorgulama, IP adresi bul, IP konumu, IP bilgileri, IP'den şehir bul, IP adresi analizi, IP adresi Türkiye, Superonline IP sorgu, IP adresinden konum bulma, IP adresi detayları",
         authors: [
             {
-                "name": "İletişim | Sorgulat",
-                "url": "https://www.sorgulat.com/iletisim"
+                "name": "IP Sorgulama | Sorgulat",
+                "url": "https://www.sorgulat.com/ip-sorgulama"
             }
         ],
         icon: '/favicon.ico',
@@ -153,5 +153,40 @@ export const metadataConfig: Record<string, MetadataConfig> = {
               "application/rss+xml": "https://sorgulat.com/rss.xml",
             },
           },
+    },
+    "/pasaport": {
+        title: "Pasaport Vize Durumu | Sorgulat",
+        description: "Türkiye pasaportu ile hangi ülkelerin vize istediğini, istemediğini, kapıda vize verdiğini veya eTA gerektirdiğini dünya haritası üzerinden öğrenin.",
+        robots: "index, follow",
+        keywords: "Türkiye pasaportu vize durumu, vizesiz ülkeler, vize gerekli ülkeler, kapıda vize, eTA ile giriş, dünya haritası pasaport durumu, pasaport vize bilgileri",
+        authors: [
+            {
+                name: "Pasaport Vize Durumu | Sorgulat",
+                url: "https://www.sorgulat.com/pasaport"
+            }
+        ],
+        icon: "/favicon.ico",
+        openGraph: {
+            title: "Pasaport Vize Durumu | Sorgulat",
+            description: "Türkiye pasaportu ile dünya genelindeki vize durumlarını kolayca öğrenin. Vizesiz, vize gerekli, kapıda vize ve eTA bilgilerini görün.",
+            url: "https://www.sorgulat.com/pasaport",
+            images: "/images/open-graph-passport.png",
+            type: "website",
+            siteName: "Sorgulat"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Pasaport Vize Durumu | Sorgulat",
+            description: "Türkiye pasaportu ile dünya genelindeki vize durumlarını kolayca öğrenin.",
+            images: "/images/open-graph-passport.png",
+            site: "@Sorgulat"
+        },
+        alternates: {
+            canonical: "/pasaport",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml"
+            }
+        }
     }
 }

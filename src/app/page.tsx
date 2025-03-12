@@ -4,12 +4,21 @@ import LiveClock from "@/components/Timezone/LiveClock";
 import RandomItems from "@/components/Timezone/RandomItems";
 import { generateMetadata } from "./layout";
 import { headers } from 'next/headers'
-import { getUserLocation } from "./saat-kac/page";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = async () => {
   return await generateMetadata({ params: { slug: 'saat-kac' } })
+}
+
+async function getUserLocation(ip: string) {
+  try {
+      const res = await fetch(`http://ip-api.com/json/${ip}?fields=country,city`);
+      const data = await res.json();
+      return data.city || data.country || "turkiye";
+  } catch {
+      return "turkiye";
+  }
 }
 
 export default async function Home() {

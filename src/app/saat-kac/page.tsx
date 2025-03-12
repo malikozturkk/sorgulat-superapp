@@ -11,7 +11,7 @@ export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'saat-kac' } })
 }
 
-export async function getUserLocation(ip: string) {
+async function getUserLocation(ip: string) {
     try {
         const res = await fetch(`http://ip-api.com/json/${ip}?fields=country,city`);
         const data = await res.json();

@@ -73,6 +73,7 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                 borderColor="white"
                 backgroundColor="#f9fafb"
                 strokeOpacity={1}
+                title="Türkiye pasaportu vize durumu"
                 tooltipBgColor="#646ecb"
                 size={size}
                 tooltipTextColor="white"

@@ -33,7 +33,7 @@ export default async function Home() {
     
     let getUserData: TimeData = await getRequest(`/timezones/${encodeURIComponent(userLocation.toLowerCase())}`)
 
-    if (!getUserData.dateTime) getUserData = await getRequest(`/timezones/${encodeURIComponent(userLocation.toLowerCase())}`)
+    if (!getUserData.dateTime) getUserData = await getRequest("/timezones/turkiye")
     return (
       <div className="flex flex-col items-center gap-5 md:gap-10">
         <LiveClock initialTime={getUserData} />

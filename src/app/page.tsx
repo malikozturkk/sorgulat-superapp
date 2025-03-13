@@ -26,11 +26,14 @@ export default async function Home() {
   const ip = headersList.get("x-forwarded-for") || "auto";
   const userLocation = await getUserLocation(ip)
   try {
-    const [getCitiesTimezones, getCountriesTimezones, getUserData]: [TimezoneData[], TimezoneData[], TimeData] = await Promise.all([
+    const [getCitiesTimezones, getCountriesTimezones]: [TimezoneData[], TimezoneData[]] = await Promise.all([
       getRequest("/timezones/city?limit=45"),
       getRequest("/timezones/country?limit=45"),
-      getRequest(`/timezones/${encodeURIComponent(userLocation.toLowerCase())}`),
     ]);
+    
+    let getUserData: TimeData = await getRequest(`/timezones/${encodeURIComponent(userLocation.toLowerCase())}`)
+
+    if (!getUserData.dateTime) getUserData = await getRequest(`/timezones/${encodeURIComponent(userLocation.toLowerCase())}`)
     return (
       <div className="flex flex-col items-center gap-5 md:gap-10">
         <LiveClock initialTime={getUserData} />

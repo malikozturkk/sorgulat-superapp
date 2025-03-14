@@ -1,5 +1,5 @@
 "use client";
-import { VisaCountry, VisaColors, VisaCounts } from "@/app/pasaport/page";
+import { VisaColors, VisaCountry, VisaCounts } from "@/app/pasaport/types/passport.types";
 import * as React from "react";
 import WorldMap from "react-svg-worldmap";
   
@@ -15,20 +15,23 @@ const visaColors: VisaColors = {
 
 interface IPassportMap {
   countries: VisaCountry[]
-  counts: VisaCounts
+  counts: VisaCounts | number
 }
 
 const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
   const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl" | "xxl">("sm");
   const [selectedType, setSelectedType] = React.useState<keyof VisaColors | "Tümü">("Tümü");
 
-  const BUTTONS: { label: string; type: keyof VisaColors | "Tümü" }[] = [
-    { label: `Tümü (${countries.length - 1})`, type: "Tümü" },
-    { label: `Vizesiz (${counts.Vizesiz || 0})`, type: "Vizesiz" },
-    { label: `Vizeli (${counts.Vizeli || 0})`, type: "Vizeli" },
-    { label: `Kapıda Vize (${counts["Kapıda Vize"] || 0})`, type: "Kapıda Vize" },
-    { label: `eTA (${counts.eTA || 0})`, type: "eTA" },
-  ];
+  const BUTTONS: { label: string; type: keyof VisaColors | "Tümü" }[] = 
+  typeof counts !== "number"
+    ? [
+        { label: `Tümü (${countries.length - 1})`, type: "Tümü" },
+        { label: `Vizesiz (${counts.Vizesiz || 0})`, type: "Vizesiz" },
+        { label: `Vizeli (${counts.Vizeli || 0})`, type: "Vizeli" },
+        { label: `Kapıda Vize (${counts["Kapıda Vize"] || 0})`, type: "Kapıda Vize" },
+        { label: `eTA (${counts.eTA || 0})`, type: "eTA" },
+      ]
+    : [];
 
     React.useEffect(() => {
       const updateSize = () => {
@@ -40,14 +43,18 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
       return () => window.removeEventListener("resize", updateSize);
     }, []);
   
-  const filteredData = selectedType === "Tümü" 
-    ? countries 
-    : countries.map(item => ({
-        ...item,
-        value: item.value === selectedType ? item.value : "default"
-      }));
+  const filteredData = selectedType === "Tümü"
+  ? countries
+  : countries.map(item => ({
+      ...item,
+      value: (item.value as keyof VisaColors) === selectedType 
+        ? item.value 
+        : "default"
+    }));
+
     return (
         <>
+        {typeof counts !== "number" &&
             <div className="w-full mb-4 px-4 flex flex-wrap gap-2 justify-center md:justify-end text-sm">
                 {BUTTONS.map(({ label, type }) => (
                 <button
@@ -65,6 +72,7 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                 </button>
                 ))}
             </div>
+            }
             <div className="w-full justify-center flex items-center">
                 <WorldMap
                 color={visaColors.default}
@@ -73,7 +81,6 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                 borderColor="white"
                 backgroundColor="#f9fafb"
                 strokeOpacity={1}
-                title="Türkiye pasaportu vize durumu"
                 tooltipBgColor="#646ecb"
                 size={size}
                 tooltipTextColor="white"

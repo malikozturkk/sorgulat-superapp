@@ -6,29 +6,6 @@ export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport' } });
 };
 
-export interface VisaColors {
-    main: string;
-    Vizesiz: string;
-    Vizeli: string;
-    "Kapıda Vize": string;
-    eTA: string;
-    default: string;
-}
-
-export interface VisaCounts {
-    "Kapıda Vize": number;
-    Vizeli: number;
-    Vizesiz: number;
-    eTA: number;
-    main: number;
-  }
-
-
-export interface VisaCountry {
-    country: string;
-    value: keyof VisaColors;
-}
-
 export default async function Passport() {
     const response = await getRequest(`/passport`);
     const { countries, counts } = response;

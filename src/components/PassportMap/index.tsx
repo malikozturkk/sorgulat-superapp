@@ -21,6 +21,14 @@ interface IPassportMap {
 const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
   const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl" | "xxl">("sm");
   const [selectedType, setSelectedType] = React.useState<keyof VisaColors | "Tümü">("Tümü");
+  const [zoom, setZoom] = React.useState(1);
+  const [translate, setTranslate] = React.useState({ x: 0, y: 0 });
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const isPanning = React.useRef(false);
+  const startCoords = React.useRef({ x: 0, y: 0 });
+
+  const handleZoomIn = () => setZoom((prev) => Math.min(prev * 1.5, 5));
+  const handleZoomOut = () => setZoom((prev) => Math.max(prev * 0.5, 1));
 
   const BUTTONS: { label: string; type: keyof VisaColors | "Tümü" }[] = 
   typeof counts !== "number"
@@ -42,6 +50,23 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
       window.addEventListener("resize", updateSize);
       return () => window.removeEventListener("resize", updateSize);
     }, []);
+
+    const handleMouseDown = (e: React.PointerEvent) => {
+      isPanning.current = true;
+      startCoords.current = { x: e.clientX - translate.x, y: e.clientY - translate.y };
+    };
+  
+    const handleMouseMove = (e: React.PointerEvent) => {
+      if (!isPanning.current) return;
+      setTranslate(prev => ({
+        x: prev.x + e.movementX,
+        y: prev.y + e.movementY,
+      }));
+    };
+  
+    const handleMouseUp = () => {
+      isPanning.current = false;
+    };
   
   const filteredData = selectedType === "Tümü"
   ? countries
@@ -54,7 +79,7 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
 
     return (
         <>
-        {typeof counts !== "number" &&
+          {typeof counts !== "number" &&
             <div className="w-full mb-4 px-4 flex flex-wrap gap-2 justify-center md:justify-end text-sm">
                 {BUTTONS.map(({ label, type }) => (
                 <button
@@ -72,27 +97,55 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                 </button>
                 ))}
             </div>
-            }
-            <div className="w-full justify-center flex items-center">
+          }
+          <div className="relative">
+            <div className="absolute left-2 top-2 flex flex-col gap-2 z-10">
+              <button
+                onClick={handleZoomIn}
+                className="rounded bg-primary p-1 box-border leading-[8px] cursor-pointer text-white h-5 w-5 duration-150 hover:opacity-80"
+              >
+                +
+              </button>
+              <button
+                onClick={handleZoomOut}
+                className="rounded bg-primary p-1 box-border leading-[8px] cursor-pointer text-white h-5 w-5 duration-150 hover:opacity-80"
+              >
+                −
+              </button>
+            </div>
+
+            <div
+              ref={containerRef}
+              className="w-full justify-center flex items-center overflow-hidden touch-none"
+              onPointerDown={handleMouseDown}
+              onPointerMove={handleMouseMove}
+              onPointerUp={handleMouseUp}
+              onPointerLeave={handleMouseUp}
+            >
+              <div
+                style={{
+                  transform: `translate(${translate.x}px, ${translate.y}px) scale(${zoom})`,
+                  transition: "transform 0.2s ease-out",
+                }}
+              >
                 <WorldMap
-                color={visaColors.default}
-                data={filteredData}
-                frame={false}
-                borderColor="white"
-                backgroundColor="#f9fafb"
-                strokeOpacity={1}
-                tooltipBgColor="#646ecb"
-                size={size}
-                tooltipTextColor="white"
-                richInteraction={true}
-                styleFunction={({ countryValue }) => ({
+                  color={visaColors.default}
+                  data={filteredData}
+                  frame={false}
+                  borderColor="white"
+                  backgroundColor="#f9fafb"
+                  strokeOpacity={1}
+                  size={size}
+                  styleFunction={({ countryValue }) => ({
                     fill: visaColors[countryValue as keyof VisaColors] || visaColors.default,
                     stroke: "#ffffff",
                     strokeWidth: 0.5,
-                })}
-                tooltipTextFunction={({ countryName }) => countryName}
+                  })}
+                  tooltipTextFunction={({ countryName }) => zoom === 1 ? countryName : ""} 
                 />
+              </div>
             </div>
+          </div>
         </>
     );
 }

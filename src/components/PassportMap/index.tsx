@@ -67,6 +67,37 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
     const handleMouseUp = () => {
       isPanning.current = false;
     };
+
+    const handleDoubleClick = () => {
+      setZoom((prev) => Math.min(prev * 1.5, 5));
+    };
+    
+    const distance = (touch1: React.Touch, touch2: React.Touch) =>
+      Math.sqrt(
+        (touch1.clientX - touch2.clientX) ** 2 + 
+        (touch1.clientY - touch2.clientY) ** 2
+      );
+    
+    const pinchStart = React.useRef(0);
+    
+    const handleTouchStart = (e: React.TouchEvent) => {
+      if (e.touches.length === 2) {
+        pinchStart.current = distance(e.touches[0], e.touches[1]);
+      }
+    };
+    
+    const handleTouchMove = (e: React.TouchEvent) => {
+      if (e.touches.length === 2) {
+        const pinchEnd = distance(e.touches[0], e.touches[1]);
+        const scale = pinchEnd / pinchStart.current;
+        setZoom((prev) => Math.min(Math.max(prev * scale, 1), 5));
+        pinchStart.current = pinchEnd;
+      }
+    };
+    
+    const handleTouchEnd = () => {
+      pinchStart.current = 0;
+    };
   
   const filteredData = selectedType === "Tümü"
   ? countries
@@ -121,6 +152,10 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
               onPointerMove={handleMouseMove}
               onPointerUp={handleMouseUp}
               onPointerLeave={handleMouseUp}
+              onDoubleClick={handleDoubleClick}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <div
                 style={{

@@ -12,8 +12,7 @@ const Navbar = () => {
         { href: "/saat-kac", title: "Saat Kaç ?" },
         { href: "/ip-sorgulama", title: "Ip Sorgulama" },
         { href: "/pasaport", title: "Pasaport" },
-        // { href: "/iftara-ne-kadar-kaldi", title: "İftara Ne Kadar Kaldı ?" },
-        // { href: "/akaryakit-fiyatlari", title: "Akaryakıt Fiyatları" },
+        { href: "/blog", title: "Blog" },
     ];
     return (
         <header className={`${open ? "pb-6" : ""} bg-white lg:pb-0 mb-3 md:mb-5`}>

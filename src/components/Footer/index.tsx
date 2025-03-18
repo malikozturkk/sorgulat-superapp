@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold tracking-widest text-primary uppercase">Şirket</p>
+            <p className="text-sm font-semibold text-primary uppercase">Şirket</p>
             <ul className="mt-6 space-y-4">
               <li>
                 <Link
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold tracking-widest text-primary uppercase">Sunduklarımız</p>
+            <p className="text-sm font-semibold text-primary uppercase">Sunduklarımız</p>
             <ul className="mt-6 space-y-4">
               <li>
                 <Link
@@ -97,6 +97,16 @@ const Footer: React.FC = () => {
                   aria-label="Visit Pasaport"
                 >
                   Pasaport
+                </Link>
+              </li>
+              <li>
+                <Link
+                  title="Blog"
+                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
+                  href="/blog"
+                  aria-label="Visit Blog"
+                >
+                  Blog
                 </Link>
               </li>
             </ul>

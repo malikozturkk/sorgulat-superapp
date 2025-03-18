@@ -1,11 +1,11 @@
-const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "https://sorgulat.com/";
+const base = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "https://sorgulat.com/";
 export const getRequest = async <T>(
     url: string,
+    baseUrl: string = base
 ): Promise<T | any> => {
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
     }
-
     try {
         const response = await fetch(`${baseUrl}${url}`, {
             method: 'GET',

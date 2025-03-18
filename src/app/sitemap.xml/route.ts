@@ -5,6 +5,7 @@ import { TimezoneData } from "../saat-kac/types/Timezone.types";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+    const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
     try {
         const staticPages = [
             "https://sorgulat.com/",
@@ -13,16 +14,20 @@ export async function GET() {
             "https://sorgulat.com/iletisim",
             "https://sorgulat.com/ip-sorgulama",
             "https://sorgulat.com/pasaport",
+            "https://sorgulat.com/blog",
+            "https://sorgulat.com/blog/pasaport",
         ];
 
-        const [cities, countries]: [TimezoneData[], TimezoneData[]] = await Promise.all([
+        const [cities, countries, getAllPassport]: [TimezoneData[], TimezoneData[], any] = await Promise.all([
             getRequest("/timezones/city"),
             getRequest("/timezones/country"),
+            getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl)
         ]);
 
         const dynamicUrls = [
             ...cities.map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
             ...countries.map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
+            ...getAllPassport.data.map((passport: any) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
         ];
 
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

@@ -9,7 +9,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#646ecb"
+        primary: "#646ecb",
+        primaryLight: "#c7d5f7",
+        green: "#2ECC71",
+        pink: "#ff69b4",
+        orange: "#f39c12",
+      },
+      fontFamily: {
+        sans: ['Sen', 'Helvetica', 'Arial', 'sans-serif'],
       },
     },
   },

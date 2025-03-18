@@ -14,8 +14,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
       <AdSense pId="4912331234184158" />
+      <link
+          href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body>
+      <body className="font-sans">
         <Navbar />
         {children}
         <Footer />

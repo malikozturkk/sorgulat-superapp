@@ -223,5 +223,40 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
         }
-    }   
+    },
+    "/pasaport-blog": {
+        title: "Pasaport Blog Rehberi | Sorgulat",
+        description: "En güncel ve detaylı analizlerle vize durumları, seyahat rehberleri ve pasaport bilgileri hakkında bilgi edinin.",
+        robots: "index, follow",
+        keywords: "vize rehberi, seyahat ipuçları, pasaport bilgileri, vizesiz ülkeler, eTA gereklilikleri, yurtdışı seyahat, vize başvurusu",
+        authors: [
+            {
+                name: "Blog | Sorgulat",
+                url: "https://www.sorgulat.com/blog"
+            }
+        ],
+        icon: "/favicon.ico",
+        openGraph: {
+            title: "Pasaport Blog Rehberi | Sorgulat",
+            description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
+            url: "https://www.sorgulat.com/blog",
+            images: "/images/open-graph-blog.png",
+            type: "website",
+            siteName: "Sorgulat"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Pasaport Blog Rehberi | Sorgulat",
+            description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
+            images: "/images/open-graph-blog.png",
+            site: "@Sorgulat"
+        },
+        alternates: {
+            canonical: "/blog",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml"
+            }
+        }
+    },
 }

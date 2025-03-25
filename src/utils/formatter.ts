@@ -36,19 +36,19 @@ export const getVisaInfo = (visaType: VisaType): VisaInfo => {
   const visaMap: Record<VisaType, VisaInfo> = {
     "visa-free": {
       text: "Vizesiz",
-      color: "green",
+      color: "#2ECC71",
     },
     visa: {
       text: "Vize Gerekli",
-      color: "pink",
+      color: "#ff69b4",
     },
     "visa-on-arrival": {
       text: "Kapıda Vize",
-      color: "orange",
+      color: "#f39c12",
     },
     eta: {
       text: "eTa Vizesi",
-      color: "primary",
+      color: "#646ecb",
     },
   };
 

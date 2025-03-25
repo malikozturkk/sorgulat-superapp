@@ -6,6 +6,7 @@ import { formatDate, generateVisaType } from '@/utils/formatter';
 import Link from 'next/link';
 import Image from 'next/image';
 import { TravelArticle } from '@/components/Blog/blog.types';
+import HorizontalBox from '@/components/Blog/ArticleBox/HorizontalBox';
 
 type Params = Promise<{ slug: string }>;
 
@@ -99,26 +100,7 @@ export default async function FilteredPassport({ params }: { params: Params }) {
             </div>
             <section className='grid grid-cols-1 gap-8'>
                 {getBlogData.data.map((blog: TravelArticle) => (
-                    <article key={blog.documentId} className='flex flex-col md:flex-row gap-4 border rounded-lg p-2 bg-white'>
-                        <figure className="flex w-full md:w-72 md:min-w-72 md:max-w-72">
-                            <Link href={`/blog/pasaport/${blog.slug}`} className="w-full" itemProp="url">
-                                <Image src={baseUrl + blog.mainPhoto.url} alt={blog.title} width={900} height={500} className="w-full min-w-full rounded-md" itemProp="image" />
-                            </Link>
-                        </figure>
-                        <header className='flex flex-col gap-2 justify-between'>
-                            <div>
-                                <Link href={`/blog/pasaport/${blog.slug}`} className="text-lg font-semibold mb-2 text-primary hover:underline" itemProp='url'>{blog.title}</Link>
-                                <p className="text-gray-600 text-sm" itemProp="description">{blog.description}</p>
-                            </div>
-                            <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                                <Image src={baseUrl + blog.author.photo.url} alt={blog.author.name} width={32} height={32} />
-                                <div className='text-sm'>
-                                    <p>{blog.author.name}</p>
-                                    <time dateTime={formatDate(blog.createdAt).isoDate}>{formatDate(blog.createdAt).formattedDate}</time>
-                                </div>
-                            </div>
-                        </header>
-                    </article>
+                    <HorizontalBox data={blog} />
                 ))}
             </section>
         </div>

@@ -5,6 +5,7 @@ import { FilterType, VisaCountry } from '../types/passport.types';
 import { formatDate, generateVisaType } from '@/utils/formatter';
 import Link from 'next/link';
 import Image from 'next/image';
+import { TravelArticle } from '@/components/Blog/blog.types';
 
 type Params = Promise<{ slug: string }>;
 
@@ -97,8 +98,8 @@ export default async function FilteredPassport({ params }: { params: Params }) {
                 <span className='inline-flex items-center rounded-md bg-white px-2 py-1 text-xs font-medium ring-1 ring-gray-500/10 ring-inset'>{count} ülke</span>
             </div>
             <section className='grid grid-cols-1 gap-8'>
-                {getBlogData.data.map((blog: any) => (
-                    <article className='flex flex-col md:flex-row gap-4 border rounded-lg p-2 bg-white'>
+                {getBlogData.data.map((blog: TravelArticle) => (
+                    <article key={blog.documentId} className='flex flex-col md:flex-row gap-4 border rounded-lg p-2 bg-white'>
                         <figure className="flex w-full md:w-72 md:min-w-72 md:max-w-72">
                             <Link href={`/blog/pasaport/${blog.slug}`} className="w-full" itemProp="url">
                                 <Image src={baseUrl + blog.mainPhoto.url} alt={blog.title} width={900} height={500} className="w-full min-w-full rounded-md" itemProp="image" />

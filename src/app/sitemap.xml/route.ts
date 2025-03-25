@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getRequest } from "@/utils/api";
 import { TimezoneData } from "../saat-kac/types/Timezone.types";
+import { TravelArticle } from "@/components/Blog/blog.types";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,7 @@ export async function GET() {
         const dynamicUrls = [
             ...cities.map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
             ...countries.map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
-            ...getAllPassport.data.map((passport: any) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
+            ...getAllPassport.data.map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
         ];
 
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

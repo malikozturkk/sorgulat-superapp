@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { formatDate } from '@/utils/formatter';
 import PopularCard from "@/components/Blog/PopularCard";
+import { TravelArticle } from "@/components/Blog/blog.types";
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport-blog' } });
@@ -22,7 +23,7 @@ export default async function PassportBlog() {
             <div className='flex flex-col md:flex-row gap-8'>
                 <div className='lg:w-2/3 pb-8'>
                     <div className='flex flex-col gap-4 md:gap-6'>
-                        {getAllPassport.data.map((passport: any) => (
+                        {getAllPassport.data.map((passport: TravelArticle) => (
                             <article className='bg-white rounded-lg shadow-sm overflow-hidden flex flex-col h-full transition-shadow duration-300 hover:shadow-md' key={passport.slug + passport.id}>
                                 <Link href={`/blog/pasaport/${passport.slug}`}>
                                     <figure>

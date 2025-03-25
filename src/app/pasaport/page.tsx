@@ -4,6 +4,8 @@ import { getRequest } from '@/utils/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDate } from '@/utils/formatter';
+import { sliceData } from '@/utils/generator';
+import { TravelArticle } from '@/components/Blog/blog.types';
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport' } });
@@ -13,10 +15,11 @@ export default async function Passport() {
     const response = await getRequest(`/passport`);
     const { countries, counts } = response;
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
-    const visaFreeBlog = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto&filters[visaStatus][$eq]=visa-free`, baseUrl);
-    const visaBlog = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto&filters[visaStatus][$eq]=visa`, baseUrl);
-    const visaOnArrivalBlog = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto&filters[visaStatus][$eq]=visa-on-arrival`, baseUrl);
-    const visaEtaBlog = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto&filters[visaStatus][$eq]=eta`, baseUrl);
+    const visaStatuses = ["visa-free", "visa", "visa-on-arrival", "eta"];
+    const blogs = await Promise.all(visaStatuses.map(status => getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto&filters[visaStatus][$eq]=${status}`, baseUrl)));
+    const [slicedVisaFree, slicedVisa, slicedVisaOnArrival, slicedVisaEta]: TravelArticle[][] = blogs.map(blog =>
+        sliceData(blog.data, 4) as TravelArticle[]
+    );
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-1 pb-6 md:pb-12 md:gap-2">
             <PassportMap countries={countries} counts={counts} />
@@ -26,7 +29,7 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/vizesiz-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {visaFreeBlog.data.map((visaFree: any) => (
+                    {slicedVisaFree.map((visaFree: TravelArticle) => (
                         <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visaFree.slug}`}>
                             <div>
                                 <Image className='mb-2' src={baseUrl + visaFree.mainPhoto.url} alt={visaFree.title} width={900} height={500} itemProp='image' />
@@ -49,7 +52,7 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/vizeli-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {visaBlog.data.map((visa: any) => (
+                    {slicedVisa.map((visa: TravelArticle) => (
                             <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
                                 <div>
                                     <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />
@@ -72,7 +75,7 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/kapida-vize-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {visaOnArrivalBlog.data.map((visa: any) => (
+                    {slicedVisaOnArrival.map((visa: TravelArticle) => (
                             <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
                                 <div>
                                     <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />
@@ -96,7 +99,7 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/eta-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {visaEtaBlog.data.map((visa: any) => (
+                    {slicedVisaEta.map((visa: TravelArticle) => (
                             <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
                                 <div>
                                     <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />

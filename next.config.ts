@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    domains: ['ipapi.co', 'localhost'],
+    domains: ['ipapi.co', 'localhost', 'dashboard.sorgulat.com'],
   },
   swcMinify: true,
 };

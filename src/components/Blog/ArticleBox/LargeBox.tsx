@@ -3,11 +3,7 @@ import Link from "next/link";
 import { TravelArticle } from "../blog.types";
 import { formatDate } from "@/utils/formatter";
 
-interface ILargeBox {
-    data: TravelArticle
-}
-
-const LargeBox: React.FC<ILargeBox> = ({ data }) => {
+const LargeBox = ({ data }: { data: TravelArticle }) => {
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
     return (
         <article className='bg-white rounded-lg shadow-sm overflow-hidden flex flex-col h-full transition-shadow duration-300 hover:shadow-md' key={data.slug + data.id}>

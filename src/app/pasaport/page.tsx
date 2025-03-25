@@ -2,10 +2,9 @@ import PassportMap from '@/components/PassportMap';
 import { generateMetadata } from '../layout';
 import { getRequest } from '@/utils/api';
 import Link from 'next/link';
-import Image from 'next/image';
-import { formatDate } from '@/utils/formatter';
 import { sliceData } from '@/utils/generator';
 import { TravelArticle } from '@/components/Blog/blog.types';
+import ArticleBox from '@/components/Blog/ArticleBox/VerticalBox';
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport' } });
@@ -30,20 +29,7 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisaFree.map((visaFree: TravelArticle) => (
-                        <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visaFree.slug}`}>
-                            <div>
-                                <Image className='mb-2' src={baseUrl + visaFree.mainPhoto.url} alt={visaFree.title} width={900} height={500} itemProp='image' />
-                                <h3 className='text-base font-semibold mb-2 text-primary hover:underline' itemProp='name'>{visaFree.title}</h3>
-                                <p className='text-gray-600 dark:text-gray-400 text-sm' itemProp='description'>{visaFree.description}</p>
-                            </div>
-                            <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                                <Image src={baseUrl + visaFree.author.photo.url} alt={visaFree.author.name} width={32} height={32} />
-                                <div className='text-sm'>
-                                    <p>{visaFree.author.name}</p>
-                                    <time className='text-sm' dateTime={formatDate(visaFree.createdAt).isoDate}>{formatDate(visaFree.createdAt).formattedDate}</time>
-                                </div>
-                            </div>
-                        </Link>
+                        <ArticleBox data={visaFree} key={visaFree.documentId} />
                     ))}
                 </div>
 
@@ -53,21 +39,8 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisa.map((visa: TravelArticle) => (
-                            <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
-                                <div>
-                                    <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />
-                                    <h3 className='text-base font-semibold mb-2 text-primary hover:underline' itemProp='name'>{visa.title}</h3>
-                                    <p className='text-gray-600 dark:text-gray-400 text-sm' itemProp='description'>{visa.description}</p>
-                                </div>
-                                <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                                    <Image src={baseUrl + visa.author.photo.url} alt={visa.author.name} width={32} height={32} />
-                                    <div className='text-sm'>
-                                        <p>{visa.author.name}</p>
-                                        <time className='text-sm' dateTime={formatDate(visa.createdAt).isoDate}>{formatDate(visa.createdAt).formattedDate}</time>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
+                        <ArticleBox data={visa} key={visa.documentId} />
+                    ))}
                 </div>
 
                 <div className='flex items-center justify-between mt-8 md:mt-16'>
@@ -75,21 +48,8 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/kapida-vize-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {slicedVisaOnArrival.map((visa: TravelArticle) => (
-                            <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
-                                <div>
-                                    <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />
-                                    <h3 className='text-base font-semibold mb-2 text-primary hover:underline' itemProp='name'>{visa.title}</h3>
-                                    <p className='text-gray-600 dark:text-gray-400 text-sm' itemProp='description'>{visa.description}</p>
-                                </div>
-                                <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                                    <Image src={baseUrl + visa.author.photo.url} alt={visa.author.name} width={32} height={32} />
-                                    <div className='text-sm'>
-                                        <p>{visa.author.name}</p>
-                                        <time className='text-sm' dateTime={formatDate(visa.createdAt).isoDate}>{formatDate(visa.createdAt).formattedDate}</time>
-                                    </div>
-                                </div>
-                            </Link>
+                    {slicedVisaOnArrival.map((visaOnArrival: TravelArticle) => (
+                            <ArticleBox data={visaOnArrival} key={visaOnArrival.documentId} />
                         ))}
                 </div>
 
@@ -99,21 +59,8 @@ export default async function Passport() {
                     <Link className='text-primary hover:underline text-sm' href="pasaport/eta-seyahat">Tümünü gör</Link>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {slicedVisaEta.map((visa: TravelArticle) => (
-                            <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${visa.slug}`}>
-                                <div>
-                                    <Image className='mb-2' src={baseUrl + visa.mainPhoto.url} alt={visa.title} width={900} height={500} itemProp='image' />
-                                    <h3 className='text-base font-semibold mb-2 text-primary hover:underline' itemProp='name'>{visa.title}</h3>
-                                    <p className='text-gray-600 dark:text-gray-400 text-sm' itemProp='description'>{visa.description}</p>
-                                </div>
-                                <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                                    <Image src={baseUrl + visa.author.photo.url} alt={visa.author.name} width={32} height={32} />
-                                    <div className='text-sm'>
-                                        <p>{visa.author.name}</p>
-                                        <time className='text-sm' dateTime={formatDate(visa.createdAt).isoDate}>{formatDate(visa.createdAt).formattedDate}</time>
-                                    </div>
-                                </div>
-                            </Link>
+                    {slicedVisaEta.map((eta: TravelArticle) => (
+                            <ArticleBox data={eta} key={eta.documentId} />
                         ))}
                 </div>
             </section>

@@ -96,7 +96,7 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                     <h1 className="text-2xl md:text-4xl font-extrabold mb-4">{getPassport.title}</h1>
                     <div className="text-sm text-gray-600 mt-2 not-prose mb-4"> <span>Vize Durumu:</span> <strong className={`text-${visa.color}`}>{visa.text}</strong></div>
                     <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                        <Image src={baseUrl + getPassport.author.photo.url} alt={getPassport.author.name} width={32} height={32} />
+                        {/* <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={32} height={32} /> */}
                         <div className='text-sm'>
                             <p>{getPassport.author.name}</p>
                             <p className="text-sm"> Yayınlanma tarihi: <time dateTime={formatDate(getPassport.createdAt).isoDate}>{formatDate(getPassport.createdAt).formattedDate}</time></p>

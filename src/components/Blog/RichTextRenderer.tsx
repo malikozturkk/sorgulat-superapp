@@ -1,26 +1,5 @@
 import React, { ElementType } from 'react'
-
-interface RichTextItem {
-  type: string
-  children?: RichTextItem[]
-  text?: string
-  url?: string
-  format?: string
-  bold?: boolean
-  italic?: boolean
-  underline?: boolean
-  strikethrough?: boolean
-  code?: boolean
-  level?: number
-  image?: {
-    url: string
-    alternativeText?: string
-  }
-}
-
-interface Props {
-  content: RichTextItem[]
-}
+import { Props, RichTextItem } from './blog.types'
 
 const RichTextRenderer: React.FC<Props> = ({ content }) => {
   const headingSizes = ['4xl', '3xl', '2xl', 'xl', 'lg', 'base', 'sm']

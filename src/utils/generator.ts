@@ -17,3 +17,8 @@ export function getRandomType() {
     ];
     return weightedTypes[Math.floor(Math.random() * weightedTypes.length)];
 }
+
+
+export function sliceData<T>(data: T[], count: number): T[] {
+    return data.slice(0, count);
+}

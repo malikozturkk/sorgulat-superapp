@@ -3,6 +3,7 @@ import { getRequest } from '@/utils/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDate } from '@/utils/formatter';
+import PopularCard from "@/components/Blog/PopularCard";
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport-blog' } });
@@ -52,30 +53,7 @@ export default async function PassportBlog() {
                     </div>
                 </div>
                 <div className='lg:w-1/3 pb-8'>
-                    <div className='sticky top-4 md:top-6 space-y-6'>
-                        <div className="bg-white rounded-lg shadow-sm p-5">
-                            <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
-                            <div className="text-lg font-semibold text-gray-900">Öne Çıkan Yazılar</div>
-                        </div>
-                        <div className="space-y-4">
-                            {getAllPassport.data.map((slicedPassport: any, index: number) => (
-                                <div className="flex items-start" key={slicedPassport.slug + slicedPassport.id}>
-                                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primaryLight text-primary flex items-center justify-center text-xs font-medium mr-3 mt-0.5">
-                                {index + 1}
-                                </span>
-                                <div>
-                                <div className="text-sm font-medium text-gray-900 hover:text-primary transition-colors line-clamp-2">
-                                    <Link href={`/blog/pasaport/${slicedPassport.slug}`}>
-                                    {slicedPassport.title}
-                                    </Link>
-                                </div>
-                                <time dateTime={formatDate(slicedPassport.createdAt).isoDate} itemProp="datePublished" className="text-xs text-gray-500 block mt-1"> {formatDate(slicedPassport.createdAt).formattedDate} </time>
-                                </div>
-                            </div>
-                            ))}
-                        </div>
-                        </div>
-                    </div>
+                <PopularCard data={getAllPassport.data} />
                 </div>
             </div>
         </div>

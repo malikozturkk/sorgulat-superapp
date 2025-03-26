@@ -25,7 +25,7 @@ const RichTextRenderer: React.FC<Props> = ({ content }) => {
       return (
         <a
           key={index}
-          className="text-blue-500 hover:underline"
+          className="text-primary hover:underline"
           href={node.url}
           target="_blank"
           rel="noopener noreferrer"

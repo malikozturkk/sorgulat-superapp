@@ -2,9 +2,7 @@ import { defaultGenerateMetadata } from '@/app/metadataConfig';
 import PassportMap from '@/components/PassportMap';
 import { getRequest } from '@/utils/api';
 import { FilterType, VisaCountry } from '../types/passport.types';
-import { formatDate, generateVisaType } from '@/utils/formatter';
-import Link from 'next/link';
-import Image from 'next/image';
+import { generateVisaType } from '@/utils/formatter';
 import { TravelArticle } from '@/components/Blog/blog.types';
 import HorizontalBox from '@/components/Blog/ArticleBox/HorizontalBox';
 

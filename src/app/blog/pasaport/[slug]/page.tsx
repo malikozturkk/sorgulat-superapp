@@ -4,9 +4,11 @@ import { TravelArticle } from "@/components/Blog/blog.types";
 import RichTextRenderer from "@/components/Blog/RichTextRenderer";
 import { getRequest } from "@/utils/api";
 import { formatDate, generateVisaUrl, getVisaInfo } from "@/utils/formatter";
-import { sliceData } from "@/utils/generator";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
+import { JSX } from "react";
 
 
 type Params = Promise<{ slug: string }>;
@@ -82,10 +84,7 @@ export default async function PassportBlogDetail({ params }: { params: Params })
     const { slug } = await params
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
     const getPassport: TravelArticle = await getRequest(`/api/passport-blogs/slug/${slug}?populate=*&sort=createdAt:desc`, baseUrl);
-    const getPopular = await getRequest(
-        `/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto`,
-        baseUrl
-    );
+    const getPopular = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto`, baseUrl);
     const shuffledData: TravelArticle[] = getPopular.data
     .filter((item: TravelArticle) => item.slug !== slug)
     .sort(() => Math.random() - 0.5)
@@ -93,6 +92,11 @@ export default async function PassportBlogDetail({ params }: { params: Params })
       
     const visa = getVisaInfo(getPassport.visaStatus)
     const visaMainUrl = generateVisaUrl(getPassport.visaStatus)
+    const icons: Record<string, JSX.Element> = {
+        instagram: <FaInstagram className="text-pink-500 w-6 h-6" />,
+        x: <FaXTwitter className="w-6 h-6" />,
+        linkedin: <FaLinkedin className="text-blue-600 w-6 h-6" />,
+      };
 
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-1 pb-6 md:pb-12 md:gap-2">
@@ -108,7 +112,7 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                     <h1 className="text-2xl md:text-4xl font-extrabold mb-4">{getPassport.title}</h1>
                     <div className="text-sm text-gray-600 mt-2 not-prose mb-4"> <span>Vize Durumu:</span> <strong style={{ color: visa.color }}>{visa.text}</strong></div>
                     <div className='flex items-center gap-2 pt-2 md:pt-4 border-t'>
-                        {/* <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={32} height={32} /> */}
+                        <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={32} height={32} />
                         <div className='text-sm'>
                             <p>{getPassport.author.name}</p>
                             <p className="text-sm"> Yayınlanma tarihi: <time dateTime={formatDate(getPassport.createdAt).isoDate}>{formatDate(getPassport.createdAt).formattedDate}</time></p>
@@ -159,14 +163,27 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                         ))}
                     </div>
                 </div>
-                <div className='flex items-center gap-4 p-6 mt-4 bg-gray-100 flex-col md:flex-row'>
-                    {/* <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={32} height={32} /> */}
-                    <div className='text-sm'>
+                <div className='flex items-center gap-4 p-6 mt-4 bg-gray-50 flex-col md:flex-row'>
+                    <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={56} height={56} className="rounded-full" />
+                    <div className='text-lg font-bold'>
                         <p>{getPassport.author.name}</p>
                     </div>
                     {getPassport.author.bio &&
-                        <div className="border-l border-solid border-gray-200 pl-4 flex flex-col">
+                        <div className="border-t pt-4 md:border-l md:pl-4 md:pt-0 md:border-t-0 border-solid border-gray-200 flex flex-col">
                             <RichTextRenderer content={getPassport.author.bio} />
+                            <div className="flex items-center gap-2 flex-wrap">
+                                {Object.entries(getPassport.author.socialLinks).map(([platform, url]) => (
+                                    <Link
+                                        key={platform}
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-1 text-gray-700 hover:text-gray-900 transition"
+                                    >
+                                    {icons[platform] || <span className="capitalize">{platform}</span>}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     }
                 </div>
@@ -174,8 +191,8 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                     <h1 className='text-2xl md:text-3xl font-extrabold mb-2 md:mb-4'>Popüler Yazılar</h1>
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                    {slicedPopular.map((visaFree: TravelArticle) => (
-                        <VerticalBox data={visaFree} key={visaFree.documentId} />
+                    {slicedPopular.map((popular: TravelArticle) => (
+                        <VerticalBox data={popular} key={popular.documentId} />
                     ))}
                 </div>
             </article>

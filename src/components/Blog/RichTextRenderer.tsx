@@ -76,7 +76,7 @@ const RichTextRenderer: React.FC<Props> = ({ content }) => {
   }
 
   return (
-    <div className="pb-4 text-base lg:pb-8">
+    <div className="text-base">
       {content.map((node, index) => renderNode(node, index))}
     </div>
   )

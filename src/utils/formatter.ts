@@ -1,3 +1,5 @@
+import { VisaType } from "@/components/Blog/blog.types";
+
 export function padZero(num: number): string {
     return num.toString().padStart(2, '0');
 }
@@ -24,8 +26,6 @@ export const formatDate = (dateString: string) => {
   
     return { formattedDate, isoDate };
 };
-
-type VisaType = "visa-free" | "visa" | "visa-on-arrival" | "eta";
 
 type VisaInfo = {
   text: string;

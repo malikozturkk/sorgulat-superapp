@@ -1,7 +1,10 @@
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
+import VerticalBox from "@/components/Blog/ArticleBox/VerticalBox";
+import { TravelArticle } from "@/components/Blog/blog.types";
 import RichTextRenderer from "@/components/Blog/RichTextRenderer";
 import { getRequest } from "@/utils/api";
 import { formatDate, generateVisaUrl, getVisaInfo } from "@/utils/formatter";
+import { sliceData } from "@/utils/generator";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -78,7 +81,16 @@ export async function generateMetadata({ params }: { params: Params }) {
 export default async function PassportBlogDetail({ params }: { params: Params }) {
     const { slug } = await params
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
-    const getPassport = await getRequest(`/api/passport-blogs/slug/${slug}?populate=*&sort=createdAt:desc`, baseUrl);
+    const getPassport: TravelArticle = await getRequest(`/api/passport-blogs/slug/${slug}?populate=*&sort=createdAt:desc`, baseUrl);
+    const getPopular = await getRequest(
+        `/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto`,
+        baseUrl
+    );
+    const shuffledData: TravelArticle[] = getPopular.data
+    .filter((item: TravelArticle) => item.slug !== slug)
+    .sort(() => Math.random() - 0.5)
+    const slicedPopular: TravelArticle[] = shuffledData.slice(0, 4);
+      
     const visa = getVisaInfo(getPassport.visaStatus)
     const visaMainUrl = generateVisaUrl(getPassport.visaStatus)
 
@@ -103,7 +115,9 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                         </div>
                     </div>
                 </header>
-                <RichTextRenderer content={getPassport.content} />
+                <div className="pb-4 lg:pb-8">
+                    <RichTextRenderer content={getPassport.content} />
+                </div>
                 {getPassport.warnings.map((warning: any) => (
                     <div className="mb-4 flex items-center justify-center flex-col text-center rounded-md bg-gray-100 p-2 text-xs font-medium text-gray-600 gap-1 md:gap-2">
                         <svg fill="#f39c12" version="1.1" width={16} height={16} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.125 478.125" xmlSpace="preserve"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <circle cx="239.904" cy="314.721" r="35.878"></circle> <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z"></path> <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z"></path> </g> </g> </g> </g></svg><strong>{warning.title}:</strong> {warning.description}
@@ -144,7 +158,26 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                             </span>
                         ))}
                     </div>
+                </div>
+                <div className='flex items-center gap-4 p-6 mt-4 bg-gray-100 flex-col md:flex-row'>
+                    {/* <Image src={baseUrl + getPassport?.author?.photo?.url} alt={getPassport.author.name} width={32} height={32} /> */}
+                    <div className='text-sm'>
+                        <p>{getPassport.author.name}</p>
                     </div>
+                    {getPassport.author.bio &&
+                        <div className="border-l border-solid border-gray-200 pl-4 flex flex-col">
+                            <RichTextRenderer content={getPassport.author.bio} />
+                        </div>
+                    }
+                </div>
+                <div className='flex items-center justify-between mt-6'>
+                    <h1 className='text-2xl md:text-3xl font-extrabold mb-2 md:mb-4'>Popüler Yazılar</h1>
+                </div>
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
+                    {slicedPopular.map((visaFree: TravelArticle) => (
+                        <VerticalBox data={visaFree} key={visaFree.documentId} />
+                    ))}
+                </div>
             </article>
             </div>
         </div>

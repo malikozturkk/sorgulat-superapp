@@ -69,13 +69,15 @@ interface Image {
   };
 }
 
+export type VisaType = "visa-free" | "visa" | "visa-on-arrival" | "eta";
+
 export interface TravelArticle {
   id: number;
   documentId: string;
   title: string;
   slug: string;
   content: ContentNode[];
-  visaStatus: string;
+  visaStatus: VisaType
   warnings: Warning[];
   keywords: string[];
   createdAt: string;
@@ -83,7 +85,7 @@ export interface TravelArticle {
     id: number;
     documentId: string;
     name: string;
-    bio: string | null
+    bio: ContentNode[];
     photo: {
       url: string;
     }
@@ -97,6 +99,7 @@ export interface TravelArticle {
   publishedAt: string;
   locale: string;
   description: string;
+  photos?: any;
   mainPhoto: Image;
 }
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { TravelArticle } from "../blog.types";
 import { formatDate } from "@/utils/formatter";
 
-const ArticleBox = ({ data }: { data: TravelArticle }) => {
+const VerticalBox = ({ data }: { data: TravelArticle }) => {
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
     return (
         <Link className='border rounded-lg p-2 bg-white flex justify-between gap-4 flex-col' href={`/blog/pasaport/${data.slug}`}>
@@ -23,4 +23,4 @@ const ArticleBox = ({ data }: { data: TravelArticle }) => {
     );
 };
 
-export default ArticleBox;
+export default VerticalBox;

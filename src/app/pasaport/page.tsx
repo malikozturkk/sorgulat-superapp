@@ -4,7 +4,7 @@ import { getRequest } from '@/utils/api';
 import Link from 'next/link';
 import { sliceData } from '@/utils/generator';
 import { TravelArticle } from '@/components/Blog/blog.types';
-import ArticleBox from '@/components/Blog/ArticleBox/VerticalBox';
+import VerticalBox from '@/components/Blog/ArticleBox/VerticalBox';
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport' } });
@@ -29,7 +29,7 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisaFree.map((visaFree: TravelArticle) => (
-                        <ArticleBox data={visaFree} key={visaFree.documentId} />
+                        <VerticalBox data={visaFree} key={visaFree.documentId} />
                     ))}
                 </div>
 
@@ -39,7 +39,7 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisa.map((visa: TravelArticle) => (
-                        <ArticleBox data={visa} key={visa.documentId} />
+                        <VerticalBox data={visa} key={visa.documentId} />
                     ))}
                 </div>
 
@@ -49,7 +49,7 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisaOnArrival.map((visaOnArrival: TravelArticle) => (
-                            <ArticleBox data={visaOnArrival} key={visaOnArrival.documentId} />
+                            <VerticalBox data={visaOnArrival} key={visaOnArrival.documentId} />
                         ))}
                 </div>
 
@@ -60,7 +60,7 @@ export default async function Passport() {
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
                     {slicedVisaEta.map((eta: TravelArticle) => (
-                            <ArticleBox data={eta} key={eta.documentId} />
+                            <VerticalBox data={eta} key={eta.documentId} />
                         ))}
                 </div>
             </section>

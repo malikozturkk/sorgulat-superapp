@@ -19,6 +19,7 @@ export interface VisaCounts {
 export interface VisaCountry {
     country: string;
     value: keyof VisaColors;
+    blogUrl?: string
 }
 
 export type FilterType = "visa-free" | "visa" | "visa-on-arrival" | "eta";

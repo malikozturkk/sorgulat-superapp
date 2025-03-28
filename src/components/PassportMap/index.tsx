@@ -2,12 +2,20 @@
 import { VisaColors, VisaCountry, VisaCounts } from "@/app/pasaport/types/passport.types";
 import * as React from "react";
 import WorldMap from "react-svg-worldmap";
-import { visaBlogUrls, visaColors } from "./Mapper";
 
 interface IPassportMap {
   countries: VisaCountry[]
   counts: VisaCounts | number
 }
+
+export const visaColors: VisaColors = {
+  main: "#C8102E",
+  Vizesiz: "#2ECC71",
+  Vizeli: "#ff69b4",
+  "Kapıda Vize": "#f39c12",
+  eTA: "#646ecb",
+  default: "#cdd0d6",
+};
 
 const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
   const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl" | "xxl">("sm");
@@ -96,8 +104,16 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
       ...item,
       value: (item.value as keyof VisaColors) === selectedType 
         ? item.value 
-        : "default"
+        : "default",
+        blogUrl: item.blogUrl || null,
     }));
+
+    const visaBlogUrls = filteredData.reduce((acc, item) => {
+      if (item.blogUrl) {
+        acc[item.country] = item.blogUrl;
+      }
+      return acc;
+    }, {} as Record<string, string>);
 
     return (
         <>
@@ -168,7 +184,7 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                     strokeWidth: 0.5,
                   })}
                   tooltipTextFunction={({ countryName }) => zoom === 1 ? countryName : ""} 
-                  onClickFunction={({ countryCode }) => {
+                  onClickFunction={({ countryCode, countryName, countryValue }) => {
                     const blogUrl = visaBlogUrls[countryCode]
                     if (blogUrl) {
                       window.open(`/blog/pasaport/${blogUrl}`, "_blank", "noopener,noreferrer");

@@ -23,7 +23,7 @@ export default async function Passport() {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-1 pb-6 md:pb-12 md:gap-2">
             <PassportMap countries={countries} counts={counts} />
             <section>
-                <div className='flex items-center justify-between'>
+                <div className='flex items-center justify-between mt-8 md:mt-16'>
                     <h1 className='text-2xl md:text-3xl font-extrabold mb-2 md:mb-4'>Vizesiz Ülkeler</h1>
                     <Link className='text-primary hover:underline text-sm' href="pasaport/vizesiz-seyahat">Tümünü gör</Link>
                 </div>

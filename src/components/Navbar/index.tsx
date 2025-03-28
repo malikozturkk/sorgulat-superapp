@@ -10,7 +10,6 @@ const Navbar = () => {
     const items = [
         { href: "/", title: "Anasayfa" },
         { href: "/saat-kac", title: "Saat Kaç ?" },
-        { href: "/ip-sorgulama", title: "Ip Sorgulama" },
         { href: "/pasaport", title: "Pasaport" },
         { href: "/blog", title: "Blog" },
     ];

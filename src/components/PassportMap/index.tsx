@@ -2,16 +2,7 @@
 import { VisaColors, VisaCountry, VisaCounts } from "@/app/pasaport/types/passport.types";
 import * as React from "react";
 import WorldMap from "react-svg-worldmap";
-  
-const visaColors: VisaColors = {
-    main: "#C8102E",
-    Vizesiz: "#2ECC71",
-    Vizeli: "#ff69b4",
-    "Kapıda Vize": "#f39c12",
-    eTA: "#646ecb",
-    default: "#cdd0d6",
-};
-
+import { visaBlogUrls, visaColors } from "./Mapper";
 
 interface IPassportMap {
   countries: VisaCountry[]
@@ -177,6 +168,12 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                     strokeWidth: 0.5,
                   })}
                   tooltipTextFunction={({ countryName }) => zoom === 1 ? countryName : ""} 
+                  onClickFunction={({ countryCode }) => {
+                    const blogUrl = visaBlogUrls[countryCode]
+                    if (blogUrl) {
+                      window.open(`/blog/pasaport/${blogUrl}`, "_blank", "noopener,noreferrer");
+                    }
+                  }}
                 />
               </div>
             </div>

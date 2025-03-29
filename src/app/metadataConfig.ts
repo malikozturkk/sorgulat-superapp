@@ -79,6 +79,41 @@ export const defaultGenerateMetadata = () => {
 }
 
 export const metadataConfig: Record<string, MetadataConfig> = {
+    "/": {
+        title: "Anasayfa | Sorgulat",
+        description: "Dünyanın saatini, vizelerini ve seyahat rehberlerini keşfedin! Anlık saat bilgileri, vize gereklilikleri ve kapsamlı seyahat rehberleriyle yolculuğunuzu planlayın.",
+        robots: "index, follow",
+        keywords: "saat kaç, dünya saatleri, vize gereklilikleri, vizesiz ülkeler, kapıda vize, seyahat rehberi, yurtdışı seyahat, pasaport bilgileri",
+        authors: [
+            {
+                "name": "Sorgulat",
+                "url": "https://www.sorgulat.com"
+            }
+        ],
+        icon: "/favicon.ico",
+        openGraph: {
+            title: "Anasayfa | Sorgulat",
+            description: "Dünyanın saatini, vizelerini ve seyahat rehberlerini keşfedin! Anlık saat bilgileri, vize gereklilikleri ve kapsamlı seyahat rehberleriyle yolculuğunuzu planlayın.",
+            url: "https://www.sorgulat.com",
+            images: "/images/open-graph-home.png",
+            type: "website",
+            siteName: "Sorgulat"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Anasayfa | Sorgulat",
+            description: "Dünyanın saatini, vizelerini ve seyahat rehberlerini keşfedin! Anlık saat bilgileri, vize gereklilikleri ve kapsamlı seyahat rehberleriyle yolculuğunuzu planlayın.",
+            images: "/images/open-graph-home.png",
+            site: "@Sorgulat"
+        },
+        alternates: {
+            canonical: "/",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml"
+            }
+        }
+    },
     '/saat-kac': {
         title: 'Saat Kaç | Sorgulat',
         description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',

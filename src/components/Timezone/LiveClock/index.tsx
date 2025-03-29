@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 
-export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
+export default function LiveClock({ initialTime, fontSizeType = 'large' }: { initialTime: TimeData, fontSizeType?: 'large' | 'small' }) {
     const [clientData, setClientData] = useState(initialTime)
     const [currentTime, setCurrentTime] = useState<Date>(new Date(initialTime.dateTime));
     const [fullScreen, setFullScreen] = useState<boolean>(false);
@@ -40,14 +40,16 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
         weekday: 'long',
     }).format(date);
 
+    const fontSize = fullScreen ? "20vw" : fontSizeType === 'small' ? '6vw' : '12vw'
+
     return (
         <div className='flex flex-col gap-4 w-full mx-auto max-w-7xl'>
             <button
                 className={`transition-all duration-300 gap-2 md:gap-4
                 ${fullScreen
                         ? "fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white z-50 p-6 md:p-8"
-                        : "flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary mx-4 sm:mx-6 lg:mx-8 relative"
-                    }`}
+                        : "flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary relative"
+                    } ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}
                 onClick={() => setFullScreen(!fullScreen)}
             >
                 {fullScreen &&
@@ -66,7 +68,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                     <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}'<span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
                     {!fullScreen && clientData?.timezone?.name !== clientData.timezone.country && (<div className='font-extrabold text-xs p-1 absolute -right-4 -top-4 bg-primary text-white rounded-full md:p-2 md:text-xl'>{clientData.timezone.country}</div>)}
                 </div>
-                <time className='font-bold leading-none' style={{ fontSize: fullScreen ? "20vw" : "12vw" }}>
+                <time className='font-bold leading-none' style={{ fontSize }}>
                     {new Intl.DateTimeFormat('tr-TR', {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -77,7 +79,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                 </time>
                 <p className='text-4xl w-full text-right'>{formattedDate}</p>
             </button>
-            <summary className='text-base flex items-center flex-wrap gap-2 justify-end mx-4 max-w-7xl sm:mx-6 lg:mx-8 md:text-2xl'>
+            <summary className={`text-base flex items-center flex-wrap gap-2 justify-end max-w-7xl md:text-2xl ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}>
                 Güneş:
                 <Image src="/icons/sunrise.svg" width={36} height={36} alt="Sunrise Icon" />
                 {initialTime.sunrise}
@@ -85,7 +87,7 @@ export default function LiveClock({ initialTime }: { initialTime: TimeData }) {
                 {initialTime.sunset} ({initialTime.sunsetDifference})
             </summary>
             {!fullScreen && (
-  <ul className="flex gap-3 justify-end flex-wrap mx-4 max-w-7xl sm:mx-6 lg:mx-8">
+  <ul className={`flex gap-3 justify-end flex-wrap max-w-7xl ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}>
     {clientData?.populerCities?.map((city: PopulerCities) => (
       <li
         key={city.name}

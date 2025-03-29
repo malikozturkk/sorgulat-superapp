@@ -27,6 +27,16 @@ export const getRequest = async <T>(
     }
 }
 
+export async function getUserLocation(ip: string) {
+    try {
+        const res = await fetch(`http://ip-api.com/json/${ip}?fields=country,city`);
+        const data = await res.json();
+        return data.city || data.country || "turkiye";
+    } catch {
+        return "turkiye";
+    }
+}
+
 // export const postRequest = async <T>(
 //   url: string,
 //   data?: Record<string, any>,

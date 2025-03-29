@@ -6,6 +6,7 @@ import WorldMap from "react-svg-worldmap";
 interface IPassportMap {
   countries: VisaCountry[]
   counts: VisaCounts | number
+  mapSize?: "sm" | "md" | "lg" | "xl" | "xxl"
 }
 
 export const visaColors: VisaColors = {
@@ -17,8 +18,10 @@ export const visaColors: VisaColors = {
   default: "#cdd0d6",
 };
 
-const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
-  const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl" | "xxl">("sm");
+const visaInfoClassName = "relative before:absolute before:-left-2 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-3 before:rounded-full pl-2 "
+
+const PassportMap: React.FC<IPassportMap> = ({countries, counts, mapSize}) => {
+  const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl" | "xxl">(mapSize || "sm");
   const [selectedType, setSelectedType] = React.useState<keyof VisaColors | "Tümü">("Tümü");
   const [zoom, setZoom] = React.useState(1);
   const [translate, setTranslate] = React.useState({ x: 0, y: 0 });
@@ -41,14 +44,17 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
     : [];
 
     React.useEffect(() => {
+      if (mapSize !== undefined) return; 
+    
       const updateSize = () => {
         setSize(window.innerWidth >= 768 ? "xxl" : "sm");
       };
-  
+    
       updateSize();
       window.addEventListener("resize", updateSize);
       return () => window.removeEventListener("resize", updateSize);
-    }, []);
+    }, [mapSize]); 
+    
 
     const handleMouseDown = (e: React.PointerEvent) => {
       isPanning.current = true;
@@ -192,6 +198,12 @@ const PassportMap: React.FC<IPassportMap> = ({countries, counts}) => {
                   }}
                 />
               </div>
+            </div>
+            <div className="flex items-center w-full justify-center gap-4 md:gap-6 flex-wrap">
+              <span className={`${visaInfoClassName} before:bg-[#2ECC71]`}>Vizesiz</span>
+              <span className={`${visaInfoClassName} before:bg-[#ff69b4]`}>Vizeli</span>
+              <span className={`${visaInfoClassName} before:bg-[#f39c12]`}>Kapıda Vize</span>
+              <span className={`${visaInfoClassName} before:bg-[#646ecb]`}>eTA</span>
             </div>
           </div>
         </>

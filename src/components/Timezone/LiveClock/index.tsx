@@ -77,7 +77,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
                         timeZone: clientData?.timezone.timezone,
                     }).format(currentTime)}
                 </time>
-                <p className='text-4xl w-full text-right'>{formattedDate}</p>
+                <p className='text-lg md:text-4xl w-full text-right'>{formattedDate}</p>
             </button>
             <summary className={`text-base flex items-center flex-wrap gap-2 justify-end max-w-7xl md:text-2xl ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}>
                 Güneş:

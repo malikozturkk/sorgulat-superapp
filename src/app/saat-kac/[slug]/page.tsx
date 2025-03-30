@@ -4,6 +4,7 @@ import { getRequest } from "@/utils/api";
 import TimeDifferenceGraph from "@/components/Timezone/TimeDifferenceGraph";
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
 import AllCitiesByCountry from "@/components/Timezone/AllCitiesByCountry";
+import NotFound from "@/app/not-found";
 
 type Params = Promise<{ slug: string }>;
 
@@ -69,7 +70,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
     }
     catch (e) {
         return (
-            <div>bu adres için saat verisi alınamadı</div>
+            <NotFound />
         )
     }
 }

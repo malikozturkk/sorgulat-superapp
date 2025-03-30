@@ -27,13 +27,13 @@ interface MetadataConfig {
   }
 
 export const defaultMetadata = {
-    title: 'Saat Kaç | Sorgulat',
-    description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
-    robots: "index, follow",
-    keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com',
+    title: 'Sayfa Bulunamadı | Sorgulat',
+    description: 'Aradığınız sayfa bulunamadı. Sorgulat.com ile saat bilgisi, vizesiz ülkeler ve seyahat rehberlerine ulaşabilirsiniz.',
+    robots: "noindex, follow",
+    keywords: '404, sayfa bulunamadı, hata, sorgulat, seyahat rehberi',
     authors: [
         {
-            name: 'Sorgulat Anasayfa',
+            name: 'Sorgulat',
             url: 'https://www.sorgulat.com',
         },
     ],
@@ -44,36 +44,26 @@ export const defaultGenerateMetadata = () => {
     return {
         title: defaultMetadata?.title,
         description: defaultMetadata?.description,
-        robots: "index, follow",
+        robots: "noindex, follow",
         icons: defaultMetadata?.icon,
-        authors: [
-            {
-                name: defaultMetadata?.authors[0]?.name,
-                url: defaultMetadata?.authors[0]?.url,
-            },
-        ],
+        authors: defaultMetadata?.authors,
         openGraph: {
-            title: 'Saat Kaç | Sorgulat',
-            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+            title: 'Sayfa Bulunamadı | Sorgulat',
+            description: 'Aradığınız sayfa bulunamadı. Sorgulat.com ile saat bilgisi, vizesiz ülkeler ve seyahat rehberlerine ulaşabilirsiniz.',
             url: 'https://www.sorgulat.com',
-            images:
-                '/images/open-graph.png',
+            images: '/images/open-graph-404.png',
             type: 'website',
             siteName: 'Sorgulat',
         },
         twitter: {
             card: 'summary_large_image',
-            title: 'Sorgulat | Saat Kaç',
-            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
-            images: '/images/open-graph.png',
+            title: 'Sayfa Bulunamadı | Sorgulat',
+            description: 'Aradığınız sayfa bulunamadı. Sorgulat.com ile saat bilgisi, vizesiz ülkeler ve seyahat rehberlerine ulaşabilirsiniz.',
+            images: '/images/open-graph-404.png',
             site: '@Sorgulat',
         },
         alternates: {
-            canonical: "/images/open-graph.png",
-            types: {
-                "application/opensearchdescription+xml": "/opensearch.xml",
-                "application/rss+xml": "https://sorgulat.com/rss.xml",
-            },
+            canonical: 'https://www.sorgulat.com', 
         },
     }
 }

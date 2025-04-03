@@ -1,8 +1,8 @@
 'use client';
 
-import { SortTypes } from '@/app/blog/page';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { SortTypes } from '../blog.types';
 
 const sortOptions: { label: string; value: SortTypes }[] = [
     { label: 'Eklenme Tarihi (Yeniden Eskiye)', value: 'createdAt:desc' },

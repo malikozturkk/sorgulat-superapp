@@ -106,3 +106,10 @@ export interface TravelArticle {
 export interface TravelData {
   data: TravelArticle[];
 }
+
+
+export type SortTypes = "createdAt:desc" | "createdAt:asc" | "title:asc" | "title:desc";
+
+export type SearchParams = { 
+    searchParams: Promise<{ page?: string, sort?: SortTypes }> 
+}

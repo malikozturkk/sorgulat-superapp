@@ -1,7 +1,7 @@
 import { getRequest } from '@/utils/api';
 import { generateMetadata } from '../layout';
 import PopularCard from '@/components/Blog/PopularCard';
-import { TravelArticle } from '@/components/Blog/blog.types';
+import { SearchParams, TravelArticle } from '@/components/Blog/blog.types';
 import LargeBox from '@/components/Blog/ArticleBox/LargeBox';
 import Pagination from '@/components/Blog/Pagination';
 import FilterSortControls from '@/components/Blog/FilterSortControls';
@@ -9,12 +9,6 @@ import FilterSortControls from '@/components/Blog/FilterSortControls';
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'blog' } });
 };
-
-export type SortTypes = "createdAt:desc" | "createdAt:asc" | "title:asc" | "title:desc";
-
-type SearchParams = { 
-    searchParams: Promise<{ page?: string, sort?: SortTypes }> 
-}
 
 export default async function Blog({ searchParams }: SearchParams) {
     const { page: defaultPage, sort = 'createdAt:desc' } = await searchParams;

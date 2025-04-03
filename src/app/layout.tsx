@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { defaultMetadata, metadataConfig } from "./metadataConfig";
 import AdSense from "@/components/AdSense";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 export default function RootLayout({
   children,
@@ -18,6 +19,19 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
           rel="stylesheet"
         />
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-1VTVJYYXQR"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-1VTVJYYXQR');
+        `}
+      </Script>
       </head>
       <body className="font-sans">
         <Navbar />

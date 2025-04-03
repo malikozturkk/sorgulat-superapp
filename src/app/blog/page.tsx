@@ -25,7 +25,7 @@ export default async function Blog({ searchParams }: SearchParams) {
     const { data, meta } = getAllPassport;
     const { page, pageCount } = meta.pagination;
 
-    const shuffledData: TravelArticle[] = data.sort(() => Math.random() - 0.5)
+    const shuffledData: TravelArticle[] = [...data].sort(() => Math.random() - 0.5)
     const slicedRandom: TravelArticle[] = sliceData(shuffledData, 5)
 
     return (

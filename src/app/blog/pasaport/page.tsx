@@ -5,6 +5,7 @@ import { SearchParams, TravelArticle } from '@/components/Blog/blog.types';
 import LargeBox from '@/components/Blog/ArticleBox/LargeBox';
 import Pagination from '@/components/Blog/Pagination';
 import FilterSortControls from '@/components/Blog/FilterSortControls';
+import { sliceData } from '@/utils/generator';
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport-blog' } });
@@ -23,6 +24,9 @@ export default async function Blog({ searchParams }: SearchParams) {
 
     const { data, meta } = getAllPassport;
     const { page, pageCount } = meta.pagination;
+
+    const shuffledData: TravelArticle[] = data.sort(() => Math.random() - 0.5)
+    const slicedRandom: TravelArticle[] = sliceData(shuffledData, 5)
 
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col pb-6 md:pb-12 gap-8">
@@ -43,7 +47,7 @@ export default async function Blog({ searchParams }: SearchParams) {
                             <Pagination currentPage={page} totalPages={pageCount} />
                         </div>
                         <div className='lg:w-1/3 pb-8'>
-                            <PopularCard data={data} />
+                            <PopularCard slicedRandom={slicedRandom} />
                         </div>
                     </div>
                 </>

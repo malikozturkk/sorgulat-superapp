@@ -1,10 +1,8 @@
 import { formatDate } from "@/utils/formatter"
-import { sliceData } from "@/utils/generator"
 import Link from "next/link"
 import { TravelArticle, TravelData } from "../blog.types"
 
-const PopularCard = ({data}: TravelData) => {
-    const slicedPassport = sliceData(data, 5)
+const PopularCard = ({ slicedRandom }: TravelData) => {
     return (
         <div className='sticky top-4 md:top-6 space-y-6'>
             <div className="bg-white rounded-lg shadow-sm p-5">
@@ -12,7 +10,7 @@ const PopularCard = ({data}: TravelData) => {
                 <div className="text-lg font-semibold text-gray-900">Öne Çıkan Yazılar</div>
             </div>
             <div className="space-y-4">
-                {slicedPassport.map((slicedPassport: TravelArticle, index: number) => (
+                {slicedRandom.map((slicedPassport: TravelArticle, index: number) => (
                     <div className="flex items-start" key={slicedPassport.slug + slicedPassport.id}>
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primaryLight text-primary flex items-center justify-center text-xs font-medium mr-3 mt-0.5">
                     {index + 1}

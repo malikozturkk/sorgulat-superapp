@@ -104,7 +104,7 @@ export interface TravelArticle {
 }
 
 export interface TravelData {
-  data: TravelArticle[];
+  slicedRandom: TravelArticle[];
 }
 
 

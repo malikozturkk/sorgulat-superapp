@@ -15,6 +15,10 @@ export async function GET() {
             "https://sorgulat.com/iletisim",
             "https://sorgulat.com/ip-sorgulama",
             "https://sorgulat.com/pasaport",
+            "https://sorgulat.com/pasaport/vizesiz-seyahat",
+            "https://sorgulat.com/pasaport/vizeli-seyahat",
+            "https://sorgulat.com/pasaport/kapida-vize-seyahat",
+            "https://sorgulat.com/pasaport/eta-seyahat",
             "https://sorgulat.com/blog",
             "https://sorgulat.com/blog/pasaport",
         ];

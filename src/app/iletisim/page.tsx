@@ -91,9 +91,9 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                             </div>
                         )}
                         <form className='flex flex-col gap-4' action="https://formsubmit.co/malikozturk975@gmail.com" method="POST">
-                            <input type='text' name='name' placeholder="İsim Soyisim" className='p-3 border border-gray-200 rounded-lg' />
-                            <input type='email' name='email' placeholder="Email" className='p-3 border border-gray-200 rounded-lg' />
-                            <textarea name='message' placeholder="Mesaj" className='p-3 border border-gray-200 rounded-lg h-28' />
+                            <input type='text' name='name' placeholder="İsim Soyisim" className='p-3 border border-gray-200 rounded-lg' required />
+                            <input type='email' name='email' placeholder="Email" className='p-3 border border-gray-200 rounded-lg' required />
+                            <textarea name='message' placeholder="Mesaj" className='p-3 border border-gray-200 rounded-lg h-28' required />
 
                             <input type="hidden" name="_captcha" value="false" />
                             <input type="hidden" name="_next" value="https://sorgulat.com/iletisim?success=true" />

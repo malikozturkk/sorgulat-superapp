@@ -8,7 +8,8 @@ export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'iletisim' } });
 };
 
-export default async function Contact() {
+export default async function Contact({ searchParams }: { searchParams: Promise<{ success?: string }> }) {
+    const { success } = await searchParams;
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-1 pb-6 md:pb-12 md:gap-2">
             <h1 className='text-2xl md:text-4xl font-extrabold mb-2 md:mb-3'>Bize Ulaşın</h1>
@@ -84,10 +85,19 @@ export default async function Contact() {
                 <div className='border border-gray-100 bg-white p-4 rounded-lg w-full md:w-1/2 shadow-md'>
                     <div className='flex flex-col gap-4'>
                         <h2 className='text-lg font-semibold'>İletişim Formu</h2>
-                        <form className='flex flex-col gap-4'>
+                        {success === 'true' && (
+                            <div className="bg-green-100 text-green-700 p-3 rounded-lg border border-green-200 text-sm">
+                                Mesajınız başarıyla gönderildi. Teşekkür ederiz!
+                            </div>
+                        )}
+                        <form className='flex flex-col gap-4' action="https://formsubmit.co/malikozturk975@gmail.com" method="POST">
                             <input type='text' name='name' placeholder="İsim Soyisim" className='p-3 border border-gray-200 rounded-lg' />
                             <input type='email' name='email' placeholder="Email" className='p-3 border border-gray-200 rounded-lg' />
                             <textarea name='message' placeholder="Mesaj" className='p-3 border border-gray-200 rounded-lg h-28' />
+
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_next" value="https://sorgulat.com/iletisim?success=true" />
+
                             <button className="bg-primary text-white px-4 py-2 rounded h-12 w-full">
                                 Gönder
                             </button>

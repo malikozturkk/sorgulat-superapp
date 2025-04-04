@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
             <p className="text-base leading-relaxed text-[#4b5563] mt-7">
               <Link className="text-primary font-bold hover:opacity-80 duration-150" href="/" aria-label="Visit Sorgulat Website">
                 Sorgulat.com
-              </Link>, kullanıcılar için dünya saatleri ve diğer çeşitli hizmetler sunan bir superapp'tir.
+              </Link>, dünya saatlerini anlık takip edebileceğiniz, vize durumlarını harita üzerinden görebileceğiniz ve seyahat rehberleriyle dolu blog yazılarına ulaşabileceğiniz pratik bir bilgi kaynağıdır.
             </p>
             <ul className="flex items-center space-x-3 mt-9">
               <li>

@@ -3,6 +3,42 @@ import Link from "next/link";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
+const footerData = [
+  {
+    title: "Saat Kaç",
+    url: "/saat-kac",
+    subItems: [
+      { title: "İstanbul Saat Kaç", url: "/saat-kac/istanbul" },
+      { title: "New York Saat Kaç", url: "/saat-kac/new-york" },
+      { title: "Paris Saat Kaç", url: "/saat-kac/paris" },
+      { title: "Tokyo Saat Kaç", url: "/saat-kac/tokyo" },
+      { title: "Londra Saat Kaç", url: "/saat-kac/londra" },
+      { title: "Dubai Saat Kaç", url: "/saat-kac/dubai" }
+    ]
+  },
+  {
+    title: "Pasaport",
+    url: "/pasaport",
+    subItems: [
+      { title: "Vizesiz Ülkeler", url: "/pasaport/vizesiz-seyahat" },
+      { title: "Vize Gereken Ülkeler", url: "/pasaport/vizeli-seyahat" },
+      { title: "Kapıda Vize Veren Ülkeler", url: "/pasaport/kapida-vize-seyahat" },
+      { title: "Elektronik Vize Veren Ülkeler", url: "/pasaport/eta-seyahat" }
+    ]
+  },
+  {
+    title: "Diğer",
+    subItems: [
+      { title: "Sorgulat Blog", url: "/blog" },
+      { title: "Ip Sorgulama", url: "/ip-sorgulama" },
+      { title: "Sorgulat Hakkında", url: "/hakkinda" },
+      { title: "İletişim", url: "/iletisim" },
+      { title: "Gizlilik", url: "/gizlilik" }
+    ]
+  }
+];
+
+
 const Footer: React.FC = () => {
   return (
     <footer className="py-10 bg-white sm:pt-16 lg:pt-24">
@@ -56,78 +92,32 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
-
-          <div>
-            <p className="text-sm font-semibold text-primary uppercase">Şirket</p>
-            <ul className="mt-6 space-y-4">
-              <li>
-                <Link
-                  title="İletişim"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/iletisim"
-                  aria-label="Visit Contact Page"
-                >
-                  İletişim
-                </Link>
-              </li>
-              <li>
-                <Link
-                  title="Gizlilik"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/gizlilik"
-                  aria-label="Visit Privacy Policy"
-                >
-                  Gizlilik
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold text-primary uppercase">Sunduklarımız</p>
-            <ul className="mt-6 space-y-4">
-              <li>
-                <Link
-                  title="Saat Kaç"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/saat-kac"
-                  aria-label="Visit Saat Kaç"
-                >
-                  Saat Kaç
-                </Link>
-              </li>
-              <li>
-                <Link
-                  title="Ip Sorgulama"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/ip-sorgulama"
-                  aria-label="Visit Ip Sorgulama"
-                >
-                  Ip Sorgulama
-                </Link>
-              </li>
-              <li>
-                <Link
-                  title="Pasaport"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/pasaport"
-                  aria-label="Visit Pasaport"
-                >
-                  Pasaport
-                </Link>
-              </li>
-              <li>
-                <Link
-                  title="Blog"
-                  className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
-                  href="/blog"
-                  aria-label="Visit Blog"
-                >
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {footerData.map((data) => (
+            <div key={data.title}>
+              <Link
+                title={data.title}
+                className="flex text-sm font-semibold text-primary uppercase transition-all duration-200 hover:text-red focus:text-red"
+                href={data.url || "#"}
+                aria-label={`Visit ${data.title}`}
+              >
+                  {data.title}
+              </Link>
+              <ul className="mt-6 space-y-4">
+                {data.subItems.map((subItem) => (
+                  <li key={subItem.title}>
+                    <Link
+                      title={subItem.title}
+                      className="flex text-base text-black transition-all duration-200 hover:text-red focus:text-red"
+                      href={subItem.url}
+                      aria-label={`Visit ${subItem.title}`}
+                    >
+                      {subItem.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </footer>

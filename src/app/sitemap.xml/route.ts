@@ -13,6 +13,7 @@ export async function GET() {
             "https://sorgulat.com/saat-kac",
             "https://sorgulat.com/gizlilik",
             "https://sorgulat.com/iletisim",
+            "https://sorgulat.com/hakkinda",
             "https://sorgulat.com/ip-sorgulama",
             "https://sorgulat.com/pasaport",
             "https://sorgulat.com/pasaport/vizesiz-seyahat",

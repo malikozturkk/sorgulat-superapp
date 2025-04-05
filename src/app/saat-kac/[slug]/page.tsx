@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Params }) {
                 description: `Anlık olarak ${name} saatini öğrenin, popüler şehirlerle saat farkını keşfedin ve güneşin doğuş/batış saatlerini görüntüleyin.`,
                 url: `https://www.sorgulat.com/saat-kac/${data.timezone.slug}`,
                 images:
-                    '/images/detail-open-graph.png',
+                    '/images/openGraph/time-detail.png',
                 type: 'website',
                 siteName: 'Sorgulat',
             },
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }) {
                 card: 'summary_large_image',
                 title: `${name} Saat Kaç | Sorgulat`,
                 description: `Anlık olarak ${name} saatini öğrenin, popüler şehirlerle saat farkını keşfedin ve güneşin doğuş/batış saatlerini görüntüleyin.`,
-                images: '/images/detail-open-graph.png',
+                images: '/images/openGraph/time-detail.png',
                 site: '@Sorgulat',
             },
         }

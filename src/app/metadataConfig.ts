@@ -51,7 +51,7 @@ export const defaultGenerateMetadata = () => {
             title: 'Sayfa Bulunamadı | Sorgulat',
             description: 'Aradığınız sayfa bulunamadı. Sorgulat.com ile saat bilgisi, vizesiz ülkeler ve seyahat rehberlerine ulaşabilirsiniz.',
             url: 'https://www.sorgulat.com',
-            images: '/images/open-graph-404.png',
+            images: '/images/openGraph/404.png',
             type: 'website',
             siteName: 'Sorgulat',
         },
@@ -59,11 +59,11 @@ export const defaultGenerateMetadata = () => {
             card: 'summary_large_image',
             title: 'Sayfa Bulunamadı | Sorgulat',
             description: 'Aradığınız sayfa bulunamadı. Sorgulat.com ile saat bilgisi, vizesiz ülkeler ve seyahat rehberlerine ulaşabilirsiniz.',
-            images: '/images/open-graph-404.png',
+            images: '/images/openGraph/404.png',
             site: '@Sorgulat',
         },
         alternates: {
-            canonical: 'https://www.sorgulat.com', 
+            canonical: '/', 
         },
     }
 }
@@ -85,7 +85,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             title: "Anasayfa | Sorgulat",
             description: "Dünyanın saatini, vizelerini ve seyahat rehberlerini keşfedin! Anlık saat bilgileri, vize gereklilikleri ve kapsamlı seyahat rehberleriyle yolculuğunuzu planlayın.",
             url: "https://www.sorgulat.com",
-            images: "/images/open-graph-home.png",
+            images: "/images/openGraph/home.png",
             type: "website",
             siteName: "Sorgulat"
         },
@@ -93,7 +93,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             card: "summary_large_image",
             title: "Anasayfa | Sorgulat",
             description: "Dünyanın saatini, vizelerini ve seyahat rehberlerini keşfedin! Anlık saat bilgileri, vize gereklilikleri ve kapsamlı seyahat rehberleriyle yolculuğunuzu planlayın.",
-            images: "/images/open-graph-home.png",
+            images: "/images/openGraph/home.png",
             site: "@Sorgulat"
         },
         alternates: {
@@ -129,6 +129,29 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             },
         ],
         icon: '/favicon.ico',
+        openGraph: {
+            title: 'Gizlilik Koşulları | Sorgulat',
+            description: 'Kullanım şartları / Gizlilik politikası / Reklam Politikası | Sorgulat',
+            url: 'https://www.sorgulat.com/gizlilik',
+            images:
+              '/images/openGraph/privacy.png',
+            type: 'website',
+            siteName: 'Sorgulat',
+          },
+          twitter: {
+            card: 'summary_large_image',
+            title: 'Gizlilik Koşulları | Sorgulat',
+            description: 'Kullanım şartları / Gizlilik politikası / Reklam Politikası | Sorgulat',
+            images: '/images/openGraph/privacy.png',
+            site: '@Sorgulat',
+          },
+          alternates: {
+            canonical: "/gizlilik",
+            types: {
+              "application/opensearchdescription+xml": "/opensearch.xml",
+              "application/rss+xml": "https://sorgulat.com/rss.xml",
+            },
+          },
     },
     '/iletisim': {
         title: 'İletişim | Sorgulat',
@@ -142,6 +165,29 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             },
         ],
         icon: '/favicon.ico',
+        openGraph: {
+            title: 'İletişim | Sorgulat',
+            description: 'İletişim | Sorgulat',
+            url: 'https://www.sorgulat.com/iletisim',
+            images:
+              '/images/openGraph/contact.png',
+            type: 'website',
+            siteName: 'Sorgulat',
+          },
+          twitter: {
+            card: 'summary_large_image',
+            title: 'İletişim | Sorgulat',
+            description: 'İletişim | Sorgulat',
+            images: '/images/openGraph/contact.png',
+            site: '@Sorgulat',
+          },
+          alternates: {
+            canonical: "/iletisim",
+            types: {
+              "application/opensearchdescription+xml": "/opensearch.xml",
+              "application/rss+xml": "https://sorgulat.com/rss.xml",
+            },
+          },
     },
     "/ip-sorgulama": {
         title: "IP Sorgulama | Sorgulat",
@@ -160,7 +206,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin. Hangi şehirde olduğunuzu bulun ve IP bilgilerinizi analiz edin.',
             url: 'https://www.sorgulat.com/ip-sorgulama',
             images:
-              '/images/open-graph-ip.png',
+              '/images/openGraph/ip.png',
             type: 'website',
             siteName: 'Sorgulat',
           },
@@ -168,11 +214,11 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             card: 'summary_large_image',
             title: 'IP Sorgulama | Sorgulat',
             description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin.',
-            images: '/images/open-graph-ip.png',
+            images: '/images/openGraph/ip.png',
             site: '@Sorgulat',
           },
           alternates: {
-            canonical: "/images/open-graph-ip.png",
+            canonical: "/ip-sorgulama",
             types: {
               "application/opensearchdescription+xml": "/opensearch.xml",
               "application/rss+xml": "https://sorgulat.com/rss.xml",
@@ -195,7 +241,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             title: "Pasaport Vize Durumu | Sorgulat",
             description: "Türkiye pasaportu ile dünya genelindeki vize durumlarını kolayca öğrenin. Vizesiz, vize gerekli, kapıda vize ve eTA bilgilerini görün.",
             url: "https://www.sorgulat.com/pasaport",
-            images: "/images/open-graph-passport.png",
+            images: "/images/openGraph/passport.png",
             type: "website",
             siteName: "Sorgulat"
         },
@@ -203,7 +249,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             card: "summary_large_image",
             title: "Pasaport Vize Durumu | Sorgulat",
             description: "Türkiye pasaportu ile dünya genelindeki vize durumlarını kolayca öğrenin.",
-            images: "/images/open-graph-passport.png",
+            images: "/images/openGraph/passport.png",
             site: "@Sorgulat"
         },
         alternates: {
@@ -230,7 +276,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             title: "Blog | Sorgulat",
             description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
             url: "https://www.sorgulat.com/blog",
-            images: "/images/open-graph-blog.png",
+            images: "/images/openGraph/blog.png",
             type: "website",
             siteName: "Sorgulat"
         },
@@ -238,7 +284,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             card: "summary_large_image",
             title: "Blog | Sorgulat",
             description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
-            images: "/images/open-graph-blog.png",
+            images: "/images/openGraph/blog.png",
             site: "@Sorgulat"
         },
         alternates: {
@@ -265,7 +311,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             title: "Pasaport Blog Rehberi | Sorgulat",
             description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
             url: "https://www.sorgulat.com/blog",
-            images: "/images/open-graph-blog.png",
+            images: "/images/openGraph/blog.png",
             type: "website",
             siteName: "Sorgulat"
         },
@@ -273,15 +319,50 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             card: "summary_large_image",
             title: "Pasaport Blog Rehberi | Sorgulat",
             description: "Vize, pasaport ve seyahat rehberleri hakkında en güncel içeriklere ulaşın.",
-            images: "/images/open-graph-blog.png",
+            images: "/images/openGraph/blog.png",
             site: "@Sorgulat"
         },
         alternates: {
-            canonical: "/blog",
+            canonical: "/pasaport-blog",
             types: {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
         }
     },
+    "/hakkinda": {
+        title: "Sorgulat Hakkında | Sorgulat",
+        description: "Sorgulat; kullanıcılarına vize, pasaport, seyahat rehberleri ve ülke bilgileri gibi konularda güncel ve doğru bilgiler sunmayı amaçlayan bir dijital bilgi platformudur.",
+        robots: "index, follow",
+        keywords: "Sorgulat hakkında, vize platformu, seyahat bilgileri, pasaport rehberi, ülke rehberleri, dijital seyahat asistanı, sorgulat.com",
+        authors: [
+            {
+                name: "Sorgulat Ekibi",
+                url: "https://www.sorgulat.com/hakkinda"
+            }
+        ],
+        icon: "/favicon.ico",
+        openGraph: {
+            title: "Sorgulat Hakkında | Sorgulat",
+            description: "Vize ve seyahat bilgilerini güvenilir kaynaklardan derleyerek kullanıcılarına en doğru verileri sunan Sorgulat'ı yakından tanıyın.",
+            url: "https://www.sorgulat.com/hakkinda",
+            images: "/images/openGraph/about.png",
+            type: "website",
+            siteName: "Sorgulat"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Sorgulat Hakkında | Sorgulat",
+            description: "Vize ve seyahat bilgilerini güvenilir kaynaklardan derleyerek kullanıcılarına en doğru verileri sunan Sorgulat'ı yakından tanıyın.",
+            images: "/images/openGraph/about.png",
+            site: "@Sorgulat"
+        },
+        alternates: {
+            canonical: "/hakkinda",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml"
+            }
+        }
+    }
 }

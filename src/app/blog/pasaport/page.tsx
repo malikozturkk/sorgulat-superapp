@@ -6,6 +6,7 @@ import LargeBox from '@/components/Blog/ArticleBox/LargeBox';
 import Pagination from '@/components/Blog/Pagination';
 import FilterSortControls from '@/components/Blog/FilterSortControls';
 import { sliceData } from '@/utils/generator';
+import NotFound from '@/app/not-found';
 
 export const metadata = async () => {
     return await generateMetadata({ params: { slug: 'pasaport-blog' } });
@@ -53,7 +54,7 @@ export default async function Blog({ searchParams }: SearchParams) {
                     </div>
                 </>
             :  
-                <div>404</div>
+                <NotFound />
             }
         </div>
     );

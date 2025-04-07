@@ -4,13 +4,55 @@ export function padZero(num: number): string {
     return num.toString().padStart(2, '0');
 }
 
-export const getLocationSuffix = (name: string) => {
-    const vowels = "aeıioöuü";
-    const deVowels = "eiöü";
-    const lastVowel = [...name].reverse().find(char => vowels.includes(char.toLowerCase()));
+export const getLocationSuffix = (name: string): string => {
+  const vowels = "aeıioöuü";
+  const deVowels = "eiöü";
+  const hardConsonants = "fstkçşhp";
 
-    return lastVowel && deVowels.includes(lastVowel) ? "de" : "da";
+  const lastChar = name.slice(-1).toLowerCase();
+  const lastVowel = [...name].reverse().find(char => vowels.includes(char.toLowerCase()));
+
+  let base = lastVowel && deVowels.includes(lastVowel) ? "'de" : "'da";
+
+  if (!vowels.includes(lastChar) && hardConsonants.includes(lastChar)) {
+      base = base.replace("d", "t"); 
+  }
+
+  return base;
 };
+
+export function parseFromTo(slug: string): { from: string; to: string } | null {
+  const match = slug.match(/^from-(.+)-to-(.+)$/);
+  if (!match) return null;
+  const from = match[1];
+  const to = match[2];
+  return { from, to };
+}
+
+export function formatDateTime(datetime: string, locale: string, timezone: string) {
+  const date = new Date(datetime);
+  const day = new Intl.DateTimeFormat(locale, { weekday: "long", timeZone: timezone }).format(date);
+  const dayFormatted = day.charAt(0).toUpperCase() + day.slice(1);
+  const dateFormatted = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "long",
+    timeZone: timezone
+  }).format(date);
+
+  const timeFormatted = new Intl.DateTimeFormat(locale, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: timezone
+  }).format(date);
+
+  const year = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    timeZone: timezone
+  }).format(date);
+
+  return { timeFormatted, dateFormatted, dayFormatted, year };
+}
 
 
 export const formatDate = (dateString: string) => {

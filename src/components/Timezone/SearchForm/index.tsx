@@ -1,4 +1,5 @@
 "use client";
+import { SearchResponse } from "@/app/saat-kac/types/Timezone.types";
 import { handleClickOutside } from "@/hooks/useClickOutside";
 import useDebounce from "@/hooks/useDebounce";
 import { getRequest } from "@/utils/api";
@@ -6,14 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-
-interface SearchResponse {
-    name: string;
-    slug: string;
-    time: string;
-    timezone: string;
-    error?: string
-}
 
 export default function SearchForm() {
     const [showAutoComplete, setShowAutoComplete] = useState<boolean>(false)

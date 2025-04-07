@@ -59,3 +59,11 @@ export interface DifferenceData {
     locationText: string;
     destinations: Destination[];
 }
+
+export interface SearchResponse {
+    name: string;
+    slug: string;
+    time: string;
+    timezone: string;
+    error?: string
+}

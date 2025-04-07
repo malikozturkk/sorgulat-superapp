@@ -66,14 +66,14 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
 
         return (
             <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-1 pb-6 md:pb-12 md:gap-2">
-                <h1 className="text-4xl font-medium">
+                <h1 className="text-2xl md:text-4xl font-medium">
                     <span>
                         <Link href={`/saat-kac/${from.slug}`} target="_blank" className="border-b-2 border-gray-300 font-bold duration-150 hover:border-primary">{from.name}</Link> ile <Link href={`/saat-kac/${to.slug}`} target="_blank" className="border-b-2 border-gray-300 font-bold duration-150 hover:border-primary">{to.name}</Link> 
                     </span> arasındaki saat farkı
                 </h1>
 
                 <div className="bg-white rounded-2xl shadow p-3 md:p-6 w-full text-center mt-4">
-                    <h2 className="text-3xl font-bold mb-6">{from.name} <span className="text-gray-500">vs</span> {to.name}</h2>
+                    <h2 className="text-xl md:text-3xl font-bold mb-6">{from.name} <span className="text-gray-500">vs</span> {to.name}</h2>
                     <div className="flex items-center justify-center gap-4 md:gap-12 mb-6">
                         <div className="flex flex-col items-center w-1/3">
                             <div className="w-12 h-12 md:w-24 md:h-24 rounded-full border-4 border-blue-500 flex items-center justify-center text-sm md:text-xl font-bold">

@@ -62,6 +62,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                         </div>
                     );
                 })}
+                <Link href="/saat-kac/fark" className="px-2 py-3 md:p-4 border border-white rounded-lg text-sm md:text-xl block w-full text-center md:w-fit mt-5 duration-150 hover:bg-white hover:text-[#222]">Diğer zaman dilimleriyle karşılaştır</Link>
             </div>
             <div className="mx-auto max-w-7xl p-4 pb-0 sm:p-6 sm:pb-0 lg:p-8 lg:pb-0">
                 <h2 className="mt-5 mb-3 md:mt-10 md:mb-5 text-4xl font-extrabold text-primary leading-10">

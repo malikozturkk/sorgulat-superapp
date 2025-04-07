@@ -7,6 +7,7 @@ import Link from "next/link";
 import VerticalBox from "@/components/Blog/ArticleBox/VerticalBox";
 import { TravelArticle } from "@/components/Blog/blog.types";
 import SearchForm from "@/components/Timezone/SearchForm";
+import CompareForm from "@/components/Timezone/CompareForm";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,14 @@ export default async function Home() {
               <PassportMap countries={countries} counts={counts} mapSize="lg" />
             </div>
             <Link href="/pasaport" target="_blank" className="bg-primary text-white rounded h-12 flex items-center justify-center mt-4 md:mt-8 duration-150 hover:opacity-80">Daha Fazla Bilgi</Link>
+          </div>
+        </div>
+
+        <div className="border border-gray-200 rounded-lg p-4 w-full flex-1 flex items-stretch justify-between flex-col">
+          <div className="w-full">
+            <h1 className='text-lg md:text-2xl font-extrabold mb-2 md:mb-4'>Saat Farkı Bul</h1>
+            <p className="mb-2 md:mb-4 text-sm md:text-lg">İki şehir seçerek, aralarındaki saat farkını öğrenin!</p>
+            <CompareForm />
           </div>
         </div>
 

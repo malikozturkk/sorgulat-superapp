@@ -4,6 +4,7 @@ import LiveClock from "@/components/Timezone/LiveClock";
 import RandomItems from "@/components/Timezone/RandomItems";
 import { generateMetadata } from '../layout'
 import { headers } from 'next/headers'
+import CompareForm from "@/components/Timezone/CompareForm";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,10 @@ export default async function WhatTime() {
         return (
             <div className="flex flex-col items-center gap-5 md:gap-10">
                 <LiveClock initialTime={getUserData} />
+                <div className="w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col pb-6 md:pb-12 gap-8">
+                    <h1 className="text-3xl font-bold">Seçeceğiniz iki şehir arasındaki saat farkını bulun</h1>
+                    <CompareForm />
+                </div>
                 <RandomItems getCitiesTimezones={getCitiesTimezones} getCountriesTimezones={getCountriesTimezones} />
             </div>
         );

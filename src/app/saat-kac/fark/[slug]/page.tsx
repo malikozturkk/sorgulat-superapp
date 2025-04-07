@@ -151,7 +151,7 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                         ))}
                     </tbody>
                 </table>
-                <h1 className="text-3xl font-bold mt-5">Farklı Şehir veya Ülke Ara</h1>
+                <h1 className="text-3xl font-bold mt-8">Farklı Şehir veya Ülke Ara</h1>
                 <CompareForm />
             </div>
         );

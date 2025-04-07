@@ -183,7 +183,7 @@ const CompareForm = () => {
           <button
             type="button"
             onClick={handleExchange}
-            className="absolute -right-5 p-2 top-2.5 rounded-full bg-gray-200 z-50"
+            className="absolute -right-6 p-2 top-2.5 rounded-full bg-gray-100 border border-gray-200 z-50 hidden sm:block"
           >
             <FaExchangeAlt className="w-3 h-3" />
           </button>

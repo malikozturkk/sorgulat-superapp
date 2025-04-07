@@ -1,6 +1,11 @@
+import { generateMetadata } from "@/app/layout";
 import NotFound from "@/app/not-found";
 import CompareForm from "@/components/Timezone/CompareForm";
 import { FaRegClock } from "react-icons/fa";
+
+export const metadata = async () => {
+    return await generateMetadata({ params: { slug: 'fark' } })
+}
 
 export default async function CompareTime() {
     try {

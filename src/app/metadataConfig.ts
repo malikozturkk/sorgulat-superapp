@@ -364,5 +364,40 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
         }
+    },
+    '/fark': {
+        title: "Saat Farkı Hesapla | Sorgulat",
+        description: "Seçtiğiniz şehirler veya ülkeler arasındaki anlık saat farkını hesaplayın. Gelecekteki saat farklarıyla ilgili bilgileri öğrenin.",
+        robots: "index, follow",
+        keywords: "saat farkı, saat hesapla, anlık saat farkı, zaman farkı, saat farkı hesaplama, saat farkı sorgula, zaman dilimi, zaman dilimi farkı, sorgulat.com, saat, şehir saati, ülke saati, zaman farkı, compare saat",
+        authors: [
+            {
+                name: "Sorgulat",
+                url: "https://sorgulat.com/saat-kac/fark",
+            }
+        ],
+        icon: "/favicon.ico",
+        openGraph: {
+            title: "Saat Farkı Hesapla | Sorgulat",
+            description: "Seçtiğiniz şehirler veya ülkeler arasındaki anlık saat farkını öğrenin.",
+            url: "https://sorgulat.com/saat-kac/fark",
+            images: "/images/openGraph/difference.png",
+            type: "website",
+            siteName: "Sorgulat"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Saat Farkı Hesapla | Sorgulat",
+            description: "Seçtiğiniz şehirler veya ülkeler arasındaki saat farkını hesaplayın.",
+            images: "/images/openGraph/difference.png",
+            site: "@Sorgulat"
+        },
+        alternates: {
+            canonical: "/fark",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml"
+            }
+        }
     }
 }

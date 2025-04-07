@@ -27,6 +27,17 @@ const footerData = [
     ]
   },
   {
+    title: "Saat Farkı",
+    url: "/saat-kac/fark",
+    subItems: [
+      { title: "İstanbul - New York Saat Farkı", url: "/saat-kac/fark/from-istanbul-to-new-york" },
+      { title: "İstanbul - Paris Saat Farkı", url: "/saat-kac/fark/from-istanbul-to-paris" },
+      { title: "İstanbul - Tokyo Saat Farkı", url: "/saat-kac/fark/from-istanbul-to-tokyo" },
+      { title: "İstanbul - Londra Saat Farkı", url: "/saat-kac/fark/from-istanbul-to-londra" },
+      { title: "İstanbul - Dubai Saat Farkı", url: "/saat-kac/fark/from-istanbul-to-dubai" },
+    ]
+  },
+  {
     title: "Diğer",
     subItems: [
       { title: "Sorgulat Blog", url: "/blog" },

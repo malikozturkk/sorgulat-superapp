@@ -9,8 +9,9 @@ const Navbar = () => {
     const itemStyle = "text-base font-medium text-black transition-all duration-200 hover:text-primary focus:text-primary"
     const items = [
         { href: "/", title: "Anasayfa" },
-        { href: "/saat-kac", title: "Saat Kaç ?" },
+        { href: "/saat-kac", title: "Saat Kaç" },
         { href: "/pasaport", title: "Pasaport" },
+        { href: "/saat-kac/fark", title: "Saat Farkı" },
         { href: "/blog", title: "Blog" },
     ];
     return (

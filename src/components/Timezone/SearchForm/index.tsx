@@ -92,7 +92,7 @@ export default function SearchForm() {
                                         minute: "2-digit",
                                         hourCycle: "h23",
                                         timeZone: item.timezone
-                                    }).format(new Date(item.time))}
+                                    }).format(new Date(item?.time || "2025-04-08T22:41:23+03:00"))}
                                 </time>
                             </Link>
                         ))}
@@ -148,7 +148,7 @@ export default function SearchForm() {
                                         minute: "2-digit",
                                         hourCycle: "h23",
                                         timeZone: item.timezone
-                                    }).format(new Date(item.time))}
+                                    }).format(new Date(item?.time || "2025-04-08T22:41:23+03:00"))}
                                 </time>
                             </Link>
                         ))}

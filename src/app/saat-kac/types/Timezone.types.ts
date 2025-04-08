@@ -63,7 +63,7 @@ export interface DifferenceData {
 export interface SearchResponse {
     name: string;
     slug: string;
-    time: string;
-    timezone: string;
+    time?: string;
+    timezone?: string;
     error?: string
 }

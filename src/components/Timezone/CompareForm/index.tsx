@@ -163,8 +163,38 @@ const CompareForm = () => {
     window.location.pathname = `/saat-kac/fark/from-${slugs.from}-to-${slugs.to}`;
   };
 
-  const renderInput = (type: keyof FormValues, label: string, placeholder: string) => (
-    <div className="relative w-full">
+  const handleFocus = (type: keyof FormValues) => {
+    setShowAuto((prev) => ({ ...prev, [type]: true }));
+  };
+
+  const renderInput = (type: keyof FormValues, label: string, placeholder: string) => {
+    const popularCities: { [key in keyof FormValues]: SearchResponse[] } = {
+      from: [
+        { name: "İstanbul", slug: "istanbul" },
+        { name: "Ankara", slug: "ankara" },
+        { name: "Antalya", slug: "antalya" },
+        { name: "Munih", slug: "munih" },
+        { name: "New York", slug: "new-york" },
+        { name: "Paris", slug: "paris" },
+        { name: "Tokyo", slug: "tokyo" },
+        { name: "Londra", slug: "londra" },
+        { name: "Dubai", slug: "dubai" },
+      ],
+      to: [
+        { name: "Munih", slug: "munih" },
+        { name: "New York", slug: "new-york" },
+        { name: "Paris", slug: "paris" },
+        { name: "Tokyo", slug: "tokyo" },
+        { name: "Londra", slug: "londra" },
+        { name: "Dubai", slug: "dubai" },
+        { name: "İstanbul", slug: "istanbul" },
+        { name: "Ankara", slug: "ankara" },
+        { name: "Antalya", slug: "antalya" },
+      ]
+    };
+  
+  return (
+    <div ref={inputRefs[type]} className="relative w-full">
       <label className="block text-base font-semibold text-gray-700 mb-1">{label}</label>
       <div className="relative">
         <span className="absolute inset-y-0 left-4 flex items-center text-gray-500">
@@ -172,9 +202,10 @@ const CompareForm = () => {
         </span>
         <input
           type="text"
-          autoComplete="false"
+          autoComplete="off"
           {...register(type, { required: "Bu alan zorunludur." })}
           onChange={(e) => handleInputChange(type, e.target.value)}
+          onFocus={() => handleFocus(type)}
           onBlur={() => handleBlur(type)}
           placeholder={placeholder}
           className="pl-10 pr-3 py-2 border border-gray-300 h-12 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -189,22 +220,64 @@ const CompareForm = () => {
           </button>
         )}
       </div>
-      {showAuto[type] && results[type].length > 0 && (
-        <ul className="absolute bg-white border w-full z-10 shadow rounded max-h-48 overflow-y-auto mt-1">
-          {results[type].map((item) => (
-            <li
-              key={item.slug}
-              onClick={() => selectOption(type, item)}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              {item.name}
-            </li>
-          ))}
-        </ul>
+      {showAuto[type] && (
+        <div className="absolute bg-white border w-full z-10 shadow rounded p-4 mt-1 space-y-4">
+          {results[type].length > 0 && (
+            <ul className="max-h-48 overflow-y-auto">
+              {results[type].map((item) => (
+                <li
+                  key={item.slug}
+                  onClick={() => selectOption(type, item)}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div>
+            <p className="text-sm font-semibold text-gray-700 mb-2">Popüler Şehirler</p>
+            <div className="flex flex-wrap gap-2">
+              {popularCities[type].map((item) => (
+                <button
+                  key={item.slug}
+                  type="button"
+                  onClick={() => selectOption(type, item)}
+                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-sm rounded-full"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
+
       {errors[type] && <p className="text-red-600 text-sm mt-1">{errors[type]?.message}</p>}
     </div>
   );
+}
+
+const inputRefs = {
+  from: useRef<HTMLDivElement>(null),
+  to: useRef<HTMLDivElement>(null),
+};
+
+React.useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    ['from', 'to'].forEach((type) => {
+      const ref = inputRefs[type as keyof FormValues];
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowAuto((prev) => ({ ...prev, [type]: false }));
+      }
+    });
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">

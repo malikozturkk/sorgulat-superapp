@@ -49,7 +49,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
                 ${fullScreen
                         ? "fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-white z-50 p-6 md:p-8"
                         : "flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary relative"
-                    } ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}
+                    } ${fontSizeType === "small" || fullScreen ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}
                 onClick={() => setFullScreen(!fullScreen)}
             >
                 {fullScreen &&

@@ -24,16 +24,18 @@ export async function GET() {
             "https://sorgulat.com/blog/pasaport",
         ];
 
-        const [cities, countries, getAllPassport]: [TimezoneData[], TimezoneData[], any] = await Promise.all([
+        const [cities, countries, compares, getAllPassport]: [TimezoneData[], TimezoneData[], string[], any] = await Promise.all([
             getRequest("/timezones/city"),
             getRequest("/timezones/country"),
+            getRequest("/compare/sitemap"),
             getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl)
         ]);
-
+        
         const dynamicUrls = [
             ...cities.map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
             ...countries.map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
-            ...getAllPassport.data.map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
+            ...getAllPassport.data.map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`),
+            ...compares.map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`)
         ];
 
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

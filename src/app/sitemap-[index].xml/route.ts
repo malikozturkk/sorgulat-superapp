@@ -1,13 +1,13 @@
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getRequest } from "@/utils/api";
 import { TimezoneData } from "../saat-kac/types/Timezone.types";
 import { TravelArticle } from "@/components/Blog/blog.types";
 
-export async function GET(req: Request, { params }: { params: { index: string } }) {
-    const index = parseInt(params.index);
+export async function GET(req: NextRequest, context: { params: { index: string } }) {
+    const index = parseInt(context.params.index);
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
 
     try {

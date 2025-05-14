@@ -31,7 +31,7 @@ export async function GET() {
             getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl)
         ]);
 
-        const compareLimit = 20000;
+        const compareLimit = 48000;
         const limitedCompares = compares.slice(0, compareLimit);
         
         const dynamicUrls = [

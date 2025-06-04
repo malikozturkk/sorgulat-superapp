@@ -217,7 +217,7 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                             "name": `${getPassport.title} için vize gerekli mi?`,
                             "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": `${getPassport.title} için vize durumu: ${visa.text}.`
+                            "text": `Vize durumu: ${visa.text}.`
                             }
                         },
                         {

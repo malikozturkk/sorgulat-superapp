@@ -199,6 +199,56 @@ export default async function PassportBlogDetail({ params }: { params: Params })
                     </div>
                 </article>
                 </div>
+                <script type="application/ld+json" suppressHydrationWarning>
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": `${getPassport.title} nedir?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": getPassport.description || `${getPassport.title} hakkında detaylı bilgi için yazımızı okuyun.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getPassport.title} için vize gerekli mi?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${getPassport.title} için vize durumu: ${visa.text}.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getPassport.title} ne zaman yayımlandı?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `Bu yazı ${formatDate(getPassport.createdAt).formattedDate} tarihinde yayımlandı.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getPassport.title} yazısının yazarı kimdir?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${getPassport.author.name} tarafından yazılmıştır.`
+                            }
+                        },
+                        ...(getPassport.warnings.length > 0
+                            ? getPassport.warnings.map((warning: any) => ({
+                                "@type": "Question",
+                                "name": `${warning.title} hakkında uyarı var mı?`,
+                                "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": warning.description
+                                }
+                            }))
+                            : [])
+                        ]
+                    })}
+                </script>
             </div>
         )
     } catch (e) {

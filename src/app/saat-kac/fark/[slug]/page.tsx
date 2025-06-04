@@ -153,6 +153,62 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                 </table>
                 <h1 className="text-3xl font-bold mt-8">Farklı Şehir veya Ülke Ara</h1>
                 <CompareForm />
+                <script type="application/ld+json" suppressHydrationWarning>
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": `${from.name} ile ${to.name} arasındaki saat farkı nedir?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${from.name} ile ${to.name} arasındaki saat farkı ${formattedDiff} olarak hesaplanmıştır. Bu fark şu anda ${diff === 0 ? "eşit" : diff > 0 ? `${from.name} ${formattedDiff} geri` : `${from.name} ${formattedDiff} ileri`} durumdadır.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${from.name} şehrinde şu an saat kaç?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${from.name} şehrinde şu an saat: ${fromTime.timeFormatted} (${fromTime.dateFormatted} ${fromTime.year}, ${fromTime.dayFormatted}).`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${to.name} şehrinde şu an saat kaç?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${to.name} şehrinde şu an saat: ${toTime.timeFormatted} (${toTime.dateFormatted} ${toTime.year}, ${toTime.dayFormatted}).`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${from.name} ile ${to.name} saat farkı nasıl hesaplanır?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `Saat farkı, her iki şehrin zaman dilimlerine göre hesaplanır. ${from.name} saati ${fromTime.timeFormatted}, ${to.name} saati ise ${toTime.timeFormatted} olduğuna göre aralarındaki fark ${formattedDiff} olarak belirlenmiştir.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${from.name} - ${to.name} saat farkı tablosu nasıl okunur?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `Saat farkı tablosunda ${from.name} saatine karşılık gelen ${to.name} saatlerini görebilirsiniz. Bu tablo, günün farklı saatlerindeki karşılaştırmaları net olarak sunar.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${from.name} ile ${to.name} aynı zaman diliminde mi?`,
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": `${from.timezone === to.timezone ? 'Evet' : 'Hayır'}, ${from.name} (${from.timezone}) ve ${to.name} (${to.timezone}) ${from.timezone === to.timezone ? 'aynı' : 'farklı'} zaman dilimlerinde yer almaktadır.`
+                            }
+                        },
+                        ]
+                    })}
+                </script>
             </div>
         );
     } catch (e) {

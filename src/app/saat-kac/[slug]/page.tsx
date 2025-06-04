@@ -54,9 +54,27 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 export default async function WhatTimeIsIt({ params }: { params: Params }) {
     const { slug } = await params
+
+    const timeDifferenceCalculator = (fromHour: number, fromMinute: number, toHour: number, toMinute: number): number => {
+        const fromTotalMinutes = fromHour * 60 + fromMinute;
+        const toTotalMinutes = toHour * 60 + toMinute;
+        const diffInMinutes = toTotalMinutes - fromTotalMinutes;
+        const diffInHours = diffInMinutes / 60;
+
+        return Math.round(diffInHours * 10) / 10;
+    };
+
     try {
         const getTime: TimeData = await getRequest(`/timezones/${slug}`);
         const differenceTime: DifferenceData = await getRequest(`/timezones/difference/${slug}`);
+        const date = new Date(getTime.dateTime);
+        const formattedDate = new Intl.DateTimeFormat('tr-TR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            weekday: 'long',
+        }).format(date);
+        const calculatedDifference = timeDifferenceCalculator(getTime.hour, getTime.minute, getTime.populerCities[0].hour, getTime.populerCities[0].minute)
 
         return (
             <>
@@ -65,6 +83,70 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                 {getTime.allCities && getTime.allCities.length > 0 &&
                     <AllCitiesByCountry allCities={getTime.allCities} />
                 }
+                <script type="application/ld+json" suppressHydrationWarning>
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name}'${getTime.locationText} saat kaç?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${getTime.timezone.name} için güncel saat: ${getTime.time}. Bu sayfada saat her saniye otomatik olarak güncellenmektedir.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name}'${getTime.locationText} bugünün tarihi nedir ve haftanın hangi günü?`,
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": `${getTime.timezone.name}'${getTime.locationText} bugünün tarihi: ${formattedDate}.`
+                            }
+                        },                          
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name} ile İstanbul arasındaki saat farkı nedir?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${getTime.timezone.name} ile İstanbul arasındaki saat farkı yaklaşık ${calculatedDifference} saat olarak hesaplanmaktadır.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name}'${getTime.locationText} öğle vakti saat kaçta?`,
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": `Bu bölgede öğle vakti saati: ${getTime.noonTime}. Güneşin en yüksek noktada olduğu vakittir.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name}'${getTime.locationText} gün ışığından yararlanma saati (DST) aktif mi?`,
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": `${getTime.dstActive ? 'Evet' : 'Hayır'}, şu anda gün ışığından yararlanma saati ${getTime.dstActive ? 'aktif' : 'pasif'} durumdadır.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name} saat diliminde gün doğumu ile batımı arasındaki süre ne kadar?`,
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": `Gün doğumu ${getTime.sunrise}, gün batımı ise ${getTime.sunset}. Aradaki fark: ${getTime.sunsetDifference}.`
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": `${getTime.timezone.name}'${getTime.locationText} güneş saat kaçta doğar ve batar?`,
+                            "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `${getTime.timezone.name}'${getTime.locationText} güneşin doğuş saati ${getTime.sunrise}, batış saati ise ${getTime.sunset} olarak belirlenmiştir.`
+                            }
+                        }
+                        ]
+                    })}
+                </script>
             </>
         );
     }

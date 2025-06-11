@@ -662,13 +662,13 @@ export default function UniversityMatch() {
 
         return (
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <h2 className="text-2xl font-bold text-gray-900">
                         {pagination.totalResults} Üniversite Bulundu
                     </h2>
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         {/* Sıralama Dropdown */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
                             <label className="text-sm font-medium text-gray-700">Sırala:</label>
                             <select
                                 value={`${preferences.sortBy}-${preferences.sortOrder}`}
@@ -676,7 +676,7 @@ export default function UniversityMatch() {
                                     const [sortBy, sortOrder] = e.target.value.split('-');
                                     handleSortChange(sortBy, sortOrder);
                                 }}
-                                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                                className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                             >
                                 <option value="score-desc">Taban Puan (Yüksekten Düşüğe)</option>
                                 <option value="score-asc">Taban Puan (Düşükten Yükseğe)</option>
@@ -692,7 +692,7 @@ export default function UniversityMatch() {
                         </div>
                         <button
                             onClick={handleFilterChange}
-                            className="text-primary hover:text-primaryDark font-medium flex items-center gap-2"
+                            className="w-full sm:w-auto text-primary hover:text-primaryDark font-medium flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
                         >
                             <FiSettings className="w-4 h-4" />
                             Filtreleri Düzenle
@@ -890,8 +890,8 @@ export default function UniversityMatch() {
 
         return (
             <div>
-                <div className="flex items-center justify-between mt-8 p-4 bg-gray-50 rounded-lg">
-                    <div className="text-sm text-gray-700">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-8 p-4 bg-gray-50 rounded-lg gap-4">
+                    <div className="text-sm text-gray-700 text-center lg:text-left">
                         Toplam <span className="font-medium">{pagination.totalResults}</span> üniversiteden{" "}
                         <span className="font-medium">
                             {((pagination.currentPage - 1) * pagination.limit) + 1}
@@ -901,11 +901,11 @@ export default function UniversityMatch() {
                         </span> arası gösteriliyor
                     </div>
                     
-                    <div className="flex items-center space-x-1">
+                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-1">
                         <button
                             onClick={() => handlePageChange(pagination.currentPage - 1)}
                             disabled={pagination.currentPage === 1}
-                            className={`px-3 py-2 text-sm font-medium rounded-lg border ${
+                            className={`w-full sm:w-auto px-3 py-2 text-sm font-medium rounded-lg border ${
                                 pagination.currentPage === 1
                                     ? "text-gray-300 bg-gray-100 border-gray-200 cursor-not-allowed"
                                     : "text-gray-500 bg-white border-gray-300 hover:bg-gray-50"
@@ -914,14 +914,14 @@ export default function UniversityMatch() {
                             Önceki
                         </button>
                         
-                        <div className="flex">
+                        <div className="flex flex-wrap justify-center">
                             {pages}
                         </div>
                         
                         <button
                             onClick={() => handlePageChange(pagination.currentPage + 1)}
                             disabled={pagination.currentPage === pagination.totalPages}
-                            className={`px-3 py-2 text-sm font-medium rounded-lg border ${
+                            className={`w-full sm:w-auto px-3 py-2 text-sm font-medium rounded-lg border ${
                                 pagination.currentPage === pagination.totalPages
                                     ? "text-gray-300 bg-gray-100 border-gray-200 cursor-not-allowed"
                                     : "text-gray-500 bg-white border-gray-300 hover:bg-gray-50"

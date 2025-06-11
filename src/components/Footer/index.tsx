@@ -57,7 +57,6 @@ const footerData = [
     icon: <FiInfo className="w-5 h-5" />,
     subItems: [
       { title: "Sorgulat Blog", url: "/blog" },
-      { title: "Ip Sorgulama", url: "/ip-sorgulama" },
     ]
   }
 ];

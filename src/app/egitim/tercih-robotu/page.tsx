@@ -692,7 +692,7 @@ export default function UniversityMatch() {
                         </div>
                         <button
                             onClick={handleFilterChange}
-                            className="w-full sm:w-auto text-primary hover:text-primaryDark font-medium flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
+                            className="w-full sm:w-auto text-primary font-medium flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
                         >
                             <FiSettings className="w-4 h-4" />
                             Filtreleri Düzenle

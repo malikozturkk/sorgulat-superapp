@@ -154,7 +154,7 @@ export default function UniversityMatch() {
         if (universities.length > 0) {
             updateQuestionOptions();
         }
-    }, [universities]);
+    }, [universities, preferences]);
 
     useEffect(() => {
         setSearchTerm(""); 
@@ -221,17 +221,76 @@ export default function UniversityMatch() {
     };
 
     const updateQuestionOptions = () => {
+        // Şehir seçenekleri - her zaman tüm şehirler
         const cities = [...new Set(universities.map(uni => uni.city))].sort(turkishSort);
-        const universityNames = [...new Set(universities.map(uni => uni.name))].sort(turkishSort);
-        const faculties = [...new Set(universities.flatMap(uni => 
-            uni.departments.map(dept => dept.name)
-        ))].sort(turkishSort);
-        const languages = [...new Set(universities.flatMap(uni => 
-            uni.departments.map(dept => dept.language)
-        ))].sort(turkishSort);
-        const educationTypes = [...new Set(universities.flatMap(uni => 
-            uni.departments.map(dept => translateEducationType(dept.education_type))
-        ))].sort(turkishSort);
+        
+        // Üniversite seçenekleri - seçili şehirlere göre filtrelenmiş
+        let universityNames: string[];
+        if (preferences.selectedCities.length > 0) {
+            universityNames = [...new Set(universities
+                .filter(uni => preferences.selectedCities.includes(uni.city))
+                .map(uni => uni.name)
+            )].sort(turkishSort);
+        } else {
+            universityNames = [...new Set(universities.map(uni => uni.name))].sort(turkishSort);
+        }
+        
+        // Bölüm seçenekleri - seçili üniversitelere göre filtrelenmiş
+        let faculties: string[];
+        if (preferences.selectedUniversities.length > 0) {
+            faculties = [...new Set(universities
+                .filter(uni => preferences.selectedUniversities.includes(uni.name))
+                .flatMap(uni => uni.departments.map(dept => dept.name))
+            )].sort(turkishSort);
+        } else if (preferences.selectedCities.length > 0) {
+            // Sadece şehir seçilmişse, o şehirlerdeki tüm bölümler
+            faculties = [...new Set(universities
+                .filter(uni => preferences.selectedCities.includes(uni.city))
+                .flatMap(uni => uni.departments.map(dept => dept.name))
+            )].sort(turkishSort);
+        } else {
+            faculties = [...new Set(universities.flatMap(uni => 
+                uni.departments.map(dept => dept.name)
+            ))].sort(turkishSort);
+        }
+        
+        // Dil seçenekleri - seçili üniversitelere göre filtrelenmiş
+        let languages: string[];
+        if (preferences.selectedUniversities.length > 0) {
+            languages = [...new Set(universities
+                .filter(uni => preferences.selectedUniversities.includes(uni.name))
+                .flatMap(uni => uni.departments.map(dept => dept.language))
+            )].sort(turkishSort);
+        } else if (preferences.selectedCities.length > 0) {
+            // Sadece şehir seçilmişse, o şehirlerdeki tüm diller
+            languages = [...new Set(universities
+                .filter(uni => preferences.selectedCities.includes(uni.city))
+                .flatMap(uni => uni.departments.map(dept => dept.language))
+            )].sort(turkishSort);
+        } else {
+            languages = [...new Set(universities.flatMap(uni => 
+                uni.departments.map(dept => dept.language)
+            ))].sort(turkishSort);
+        }
+        
+        // Eğitim türü seçenekleri - seçili üniversitelere göre filtrelenmiş
+        let educationTypes: string[];
+        if (preferences.selectedUniversities.length > 0) {
+            educationTypes = [...new Set(universities
+                .filter(uni => preferences.selectedUniversities.includes(uni.name))
+                .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
+            )].sort(turkishSort);
+        } else if (preferences.selectedCities.length > 0) {
+            // Sadece şehir seçilmişse, o şehirlerdeki tüm eğitim türleri
+            educationTypes = [...new Set(universities
+                .filter(uni => preferences.selectedCities.includes(uni.city))
+                .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
+            )].sort(turkishSort);
+        } else {
+            educationTypes = [...new Set(universities.flatMap(uni => 
+                uni.departments.map(dept => translateEducationType(dept.education_type))
+            ))].sort(turkishSort);
+        }
 
         setQuestions(prevQuestions => [
             { ...prevQuestions[0], options: cities },
@@ -514,9 +573,50 @@ export default function UniversityMatch() {
         const currentValues = key ? (preferences[key] as string[]) || [] : [];
         const filteredOptions = getFilteredOptions(question.options || []);
 
+        // Aktif filtreleri göster
+        const getActiveFiltersInfo = () => {
+            const activeFilters = [];
+            
+            if (preferences.selectedCities.length > 0) {
+                activeFilters.push(`${preferences.selectedCities.length} şehir seçili`);
+            }
+            
+            if (preferences.selectedUniversities.length > 0) {
+                activeFilters.push(`${preferences.selectedUniversities.length} üniversite seçili`);
+            }
+            
+            if (preferences.selectedFaculties.length > 0) {
+                activeFilters.push(`${preferences.selectedFaculties.length} bölüm seçili`);
+            }
+            
+            if (preferences.selectedLanguages.length > 0) {
+                activeFilters.push(`${preferences.selectedLanguages.length} dil seçili`);
+            }
+            
+            if (preferences.educationType.length > 0) {
+                activeFilters.push(`${preferences.educationType.length} eğitim türü seçili`);
+            }
+            
+            return activeFilters;
+        };
+
+        const activeFilters = getActiveFiltersInfo();
+
         if (question.type === "multiSelect") {
             return (
                 <div className="space-y-4">
+                    {/* Aktif Filtreler Bilgisi */}
+                    {activeFilters.length > 0 && (
+                        <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p className="text-sm text-blue-800">
+                                <span className="font-medium">Aktif Filtreler:</span> {activeFilters.join(', ')}
+                            </p>
+                            <p className="text-xs text-blue-600 mt-1">
+                                Seçenekler bu filtrelere göre güncellenmiştir.
+                            </p>
+                        </div>
+                    )}
+
                     {/* Arama Inputu */}
                     <div className="relative">
                         <input

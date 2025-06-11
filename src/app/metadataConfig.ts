@@ -189,42 +189,6 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             },
           },
     },
-    "/ip-sorgulama": {
-        title: "IP Sorgulama | Sorgulat",
-        description: "IP adresinizin konum, ülke, şehir, saat dilimi, ISP ve diğer bilgilerini anında sorgulayın. Türkiye ve dünya genelindeki IP adreslerini analiz edin.",
-        robots: "index, follow",
-        keywords: "IP sorgulama, IP adresi bul, IP konumu, IP bilgileri, IP'den şehir bul, IP adresi analizi, IP adresi Türkiye, Superonline IP sorgu, IP adresinden konum bulma, IP adresi detayları",
-        authors: [
-            {
-                "name": "IP Sorgulama | Sorgulat",
-                "url": "https://www.sorgulat.com/ip-sorgulama"
-            }
-        ],
-        icon: '/favicon.ico',
-        openGraph: {
-            title: 'IP Sorgulama | Sorgulat',
-            description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin. Hangi şehirde olduğunuzu bulun ve IP bilgilerinizi analiz edin.',
-            url: 'https://www.sorgulat.com/ip-sorgulama',
-            images:
-              '/images/openGraph/ip.png',
-            type: 'website',
-            siteName: 'Sorgulat',
-          },
-          twitter: {
-            card: 'summary_large_image',
-            title: 'IP Sorgulama | Sorgulat',
-            description: 'IP adresinizin konum, ISP, saat dilimi ve diğer detaylarını öğrenin.',
-            images: '/images/openGraph/ip.png',
-            site: '@Sorgulat',
-          },
-          alternates: {
-            canonical: "/ip-sorgulama",
-            types: {
-              "application/opensearchdescription+xml": "/opensearch.xml",
-              "application/rss+xml": "https://sorgulat.com/rss.xml",
-            },
-          },
-    },
     "/pasaport": {
         title: "Pasaport Vize Durumu | Sorgulat",
         description: "Türkiye pasaportu ile hangi ülkelerin vize istediğini, istemediğini, kapıda vize verdiğini veya eTA gerektirdiğini dünya haritası üzerinden öğrenin.",

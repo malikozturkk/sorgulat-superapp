@@ -254,43 +254,44 @@ export default function UniversityMatch() {
             ))].sort(turkishSort);
         }
         
-        // Dil seçenekleri - seçili üniversitelere göre filtrelenmiş
+        // Dil seçenekleri - seçili üniversitelere ve bölümlere göre filtrelenmiş
         let languages: string[];
-        if (preferences.selectedUniversities.length > 0) {
-            languages = [...new Set(universities
-                .filter(uni => preferences.selectedUniversities.includes(uni.name))
-                .flatMap(uni => uni.departments.map(dept => dept.language))
-            )].sort(turkishSort);
-        } else if (preferences.selectedCities.length > 0) {
-            // Sadece şehir seçilmişse, o şehirlerdeki tüm diller
-            languages = [...new Set(universities
-                .filter(uni => preferences.selectedCities.includes(uni.city))
-                .flatMap(uni => uni.departments.map(dept => dept.language))
-            )].sort(turkishSort);
-        } else {
-            languages = [...new Set(universities.flatMap(uni => 
-                uni.departments.map(dept => dept.language)
-            ))].sort(turkishSort);
+        let filteredUniversities = universities;
+        
+        // Önce şehir filtresini uygula
+        if (preferences.selectedCities.length > 0) {
+            filteredUniversities = filteredUniversities.filter(uni => 
+                preferences.selectedCities.includes(uni.city)
+            );
         }
         
-        // Eğitim türü seçenekleri - seçili üniversitelere göre filtrelenmiş
-        let educationTypes: string[];
+        // Sonra üniversite filtresini uygula
         if (preferences.selectedUniversities.length > 0) {
-            educationTypes = [...new Set(universities
-                .filter(uni => preferences.selectedUniversities.includes(uni.name))
-                .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
-            )].sort(turkishSort);
-        } else if (preferences.selectedCities.length > 0) {
-            // Sadece şehir seçilmişse, o şehirlerdeki tüm eğitim türleri
-            educationTypes = [...new Set(universities
-                .filter(uni => preferences.selectedCities.includes(uni.city))
-                .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
-            )].sort(turkishSort);
-        } else {
-            educationTypes = [...new Set(universities.flatMap(uni => 
-                uni.departments.map(dept => translateEducationType(dept.education_type))
-            ))].sort(turkishSort);
+            filteredUniversities = filteredUniversities.filter(uni => 
+                preferences.selectedUniversities.includes(uni.name)
+            );
         }
+        
+        // Sonra bölüm filtresini uygula
+        if (preferences.selectedFaculties.length > 0) {
+            filteredUniversities = filteredUniversities.map(uni => ({
+                ...uni,
+                departments: uni.departments.filter(dept => 
+                    preferences.selectedFaculties.includes(dept.name)
+                )
+            })).filter(uni => uni.departments.length > 0);
+        }
+        
+        // Filtrelenmiş üniversitelerden dil seçeneklerini al
+        languages = [...new Set(filteredUniversities
+            .flatMap(uni => uni.departments.map(dept => dept.language))
+        )].sort(turkishSort);
+        
+        // Eğitim türü seçenekleri - seçili üniversitelere ve bölümlere göre filtrelenmiş
+        let educationTypes: string[];
+        educationTypes = [...new Set(filteredUniversities
+            .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
+        )].sort(turkishSort);
 
         setQuestions(prevQuestions => [
             { ...prevQuestions[0], options: cities },
@@ -603,6 +604,11 @@ export default function UniversityMatch() {
         const activeFilters = getActiveFiltersInfo();
 
         if (question.type === "multiSelect") {
+            // Eğer seçenekler boşsa ve bu arama terimi nedeniyle değilse
+            const hasNoOptions = (question.options || []).length === 0;
+            const hasNoFilteredOptions = filteredOptions.length === 0;
+            const isSearchFiltered = searchTerm.trim() !== "";
+
             return (
                 <div className="space-y-4">
                     {/* Aktif Filtreler Bilgisi */}
@@ -614,6 +620,52 @@ export default function UniversityMatch() {
                             <p className="text-xs text-blue-600 mt-1">
                                 Seçenekler bu filtrelere göre güncellenmiştir.
                             </p>
+                        </div>
+                    )}
+
+                    {/* Seçenek Yok Uyarısı */}
+                    {hasNoOptions && !isSearchFiltered && (
+                        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 mt-0.5">
+                                    <FiInfo className="w-5 h-5 text-yellow-500" />
+                                </div>
+                                <div className="flex-1">
+                                    <h4 className="text-sm font-medium text-yellow-900 mb-1">
+                                        Seçenek Bulunamadı
+                                    </h4>
+                                    <p className="text-sm text-yellow-700 leading-relaxed mb-3">
+                                        Seçtiğiniz önceki filtreler bu adım için hiç seçenek bırakmadı. 
+                                        Daha fazla seçenek görmek için önceki adımlardaki seçimlerinizi genişletebilirsiniz.
+                                    </p>
+                                    <button
+                                        onClick={() => {
+                                            // Önceki adıma git ve seçimleri temizle
+                                            if (currentStep > 0) {
+                                                setCurrentStep(currentStep - 1);
+                                                // İlgili seçimleri temizle
+                                                const keyMap: { [key: string]: keyof UserPreferences } = {
+                                                    'cities': 'selectedCities',
+                                                    'universities': 'selectedUniversities',
+                                                    'faculties': 'selectedFaculties',
+                                                    'languages': 'selectedLanguages',
+                                                    'educationType': 'educationType'
+                                                };
+                                                const key = keyMap[questions[currentStep - 1].id];
+                                                if (key) {
+                                                    setPreferences(prev => ({
+                                                        ...prev,
+                                                        [key]: []
+                                                    }));
+                                                }
+                                            }
+                                        }}
+                                        className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded-md hover:bg-yellow-200 transition-colors"
+                                    >
+                                        Önceki Adıma Dön ve Seçimleri Temizle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     )}
 
@@ -666,8 +718,17 @@ export default function UniversityMatch() {
                             ))
                         ) : (
                             <div className="text-center py-8 text-gray-500">
-                                <p>Arama kriterinize uygun sonuç bulunamadı.</p>
-                                <p className="text-sm mt-1">Farklı bir arama terimi deneyin.</p>
+                                {isSearchFiltered ? (
+                                    <>
+                                        <p>Arama kriterinize uygun sonuç bulunamadı.</p>
+                                        <p className="text-sm mt-1">Farklı bir arama terimi deneyin.</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>Bu adım için seçenek bulunamadı.</p>
+                                        <p className="text-sm mt-1">Önceki adımlardaki seçimlerinizi genişletin.</p>
+                                    </>
+                                )}
                             </div>
                         )}
                     </div>
@@ -1124,7 +1185,16 @@ export default function UniversityMatch() {
 
                         <button
                             onClick={handleNext}
-                            className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg hover:bg-primaryDark transition-colors"
+                            disabled={
+                                questions[currentStep].type === "multiSelect" && 
+                                (questions[currentStep].options || []).length === 0
+                            }
+                            className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-colors ${
+                                questions[currentStep].type === "multiSelect" && 
+                                (questions[currentStep].options || []).length === 0
+                                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                    : "bg-primary text-white hover:bg-primaryDark"
+                            }`}
                         >
                             {currentStep === questions.length - 1 ? "Sonuçları Göster" : "İleri"}
                             <FiArrowRight className="w-4 h-4" />

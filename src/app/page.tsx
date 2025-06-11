@@ -30,6 +30,9 @@ export default async function Home() {
     }
 
     const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
+    const getPopular = await getRequest(`/api/passport-blogs?populate[author][populate]=photo&populate=mainPhoto`, baseUrl);
+    const shuffledData: TravelArticle[] = getPopular?.data?.sort(() => Math.random() - 0.5) || [];
+    const slicedPopular: TravelArticle[] = shuffledData.slice(0, 4);
     
     return (
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col pb-6 md:pb-12 gap-8">
@@ -203,6 +206,14 @@ export default async function Home() {
               <FiArrowRight className="w-4 h-4" />
             </Link>
           </div>
+          
+          {slicedPopular.length > 0 && (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6'>
+              {slicedPopular.map((popular: TravelArticle) => (
+                <VerticalBox data={popular} key={popular.documentId} />
+              ))}
+            </div>
+          )}
           
           <Link 
             href="/blog" 

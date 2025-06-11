@@ -16,15 +16,14 @@ export const getRequest = async <T>(
         const res = await response.json()
 
         if (!response.ok) {
-            console.error(`API Error: ${response.status} - ${res.message || 'Unknown error'}`);
-            return null;
+            throw new Error(`HTTP error! status: ${res.message}`)
         }
 
         return res
     }
     catch (error) {
         console.error("API Request Error:", error);
-        return null;
+        throw error
     }
 }
 

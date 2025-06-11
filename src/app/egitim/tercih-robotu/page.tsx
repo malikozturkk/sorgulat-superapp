@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getRequest } from "@/utils/api";
 import { FiArrowRight, FiArrowLeft, FiCheck, FiX, FiSettings, FiInfo } from "react-icons/fi";
 
@@ -175,6 +175,25 @@ export default function UniversityMatch() {
             required: false
         }
     ]);
+
+    // Smooth scroll için ref
+    const scrollToTop = useRef<HTMLDivElement>(null);
+    
+    // Optimized scroll function
+    const smoothScrollToTop = () => {
+        if (scrollToTop.current) {
+            scrollToTop.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            // Fallback to window.scrollTo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     useEffect(() => {
         fetchUniversities();
@@ -456,15 +475,27 @@ export default function UniversityMatch() {
     const handleNext = async () => {
         if (currentStep < questions.length - 1) {
             setCurrentStep(currentStep + 1);
+            // Smooth scroll to top with performance optimization
+            setTimeout(() => {
+                smoothScrollToTop();
+            }, 100); // Small delay to ensure state update completes
         } else {
             await filterResults(1);
             setShowResults(true);
+            // Smooth scroll to top when showing results
+            setTimeout(() => {
+                smoothScrollToTop();
+            }, 100);
         }
     };
 
     const handlePrevious = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
+            // Smooth scroll to top when going back
+            setTimeout(() => {
+                smoothScrollToTop();
+            }, 100);
         }
     };
 
@@ -1156,6 +1187,10 @@ export default function UniversityMatch() {
             ...prev,
             currentPage: 1
         }));
+        // Smooth scroll to top when returning to filters
+        setTimeout(() => {
+            smoothScrollToTop();
+        }, 100);
         // Önceki seçimler korunacak, sadece sonuç sayfasından filtre seçim sayfasına dönüyoruz
     };
 
@@ -1302,13 +1337,16 @@ export default function UniversityMatch() {
     }
 
     return (
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
+        <div ref={scrollToTop} className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
             <div className="text-center">
                 <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Üniversite Tercih Robotu
+                    {showResults ? "Üniversite Tercih Sonuçları" : "Üniversite Tercih Robotu"}
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Size en uygun üniversite ve bölümleri bulmak için birkaç soru soracağız
+                    {showResults 
+                        ? "Seçtiğiniz kriterlere uygun üniversite ve bölümler aşağıda listelenmiştir. Detaylı bilgileri inceleyebilir ve karşılaştırabilirsiniz."
+                        : "Size en uygun üniversite ve bölümleri bulmak için birkaç soru soracağız"
+                    }
                 </p>
             </div>
 

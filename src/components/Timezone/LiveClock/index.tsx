@@ -79,13 +79,6 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
                 </time>
                 <p className='text-lg md:text-4xl w-full text-right'>{formattedDate}</p>
             </button>
-            <summary className={`text-base flex items-center flex-wrap gap-2 justify-end max-w-7xl md:text-2xl ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}>
-                Güneş:
-                <Image src="/icons/sunrise.svg" width={36} height={36} alt="Sunrise Icon" />
-                {initialTime.sunrise}
-                <Image src="/icons/sunset.svg" width={36} height={36} alt="Sunset Icon" />
-                {initialTime.sunset} ({initialTime.sunsetDifference})
-            </summary>
             {!fullScreen && (
   <ul className={`flex gap-3 justify-end flex-wrap max-w-7xl ${fontSizeType === "small" ? "m-0" : "mx-4 sm:mx-6 lg:mx-8" }`}>
     {clientData?.populerCities?.map((city: PopulerCities) => (

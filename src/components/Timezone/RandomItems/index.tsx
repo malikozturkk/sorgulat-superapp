@@ -4,19 +4,18 @@ import Link from "next/link";
 
 const getClassName = (type: string) => {
     const classMap: Record<string, string> = {
-        "5xl": "hover:bg-primary text-black font-extrabold text-2xl md:text-5xl px-3 bg-white hover:text-white",
-        "3xl": "hover:bg-primary text-white font-extrabold text-lg md:text-3xl px-3",
-        "xl": "hover:bg-primary text-white font-normal text-base md:text-xl px-3",
+        "5xl": "hover:bg-primary hover:text-white text-gray-900 font-extrabold text-lg md:text-2xl px-4 py-3 bg-white hover:shadow-lg border-2 border-gray-200 hover:border-primary rounded-xl transition-all duration-200 flex items-center justify-center",
+        "3xl": "hover:bg-primary hover:text-white text-gray-700 font-bold text-base md:text-xl px-3 py-2 bg-gray-50 hover:shadow-md border border-gray-200 hover:border-primary rounded-lg transition-all duration-200 flex items-center justify-center",
+        "xl": "hover:bg-primary hover:text-white text-gray-600 font-medium text-sm md:text-lg px-3 py-2 bg-gray-50 hover:shadow-md border border-gray-200 hover:border-primary rounded-lg transition-all duration-200 flex items-center justify-center",
     };
 
-    return classMap[type] || "px-1 text-white hover:bg-primary font-normal text-sm md:text-base";
+    return classMap[type] || "hover:bg-primary hover:text-white text-gray-600 font-normal text-sm md:text-base px-3 py-2 bg-gray-50 hover:shadow-md border border-gray-200 hover:border-primary rounded-lg transition-all duration-200 flex items-center justify-center";
 };
 
 export const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
     <Link
         key={`/saat-kac/${timezone.name}`}
         href={`/saat-kac/${timezone?.slug}/`}
-        style={{ lineHeight: timezone.type === "5xl" ? "1.375" : timezone.type === "3xl" ? "2.5rem" : "1.5rem" }}
         className={getClassName(timezone?.type || "base")}
     >
         {timezone?.name}
@@ -25,14 +24,21 @@ export const TimezoneLink = ({ timezone }: { timezone: TimezoneData }) => (
 
 const RandomItems = ({ getCitiesTimezones, getCountriesTimezones }: IRandomItems) => {
     return (
-        <div className="flex justify-center bg-[#333] py-4 w-full px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center gap-4 mx-auto max-w-7xl">
-                <div className="flex gap-6 flex-wrap items-center">
+        <div className="space-y-8">
+            {/* Popüler Şehirler */}
+            <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Popüler Şehirler</h3>
+                <div className="flex gap-3 flex-wrap items-center">
                     {getCitiesTimezones.map((timezone) => (
                         <TimezoneLink key={timezone.name} timezone={timezone} />
                     ))}
                 </div>
-                <div className="flex gap-6 flex-wrap items-center">
+            </div>
+            
+            {/* Popüler Ülkeler */}
+            <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Popüler Ülkeler</h3>
+                <div className="flex gap-3 flex-wrap items-center">
                     {getCountriesTimezones.map((timezone) => (
                         <TimezoneLink key={timezone.name} timezone={timezone} />
                     ))}

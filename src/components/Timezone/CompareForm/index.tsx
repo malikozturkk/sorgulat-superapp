@@ -5,6 +5,7 @@ import { FaExchangeAlt, FaMapMarkedAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import useDebounce from "@/hooks/useDebounce";
 import { getRequest } from "@/utils/api";
 import { SearchResponse } from "@/app/saat-kac/types/Timezone.types";
+import { FiSearch, FiArrowRight, FiGlobe } from "react-icons/fi";
 
 type FormValues = {
   from: string;
@@ -195,7 +196,7 @@ const CompareForm = () => {
   
   return (
     <div ref={inputRefs[type]} className="relative w-full">
-      <label className="block text-base font-semibold text-gray-700 mb-1">{label}</label>
+      <label className="block text-base font-semibold text-gray-700 mb-3">{label}</label>
       <div className="relative">
         <span className="absolute inset-y-0 left-4 flex items-center text-gray-500">
           {icons[type]}
@@ -208,42 +209,54 @@ const CompareForm = () => {
           onFocus={() => handleFocus(type)}
           onBlur={() => handleBlur(type)}
           placeholder={placeholder}
-          className="pl-10 pr-3 py-2 border border-gray-300 h-12 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 text-gray-900 placeholder-gray-500 bg-white shadow-sm hover:shadow-md"
         />
         {type === "from" && (
           <button
             type="button"
             onClick={handleExchange}
-            className="absolute -right-6 p-2 top-2.5 rounded-full bg-gray-100 border border-gray-200 z-50 hidden sm:block"
+            className="absolute -right-6 p-2 top-3 rounded-full bg-gradient-to-r from-primary to-primaryDark text-white border border-primary z-50 hidden sm:block hover:from-primaryDark hover:to-primary transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            <FaExchangeAlt className="w-3 h-3" />
+            <FaExchangeAlt className="w-4 h-4" />
           </button>
         )}
       </div>
       {showAuto[type] && (
-        <div className="absolute bg-white border w-full z-10 shadow rounded p-4 mt-1 space-y-4">
+        <div className="absolute bg-white border-2 border-gray-200 w-full z-10 shadow-xl rounded-xl p-6 mt-2 space-y-4">
           {results[type].length > 0 && (
-            <ul className="max-h-48 overflow-y-auto">
-              {results[type].map((item) => (
-                <li
-                  key={item.slug}
-                  onClick={() => selectOption(type, item)}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  {item.name}
-                </li>
-              ))}
-            </ul>
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <FiSearch className="w-4 h-4 text-primary" />
+                <p className="text-sm font-semibold text-gray-700">Arama Sonuçları</p>
+              </div>
+              <ul className="max-h-48 overflow-y-auto space-y-1">
+                {results[type].map((item) => (
+                  <li
+                    key={item.slug}
+                    onClick={() => selectOption(type, item)}
+                    className="px-4 py-3 hover:bg-gradient-to-r hover:from-primary hover:to-primaryDark hover:text-white cursor-pointer rounded-lg transition-all duration-150 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <FiGlobe className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
+                      <span className="font-medium text-gray-900 group-hover:text-white transition-colors">{item.name}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
           <div>
-            <p className="text-sm font-semibold text-gray-700 mb-2">Popüler Şehirler</p>
+            <div className="flex items-center gap-2 mb-3">
+              <FiArrowRight className="w-4 h-4 text-primary" />
+              <p className="text-sm font-semibold text-gray-700">Popüler Şehirler</p>
+            </div>
             <div className="flex flex-wrap gap-2">
               {popularCities[type].map((item) => (
                 <button
                   key={item.slug}
                   type="button"
                   onClick={() => selectOption(type, item)}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-sm rounded-full"
+                  className="px-4 py-2 bg-gray-100 hover:bg-gradient-to-r hover:from-primary hover:to-primaryDark hover:text-white text-sm rounded-lg transition-all duration-200 font-medium border border-gray-200 hover:border-primary"
                 >
                   {item.name}
                 </button>
@@ -253,7 +266,14 @@ const CompareForm = () => {
         </div>
       )}
 
-      {errors[type] && <p className="text-red-600 text-sm mt-1">{errors[type]?.message}</p>}
+      {errors[type] && (
+        <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600 text-sm flex items-center gap-2">
+            <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+            {errors[type]?.message}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -278,17 +298,17 @@ React.useEffect(() => {
   };
 }, []);
 
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">
-      <div className="flex flex-col gap-4 sm:flex-row">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+      <div className="flex flex-col gap-6 sm:flex-row">
         {renderInput("from", "Nereden:", "Şehir veya Ülke Ara")}
         {renderInput("to", "Nereye:", "Şehir veya Ülke Ara")}
       </div>
       <button
         type="submit"
-        className="w-full bg-primary hover:bg-primaryDark text-white py-3 rounded-md font-semibold transition"
+        className="w-full bg-gradient-to-r from-primary to-primaryDark hover:from-primaryDark hover:to-primary text-white py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
       >
+        <FiSearch className="w-5 h-5" />
         Saat Farkını Bul
       </button>
     </form>

@@ -16,14 +16,15 @@ export const getRequest = async <T>(
         const res = await response.json()
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${res.message}`)
+            console.error(`API Error: ${response.status} - ${res.message || 'Unknown error'}`);
+            return null;
         }
 
         return res
     }
     catch (error) {
         console.error("API Request Error:", error);
-        throw error
+        return null;
     }
 }
 
@@ -36,27 +37,3 @@ export async function getUserLocation(ip: string) {
         return "turkiye";
     }
 }
-
-// export const postRequest = async <T>(
-//   url: string,
-//   data?: Record<string, any>,
-//   authGuard?: boolean,
-//   credentials?: RequestCredentials
-// ): Promise<T | any> => {
-//   const jwtToken = getJwtToken()
-//   const response = await fetch(`${baseURL}${url}`, {
-//     method: 'POST',
-//     credentials: credentials || 'same-origin',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: authGuard ? `Bearer ${jwtToken}` : '',
-//     },
-//     body: JSON.stringify(data),
-//   })
-//   const res = await response.json()
-//   if (!response.ok) {
-//     throw new Error(`HTTP error! status: ${res.message}`)
-//   }
-
-//   return res?.data
-// }

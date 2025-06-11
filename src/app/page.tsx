@@ -37,7 +37,7 @@ export default async function Home() {
     return (
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col pb-6 md:pb-12 gap-8">
         {/* Hero Section */}
-        <div className="w-full aspect-[16/9] bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl border border-blue-100 flex items-center justify-center relative overflow-hidden">
+        <div className="w-full p-3 aspect-[16/9] bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl border border-blue-100 flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/icons/worldMap.svg')] bg-no-repeat bg-center bg-contain opacity-30"></div>
           <div className="relative z-10 w-full md:w-2/3 flex flex-col gap-4 md:gap-8 items-center text-center">
             <h1 className='text-xl md:text-5xl font-extrabold text-gray-900'>

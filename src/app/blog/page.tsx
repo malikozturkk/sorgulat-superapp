@@ -35,19 +35,6 @@ export default async function Blog({ searchParams }: SearchParams) {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
             {data && data.length > 0 ? 
                 <>
-                    {/* Hero Section */}
-                    <div className="w-full aspect-[16/9] bg-gradient-to-br from-purple-50 via-white to-pink-50 rounded-2xl border border-purple-100 flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-[url('/icons/worldMap.svg')] bg-no-repeat bg-center bg-contain opacity-30"></div>
-                        <div className="relative z-10 w-full md:w-2/3 flex flex-col gap-4 md:gap-8 items-center text-center">
-                            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-                                Blog ve Haberler
-                            </h1>
-                            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                                Türkiye'den vizesiz seyahat edilebilen ülkeler, saat bilgileri ve pasaport hakkında güncel haberler
-                            </p>
-                        </div>
-                    </div>
-
                     {/* Filter Controls */}
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-4">

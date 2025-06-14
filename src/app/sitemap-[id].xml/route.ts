@@ -5,9 +5,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const sitemapId = parseInt(params.id);
+    const { id } = await params;
+    const sitemapId = parseInt(id);
     
     if (isNaN(sitemapId) || sitemapId < 1) {
         return new NextResponse("Invalid sitemap ID", { status: 400 });

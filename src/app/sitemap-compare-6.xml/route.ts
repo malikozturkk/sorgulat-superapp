@@ -1,21 +1,24 @@
 import { NextResponse } from "next/server";
 import { getRequest } from "@/utils/api";
-import { TimezoneData } from "../saat-kac/types/Timezone.types";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
     try {
-        const cities: TimezoneData[] = await getRequest("/timezones/city");
+        const compares = await getRequest("/compare/sitemap");
         
+        // 236.000-252.000 arası URL'leri al (16.000 URL)
+        const limitedCompares = compares.slice(236000, 282000);
+        
+        const dynamicUrls = limitedCompares.map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`);
+
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            ${cities
-                .map((city) => `<url>
-                <loc>https://sorgulat.com/saat-kac/${city.slug}</loc>
+            ${dynamicUrls
+                .map((url: string) => `<url>
+                <loc>${url}</loc>
                 <changefreq>weekly</changefreq>
                 <priority>0.8</priority>
-                <lastmod>${new Date().toISOString()}</lastmod>
                 </url>`)
                 .join("")}
         </urlset>`;
@@ -26,6 +29,6 @@ export async function GET() {
             },
         });
     } catch (error) {
-        return new NextResponse("Error generating cities sitemap", { status: 500 });
+        return new NextResponse("Error generating compare sitemap 6", { status: 500 });
     }
 } 

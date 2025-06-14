@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { getAllUrls, chunkArray, generateSitemapXml } from "@/utils/sitemap";
 
 export const dynamic = "force-dynamic";
-
-// Route segment config
 export const runtime = 'nodejs';
 
 export async function GET(

@@ -28,7 +28,7 @@ export function generateSitemapIndex(chunkCount: number): string {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${Array.from({ length: chunkCount }, (_, index) => `<sitemap>
-    <loc>https://sorgulat.com/sitemap-${index + 1}.xml</loc>
+    <loc>https://sorgulat.com/sitemap/${index + 1}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
 </sitemap>`).join("")}
 </sitemapindex>`;
@@ -53,19 +53,36 @@ export async function getAllUrls(): Promise<string[]> {
         "https://sorgulat.com/blog/pasaport",
     ];
 
-    const [cities, countries, compares, getAllPassport]: [TimezoneData[], TimezoneData[], string[], any] = await Promise.all([
-        getRequest("/timezones/city"),
-        getRequest("/timezones/country"),
-        getRequest("/compare/sitemap"),
-        getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl)
-    ]);
+    try {
+        console.log("Fetching API data...");
+        console.log("Base URL:", baseUrl);
+        
+        const [cities, countries, compares, getAllPassport]: [TimezoneData[], TimezoneData[], string[], any] = await Promise.all([
+            getRequest("/timezones/city").catch(() => []),
+            getRequest("/timezones/country").catch(() => []),
+            getRequest("/compare/sitemap").catch(() => []),
+            getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl).catch(() => ({ data: [] }))
+        ]);
 
-    const dynamicUrls = [
-        ...cities.map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
-        ...countries.map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
-        ...compares.map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`),
-        ...getAllPassport.data.map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
-    ];
+        console.log("Cities count:", cities?.length || 0);
+        console.log("Countries count:", countries?.length || 0);
+        console.log("Compares count:", compares?.length || 0);
+        console.log("Passport blogs count:", getAllPassport?.data?.length || 0);
 
-    return [...staticPages, ...dynamicUrls];
+        const dynamicUrls = [
+            ...(cities || []).map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
+            ...(countries || []).map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
+            ...(compares || []).map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`),
+            ...(getAllPassport?.data || []).map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
+        ];
+
+        const allUrls = [...staticPages, ...dynamicUrls];
+        console.log("Total URLs:", allUrls.length);
+        
+        return allUrls;
+    } catch (error) {
+        console.error("Error in getAllUrls:", error);
+        // Hata durumunda sadece static sayfaları döndür
+        return staticPages;
+    }
 } 

@@ -5,12 +5,13 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
     request: Request,
-    { params }: { params: { chunk: string } }
+    { params }: { params: Promise<{ chunk: string }> }
 ) {
     try {
+        const { chunk } = await params;
         const compares: string[] = await getRequest("/compare/sitemap");
         const CHUNK_SIZE = 50000;
-        const chunkIndex = parseInt(params.chunk) - 1;
+        const chunkIndex = parseInt(chunk) - 1;
         
         // URL'leri 50.000'lik parçalara böl
         const chunks = [];

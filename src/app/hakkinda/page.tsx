@@ -120,7 +120,7 @@ export default async function Contact() {
             {/* Contact Section */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border border-gray-200">
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center">
                         <FiMail className="w-6 h-6 text-white" />
                     </div>
                     <div>

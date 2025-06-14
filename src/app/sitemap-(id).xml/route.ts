@@ -3,18 +3,21 @@ import { getAllUrls, chunkArray, generateSitemapXml } from "@/utils/sitemap";
 
 export const dynamic = "force-dynamic";
 
+// Route segment config
+export const runtime = 'nodejs';
+
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const { id } = await params;
-    const sitemapId = parseInt(id);
-    
-    if (isNaN(sitemapId) || sitemapId < 1) {
-        return new NextResponse("Invalid sitemap ID", { status: 400 });
-    }
-    
     try {
+        const { id } = await params;
+        const sitemapId = parseInt(id);
+        
+        if (isNaN(sitemapId) || sitemapId < 1) {
+            return new NextResponse("Invalid sitemap ID", { status: 400 });
+        }
+        
         // Tüm URL'leri al
         const allUrls = await getAllUrls();
         
@@ -33,9 +36,11 @@ export async function GET(
         return new NextResponse(sitemapXml, {
             headers: {
                 "Content-Type": "application/xml",
+                "Cache-Control": "public, max-age=3600, s-maxage=3600",
             },
         });
     } catch (error) {
+        console.error("Sitemap generation error:", error);
         return new NextResponse("Error generating sitemap", { status: 500 });
     }
 } 

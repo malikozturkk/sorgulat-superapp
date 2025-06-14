@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAllUrls, chunkArray, generateSitemapIndex } from "@/utils/sitemap";
 
 export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
 
 export async function GET() {
     try {
@@ -17,9 +18,11 @@ export async function GET() {
         return new NextResponse(sitemapIndex, {
             headers: {
                 "Content-Type": "application/xml",
+                "Cache-Control": "public, max-age=3600, s-maxage=3600",
             },
         });
     } catch (error) {
+        console.error("Sitemap index generation error:", error);
         return new NextResponse("Error generating sitemap", { status: 500 });
     }
 }

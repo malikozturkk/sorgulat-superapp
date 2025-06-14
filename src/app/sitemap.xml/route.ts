@@ -1,57 +1,20 @@
 import { NextResponse } from "next/server";
-import { getRequest } from "@/utils/api";
-import { TimezoneData } from "../saat-kac/types/Timezone.types";
-import { TravelArticle } from "@/components/Blog/blog.types";
+import { getAllUrls, chunkArray, generateSitemapIndex } from "@/utils/sitemap";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-    const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL
     try {
-        const staticPages = [
-            "https://sorgulat.com/",
-            "https://sorgulat.com/saat-kac",
-            "https://sorgulat.com/gizlilik",
-            "https://sorgulat.com/iletisim",
-            "https://sorgulat.com/hakkinda",
-            "https://sorgulat.com/pasaport",
-            "https://sorgulat.com/pasaport/vizesiz-seyahat",
-            "https://sorgulat.com/pasaport/vizeli-seyahat",
-            "https://sorgulat.com/pasaport/kapida-vize-seyahat",
-            "https://sorgulat.com/pasaport/eta-seyahat",
-            "https://sorgulat.com/blog",
-            "https://sorgulat.com/blog/pasaport",
-        ];
-
-        const [cities, countries, compares, getAllPassport]: [TimezoneData[], TimezoneData[], string[], any] = await Promise.all([
-            getRequest("/timezones/city"),
-            getRequest("/timezones/country"),
-            getRequest("/compare/sitemap"),
-            getRequest(`/api/passport-blogs?populate=*&sort=createdAt:desc`, baseUrl)
-        ]);
-
-        const compareLimit = 48000;
-        const limitedCompares = compares.slice(0, compareLimit);
+        // Tüm URL'leri al
+        const allUrls = await getAllUrls();
         
-        const dynamicUrls = [
-            ...cities.map((city) => `https://sorgulat.com/saat-kac/${city.slug}`),
-            ...countries.map((country) => `https://sorgulat.com/saat-kac/${country.slug}`),
-            ...limitedCompares.map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`),
-            ...getAllPassport.data.map((passport: TravelArticle) => `https://sorgulat.com/blog/pasaport/${passport.slug}`)
-        ];
+        // URL'leri 50.000'lik parçalara böl
+        const urlChunks = chunkArray(allUrls, 50000);
+        
+        // Sitemap index dosyası oluştur
+        const sitemapIndex = generateSitemapIndex(urlChunks.length);
 
-        const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            ${[...staticPages, ...dynamicUrls]
-                .map((url) => `<url>
-                <loc>${url}</loc>
-                <changefreq>weekly</changefreq>
-                <priority>1.0</priority>
-                </url>`)
-                .join("")}
-        </urlset>`;
-
-        return new NextResponse(sitemap, {
+        return new NextResponse(sitemapIndex, {
             headers: {
                 "Content-Type": "application/xml",
             },

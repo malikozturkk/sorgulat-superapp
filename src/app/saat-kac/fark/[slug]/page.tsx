@@ -33,6 +33,9 @@ export async function generateMetadata({ params }: { params: Params }) {
                 },
             ],
             icons: '/favicon.ico',
+            alternates: {
+                canonical: `https://www.sorgulat.com/saat-kac/fark/${slug}`,
+            },
             openGraph: {
                 title: `${from.name} ile ${to.name} arasındaki saat farkı | Sorgulat`,
                 description: `${from.name} ile ${to.name} arasındaki anlık saat farkını öğrenin. Şu anki saat bilgisi, zaman dilimi farkı ve karşılaştırmalı saat tablosunu inceleyin.`,
@@ -97,7 +100,7 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{from.name}</h3>
                             <p className="text-gray-600 mb-1">{from.country}</p>
                             <p className="text-sm text-gray-500">{fromTime.dateFormatted} {fromTime.year}</p>
-                            <p className="text-sm text-gray-400">{fromTime.dayFormatted}</p>
+                            <p className="text-sm text-gray-500">{fromTime.dayFormatted}</p>
                         </div>
 
                         <div className="flex flex-col items-center w-full lg:w-1/3">
@@ -121,7 +124,7 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{to.name}</h3>
                             <p className="text-gray-600 mb-1">{to.country}</p>
                             <p className="text-sm text-gray-500">{toTime.dateFormatted} {toTime.year}</p>
-                            <p className="text-sm text-gray-400">{toTime.dayFormatted}</p>
+                            <p className="text-sm text-gray-500">{toTime.dayFormatted}</p>
                         </div>
                     </div>
                 </div>

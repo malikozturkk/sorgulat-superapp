@@ -15,12 +15,6 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                 src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${pId}`}
                 crossOrigin="anonymous"
                 strategy="afterInteractive"
-                onLoad={() => {
-                    console.log('AdSense script loaded');
-                }}
-                onError={(e) => {
-                    console.error('AdSense script error:', e);
-                }}
             />
             <div 
                 className={`adsbygoogle-container ${className}`}

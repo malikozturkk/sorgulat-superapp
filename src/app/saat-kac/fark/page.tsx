@@ -11,7 +11,6 @@ export default async function CompareTime() {
     try {
         return (
             <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
-                {/* Hero Section */}
                 <div className="text-center">
                     <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
                         Saat Farkını Bul
@@ -21,7 +20,6 @@ export default async function CompareTime() {
                     </p>
                 </div>
 
-                {/* Ana Form */}
                 <div className="max-w-4xl mx-auto w-full">
                     <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                         <div className="text-center mb-8">
@@ -40,7 +38,6 @@ export default async function CompareTime() {
                     </div>
                 </div>
 
-                {/* Özellikler */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
                         <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
@@ -83,7 +80,6 @@ export default async function CompareTime() {
                     </div>
                 </div>
 
-                {/* Bilgi Kartı */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
                     <div className="flex items-start gap-4">
                         <div className="flex-shrink-0">
@@ -121,7 +117,6 @@ export default async function CompareTime() {
                     </div>
                 </div>
 
-                {/* Popüler Karşılaştırmalar */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl font-bold text-gray-900 mb-2">

@@ -21,7 +21,6 @@ export default function NotFound() {
                 <Link href="/pasaport" className={lightButton}>Vize Haritası</Link>
                 <Link href="/blog" className={lightButton}>Seyahat Rehberleri</Link>
             </div>
-            {/* <Image src="/icons/404.svg" alt="404 Icon" className="mt-10 relative w-80 h-80" width={320} height={320} /> */}
         </div>
     )
 }

@@ -6,7 +6,10 @@ body {
   color: #333;
   background: #f9fafb;
   cursor: pointer;
-  font-family: TimeTraveler, Arial, Helvetica, sans-serif
+  font-family: TimeTraveler, Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
@@ -14,8 +17,74 @@ body {
     background-color: #646ecb;
     color: white;
   }
+  
+  /* Performance optimizations */
+  .layout-shift-prevention {
+    contain: layout style paint;
+    will-change: auto;
+  }
+  
+  .animated-bar {
+    will-change: width;
+    transform: translateZ(0);
+  }
+  
+  .performance-optimized {
+    contain: layout style paint;
+    will-change: auto;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Optimize animations */
+  * {
+    backface-visibility: hidden;
+  }
+  
+  /* Reduce layout thrashing */
+  .stable-layout {
+    contain: layout style paint;
+  }
 }
 
 button {
   cursor: pointer;
+}
+
+/* Optimize images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optimize fonts */
+@font-face {
+  font-family: 'TimeTraveler';
+  font-display: swap;
+  src: url('/fonts/TimeTraveler.woff2') format('woff2');
+}
+
+/* Reduce Cumulative Layout Shift */
+.clock-container {
+  min-height: 200px;
+  contain: layout style paint;
+}
+
+.time-difference-container {
+  min-height: 400px;
+  contain: layout style paint;
+}
+
+.cities-container {
+  min-height: 300px;
+  contain: layout style paint;
+}
+
+.info-container {
+  min-height: 150px;
+  contain: layout style paint;
 }

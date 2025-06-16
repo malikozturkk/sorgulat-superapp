@@ -22,7 +22,6 @@ export default async function Passport() {
     );
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
-            {/* Interactive Map Section */}
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                 <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
@@ -36,9 +35,7 @@ export default async function Passport() {
                 <PassportMap countries={countries} counts={counts} />
             </div>
 
-            {/* Vize Türleri Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Vizesiz Ülkeler */}
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100 relative overflow-hidden">
                     <div className="absolute top-4 right-4">
                         <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
@@ -72,7 +69,6 @@ export default async function Passport() {
                     </Link>
                 </div>
 
-                {/* Vize Gereken Ülkeler */}
                 <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 border border-red-100 relative overflow-hidden">
                     <div className="absolute top-4 right-4">
                         <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
@@ -107,9 +103,7 @@ export default async function Passport() {
                 </div>
             </div>
 
-            {/* Alt Vize Türleri Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Kapıda Vize */}
                 <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-8 border border-orange-100 relative overflow-hidden">
                     <div className="absolute top-4 right-4">
                         <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
@@ -143,7 +137,6 @@ export default async function Passport() {
                     </Link>
                 </div>
 
-                {/* eTA */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100 relative overflow-hidden">
                     <div className="absolute top-4 right-4">
                         <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">

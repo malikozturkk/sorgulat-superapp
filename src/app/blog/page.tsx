@@ -35,7 +35,6 @@ export default async function Blog({ searchParams }: SearchParams) {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
             {data && data.length > 0 ? 
                 <>
-                    {/* Filter Controls */}
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-4">
                             <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
@@ -49,9 +48,7 @@ export default async function Blog({ searchParams }: SearchParams) {
                         <FilterSortControls currentSort={sort} />
                     </div>
 
-                    {/* Main Content */}
                     <div className="flex flex-col lg:flex-row gap-8">
-                        {/* Blog Posts */}
                         <div className="lg:w-2/3">
                             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                                 <div className="flex items-center gap-4 mb-6">
@@ -76,7 +73,6 @@ export default async function Blog({ searchParams }: SearchParams) {
                             </div>
                         </div>
 
-                        {/* Sidebar */}
                         <div className="lg:w-1/3">
                             <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-8 border border-orange-100 relative overflow-hidden">
                                 <div className="absolute top-4 right-4">

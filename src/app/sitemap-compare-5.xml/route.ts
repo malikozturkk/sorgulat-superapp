@@ -7,7 +7,6 @@ export async function GET() {
     try {
         const compares = await getRequest("/compare/sitemap");
         
-        // 187.000-236.000 arası URL'leri al (49.000 URL)
         const limitedCompares = compares.slice(187000, 236000);
         
         const dynamicUrls = limitedCompares.map((slug: string) => `https://sorgulat.com/saat-kac/fark/${slug}`);

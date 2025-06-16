@@ -36,7 +36,6 @@ export default async function Home() {
     
     return (
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col pb-6 md:pb-12 gap-8">
-        {/* Hero Section */}
         <div className="w-full p-3 aspect-[16/9] bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl border border-blue-100 flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/icons/worldMap.svg')] bg-no-repeat bg-center bg-contain opacity-30"></div>
           <div className="relative z-10 w-full md:w-2/3 flex flex-col gap-4 md:gap-8 items-center text-center">
@@ -54,7 +53,6 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* YKS Tercih Robotu - Yeni Özellik */}
         <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-100 relative overflow-hidden">
           <div className="absolute top-4 right-4">
             <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
@@ -110,9 +108,7 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Ana Özellikler Grid */}
         <div className="space-y-8">
-          {/* Saat Kaç Kartı */}
           <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 border border-blue-100 relative overflow-hidden">
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="flex-1 text-center lg:text-left">
@@ -164,7 +160,6 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Vize Haritası Kartı */}
           <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100 relative overflow-hidden">
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="flex-1 text-center lg:text-left">
@@ -218,7 +213,6 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Saat Farkı Kartı */}
         <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-8 border border-orange-100 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-center gap-8">
             <div className="flex-1 text-center lg:text-left">
@@ -271,7 +265,6 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Blog Bölümü */}
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-center gap-8">
             <div className="flex-1 text-center lg:text-left">

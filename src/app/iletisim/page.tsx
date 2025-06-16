@@ -13,11 +13,8 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
     const { success } = await searchParams;
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
-            {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Contact Information */}
                 <div className="space-y-6">
-                    {/* Contact Options */}
                     <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
@@ -76,7 +73,6 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                         </div>
                     </div>
 
-                    {/* About Sorgulat */}
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
@@ -121,7 +117,6 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                     </div>
                 </div>
 
-                {/* Contact Form */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">

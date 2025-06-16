@@ -1,11 +1,12 @@
 import { TimezoneData } from "@/app/saat-kac/types/Timezone.types"
 import { TimezoneLink } from "../RandomItems"
+import { memo } from "react"
 
 interface IAllCitiesByCountry {
     allCities: TimezoneData[]
 }
 
-const AllCitiesByCountry: React.FC<IAllCitiesByCountry> = ({ allCities }) => {
+const AllCitiesByCountry: React.FC<IAllCitiesByCountry> = memo(({ allCities }) => {
     return (
         <div className="space-y-6">
             <div className="text-center">
@@ -24,6 +25,8 @@ const AllCitiesByCountry: React.FC<IAllCitiesByCountry> = ({ allCities }) => {
             </div>
         </div>
     )
-}
+})
+
+AllCitiesByCountry.displayName = 'AllCitiesByCountry'
 
 export default AllCitiesByCountry

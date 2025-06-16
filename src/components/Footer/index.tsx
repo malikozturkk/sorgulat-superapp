@@ -60,9 +60,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 py-12">
-        {/* Ana İçerik */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Logo ve Açıklama */}
           <div className="lg:col-span-2">
             <Link href="/" title="Logo" className="inline-block mb-4">
               <Image 
@@ -77,7 +75,6 @@ const Footer: React.FC = () => {
               Sorgulat.com, dünya saatlerini anlık takip edebileceğiniz, vize durumlarını harita üzerinden görebileceğiniz, YKS tercih robotumuzla üniversite seçiminizi kolaylaştırabileceğiniz ve seyahat rehberleriyle dolu blog yazılarına ulaşabileceğiniz pratik bir bilgi kaynağıdır.
             </p>
             
-            {/* Sosyal Medya */}
             <div className="flex items-center gap-3">
               <Link
                 target="_blank"
@@ -112,7 +109,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Menü Bölümleri */}
           <div className="lg:col-span-3">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {footerData.map((data) => (
@@ -151,7 +147,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Alt Bilgi */}
         <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">

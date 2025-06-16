@@ -10,9 +10,7 @@ export const metadata = async () => {
 export default async function Contact() {
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
-            {/* About Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Image Section */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
@@ -28,7 +26,6 @@ export default async function Contact() {
                     </div>
                 </div>
 
-                {/* Text Content */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="space-y-6">
                         <div className="flex items-start gap-4">
@@ -82,7 +79,6 @@ export default async function Contact() {
                 </div>
             </div>
 
-            {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
                     <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-4">
@@ -117,7 +113,6 @@ export default async function Contact() {
                 </div>
             </div>
 
-            {/* Contact Section */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border border-gray-200">
                 <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center">

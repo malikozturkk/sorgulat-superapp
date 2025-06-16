@@ -6,10 +6,13 @@ import { defaultGenerateMetadata } from "@/app/metadataConfig";
 import AllCitiesByCountry from "@/components/Timezone/AllCitiesByCountry";
 import NotFound from "@/app/not-found";
 import { FiSun, FiSunrise, FiSunset, FiClock, FiMapPin, FiInfo, FiGlobe } from "react-icons/fi";
+import { Metadata } from "next";
+import LayoutShiftPrevention from "@/components/LayoutShiftPrevention";
+import LazyLoad from "@/components/LazyLoad";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: { params: Params }) {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
     const { slug } = await params
     try {
         if (!slug) {
@@ -30,6 +33,9 @@ export async function generateMetadata({ params }: { params: Params }) {
                 },
             ],
             icons: '/favicon.ico',
+            alternates: {
+                canonical: `https://www.sorgulat.com/saat-kac/${data.timezone.slug}`,
+            },
             openGraph: {
                 title: `${name} Saat Kaç | Sorgulat`,
                 description: `Anlık olarak ${name} saatini öğrenin, popüler şehirlerle saat farkını keşfedin ve güneşin doğuş/batış saatlerini görüntüleyin.`,
@@ -78,66 +84,66 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
         const calculatedDifference = timeDifferenceCalculator(getTime.hour, getTime.minute, getTime.populerCities[0].hour, getTime.populerCities[0].minute)
 
         return (
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
-                {/* Header Section */}
-                <div className="text-center">
+            <LayoutShiftPrevention className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
+                <LayoutShiftPrevention className="text-center" minHeight="120px">
                     <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
                         {getTime.timezone.name} Saat Kaç?
                     </h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                         {getTime.timezone.name} için anlık saat bilgisi, güneş doğuş/batış saatleri ve popüler şehirlerle saat farkları
                     </p>
-                </div>
+                </LayoutShiftPrevention>
 
-                {/* Live Clock Section */}
-                <div className="flex justify-center">
-                    <LiveClock initialTime={getTime} />
-                </div>
+                <LazyLoad minHeight="200px">
+                    <LayoutShiftPrevention className="flex justify-center" minHeight="200px">
+                        <LiveClock initialTime={getTime} />
+                    </LayoutShiftPrevention>
+                </LazyLoad>
 
-                {/* Main Content */}
                 <div className="space-y-8">
-                    {/* Saat Farkı Grafiği */}
-                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                <FiMapPin className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                                <h2 className="text-2xl font-bold text-gray-900">
-                                    Saat Farkları
-                                </h2>
-                                <p className="text-gray-600">
-                                    {getTime.timezone.name} ile diğer şehirler arasındaki saat farkları
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <TimeDifferenceGraph differenceTime={differenceTime} initialTime={getTime} />
-                    </div>
-
-                    {/* Tüm Şehirler */}
-                    {getTime.allCities && getTime.allCities.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <LazyLoad minHeight="400px">
+                        <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100" minHeight="400px">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                                    <FiGlobe className="w-6 h-6 text-white" />
+                                <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                                    <FiMapPin className="w-6 h-6 text-white" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-bold text-gray-900">
-                                        Tüm Şehirler
+                                        Saat Farkları
                                     </h2>
                                     <p className="text-gray-600">
-                                        {getTime.timezone.country} ülkesindeki tüm şehirlerin saatleri
+                                        {getTime.timezone.name} ile diğer şehirler arasındaki saat farkları
                                     </p>
                                 </div>
                             </div>
                             
-                            <AllCitiesByCountry allCities={getTime.allCities} />
-                        </div>
+                            <TimeDifferenceGraph differenceTime={differenceTime} initialTime={getTime} />
+                        </LayoutShiftPrevention>
+                    </LazyLoad>
+
+                    {getTime.allCities && getTime.allCities.length > 0 && (
+                        <LazyLoad minHeight="300px">
+                            <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100" minHeight="300px">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                                        <FiGlobe className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-2xl font-bold text-gray-900">
+                                            Tüm Şehirler
+                                        </h2>
+                                        <p className="text-gray-600">
+                                            {getTime.timezone.country} ülkesindeki tüm şehirlerin saatleri
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <AllCitiesByCountry allCities={getTime.allCities} />
+                            </LayoutShiftPrevention>
+                        </LazyLoad>
                     )}
 
-                    {/* Bilgi Kartı */}
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                    <LayoutShiftPrevention className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100" minHeight="150px">
                         <div className="flex items-start gap-4">
                             <div className="flex-shrink-0 mt-1">
                                 <FiInfo className="w-6 h-6 text-blue-600" />
@@ -166,7 +172,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </LayoutShiftPrevention>
                 </div>
 
                 <script type="application/ld+json" suppressHydrationWarning>
@@ -233,7 +239,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                         ]
                     })}
                 </script>
-            </div>
+            </LayoutShiftPrevention>
         );
     }
     catch (e) {

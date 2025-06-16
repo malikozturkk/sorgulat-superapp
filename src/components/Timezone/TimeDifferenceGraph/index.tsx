@@ -1,6 +1,7 @@
 import { DifferenceData, TimeData } from "@/app/saat-kac/types/Timezone.types";
 import Link from "next/link";
 import { FiArrowRight, FiSun, FiSunrise, FiSunset, FiClock } from "react-icons/fi";
+import { useMemo } from "react";
 
 interface ITimeDifferenceGraph {
     differenceTime: DifferenceData
@@ -8,9 +9,32 @@ interface ITimeDifferenceGraph {
 }
 
 const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, initialTime }) => {
+    const animationStyles = useMemo(() => `
+        @keyframes fillBar {
+            from {
+                width: 0;
+            }
+            to {
+                width: var(--bar-width);
+            }
+        }
+
+        .animated-bar {
+            position: absolute;
+            height: 1.5rem;
+            background-color: white;
+            animation: fillBar 0.5s ease-out forwards;
+            will-change: width;
+        }
+
+        .animated-bar:hover {
+            background-color: #646ecb;
+            transition: background-color 0.2s ease;
+        }
+    `, []);
+
     return (
         <div className="space-y-8">
-            {/* Saat Farkları Grafiği */}
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold text-white mb-2">
@@ -21,29 +45,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                     </p>
                 </div>
                 
-                <style>
-                    {`
-                @keyframes fillBar {
-                    from {
-                        width: 0;
-                    }
-                    to {
-                        width: var(--bar-width);
-                    }
-                }
-
-                .animated-bar {
-                    position: absolute;
-                    height: 1.5rem;
-                    background-color: white;
-                    animation: fillBar 0.5s ease-out forwards;
-                }
-
-                .animated-bar:hover {
-                    background-color: #646ecb;
-                }
-                `}
-                </style>
+                <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
                 
                 <div className="space-y-4">
                     {differenceTime.destinations.map((city) => {
@@ -52,7 +54,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
 
                         return (
                             <div key={city.name} className="group flex items-center w-full hover:bg-gray-700 transition-all duration-200 rounded-lg p-3">
-                                <Link href={`/saat-kac/${city.slug}`} target="_blank" className="w-40 text-right pr-4 border-b border-gray-600 group-hover:border-primary cursor-pointer font-medium">
+                                <Link href={`/saat-kac/${city.slug}`} target="_blank" className="w-40 text-right pr-4 border-b border-gray-600 group-hover:border-primary cursor-pointer font-medium transition-colors duration-200">
                                     {city.name}
                                 </Link>
                                 <div className="relative flex-1 h-10 p-2 hidden sm:block">
@@ -65,6 +67,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                                             left: left,
                                             marginLeft: city.offset > 0 ? "12px" : "",
                                         } as React.CSSProperties}
+                                        aria-label={`${city.name} ile saat farkı: ${city.offset} saat`}
                                     ></div>
                                 </div>
                                 <div className="w-28 text-left pl-4 h-6 font-semibold">
@@ -86,7 +89,6 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                 </div>
             </div>
 
-            {/* Güneş Bilgileri */}
             <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl p-8 border border-orange-100">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center">

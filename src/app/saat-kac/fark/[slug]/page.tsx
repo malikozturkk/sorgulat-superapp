@@ -67,7 +67,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
 
         return (
             <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-8 pb-6 md:pb-12">
-                {/* Hero Section */}
                 <div className="text-center">
                     <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
                         <span>
@@ -79,7 +78,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </p>
                 </div>
 
-                {/* Ana Karşılaştırma Kartı */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="text-center mb-8">
                         <div className="w-16 h-16 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -92,7 +90,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </div>
 
                     <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-8">
-                        {/* İlk Şehir */}
                         <div className="flex flex-col items-center w-full lg:w-1/3">
                             <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border-4 border-primary bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center text-lg md:text-2xl font-bold text-white mb-4 shadow-lg">
                                 {fromTime.timeFormatted}
@@ -103,7 +100,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                             <p className="text-sm text-gray-400">{fromTime.dayFormatted}</p>
                         </div>
 
-                        {/* Fark Bilgisi */}
                         <div className="flex flex-col items-center w-full lg:w-1/3">
                             <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                                 <FaArrowRightLong className="w-8 h-8 text-white" />
@@ -118,7 +114,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                             </div>
                         </div>
 
-                        {/* İkinci Şehir */}
                         <div className="flex flex-col items-center w-full lg:w-1/3">
                             <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border-4 border-primary bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center text-lg md:text-2xl font-bold text-white mb-4 shadow-lg">
                                 {toTime.timeFormatted}
@@ -131,7 +126,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </div>
                 </div>
 
-                {/* Detaylı Bilgi Kartları */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-4">
@@ -180,7 +174,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </div>
                 </div>
 
-                {/* Saat Tablosu */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="text-center mb-8">
                         <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -224,7 +217,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </div>
                 </div>
 
-                {/* Yeni Karşılaştırma Formu */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
                     <div className="text-center mb-8">
                         <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -243,7 +235,6 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                     </div>
                 </div>
 
-                {/* Popüler Karşılaştırmalar */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl font-bold text-gray-900 mb-2">

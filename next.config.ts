@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['react-icons'],
   },
   compiler: {

@@ -36,7 +36,7 @@ export default async function WhatTime() {
                         </p>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 min-h-[200px] contain-layout">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                             <FiClock className="w-6 h-6 text-white" />
@@ -52,7 +52,7 @@ export default async function WhatTime() {
                 </div>
 
                 <div className="space-y-8">
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100 relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100 relative overflow-hidden min-h-[400px] contain-layout">
                         <div className="absolute top-4 right-4">
                             <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
                                 <FiStar className="w-3 h-3" />
@@ -131,7 +131,7 @@ export default async function WhatTime() {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 min-h-[300px] contain-layout">
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                                 <FiGlobe className="w-6 h-6 text-white" />

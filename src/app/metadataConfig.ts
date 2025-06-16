@@ -116,6 +116,28 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             },
         ],
         icon: '/favicon.ico',
+        openGraph: {
+            title: 'Saat Kaç | Sorgulat',
+            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+            url: 'https://www.sorgulat.com/saat-kac',
+            images: '/images/openGraph/time.png',
+            type: 'website',
+            siteName: 'Sorgulat',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: 'Saat Kaç | Sorgulat',
+            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+            images: '/images/openGraph/time.png',
+            site: '@Sorgulat',
+        },
+        alternates: {
+            canonical: "/saat-kac",
+            types: {
+                "application/opensearchdescription+xml": "/opensearch.xml",
+                "application/rss+xml": "https://sorgulat.com/rss.xml",
+            },
+        },
     },
     '/gizlilik': {
         title: 'Gizlilik Koşulları | Sorgulat',

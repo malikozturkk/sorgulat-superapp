@@ -7,18 +7,22 @@ import Link from 'next/link';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 
 export default function LiveClock({ initialTime, fontSizeType = 'large' }: { initialTime: TimeData, fontSizeType?: 'large' | 'small' }) {
-    const [clientData, setClientData] = useState(initialTime)
-    const [currentTime, setCurrentTime] = useState<Date>(new Date(initialTime.dateTime));
+    const [clientData, setClientData] = useState<TimeData | null>(null)
+    const [currentTime, setCurrentTime] = useState<Date | null>(null);
     const [fullScreen, setFullScreen] = useState<boolean>(false);
     const [isClient, setIsClient] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
-    }, []);
+        if (initialTime) {
+            setClientData(initialTime);
+            setCurrentTime(new Date(initialTime.dateTime));
+        }
+    }, [initialTime]);
 
     const formattedDate = useMemo(() => {
-        if (!isClient) return '';
+        if (!isClient || !clientData) return '';
         try {
             const date = new Date(clientData.dateTime);
             return new Intl.DateTimeFormat('tr-TR', {
@@ -31,17 +35,21 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             console.error('Date formatting error:', error);
             return '';
         }
-    }, [clientData.dateTime, isClient]);
+    }, [clientData?.dateTime, isClient, clientData]);
 
     const fontSize = useMemo(() => {
         return fullScreen ? "20vw" : fontSizeType === 'small' ? '6vw' : '12vw';
     }, [fullScreen, fontSizeType]);
 
     const updateTime = useCallback(() => {
-        setCurrentTime((prevTime) => new Date(prevTime.getTime() + 1000));
+        setCurrentTime((prevTime) => {
+            if (!prevTime) return new Date();
+            return new Date(prevTime.getTime() + 1000);
+        });
     }, []);
 
     const fetchTime = useCallback(async () => {
+        if (!initialTime?.timezone?.slug) return;
         try {
             const response: TimeData = await getRequest(`/timezones/${initialTime.timezone.slug}`);
             setCurrentTime(new Date(response?.dateTime || Date.now()));
@@ -50,7 +58,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             console.error('Time fetch error:', error);
             setHasError(true);
         }
-    }, [initialTime.timezone.slug]);
+    }, [initialTime?.timezone?.slug]);
 
     useEffect(() => {
         if (!isClient) return;
@@ -65,7 +73,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
     }, [fetchTime, isClient]);
 
     const formattedTime = useMemo(() => {
-        if (!isClient) return '';
+        if (!isClient || !currentTime || !clientData) return '';
         try {
             return new Intl.DateTimeFormat('tr-TR', {
                 hour: '2-digit',
@@ -78,7 +86,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             console.error('Time formatting error:', error);
             return '';
         }
-    }, [currentTime, clientData?.timezone.timezone, isClient]);
+    }, [currentTime, clientData?.timezone.timezone, isClient, clientData]);
 
     if (!isClient) {
         return (
@@ -137,11 +145,11 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
                 }
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-extrabold text-xl md:text-4xl'>{clientData?.timezone?.name}'<span className='font-normal'>{clientData?.locationText} saat kaç</span></h1>
-                    {!fullScreen && clientData?.timezone?.name !== clientData.timezone.country && (
-                        <div className='font-extrabold text-xs p-1 absolute -right-4 -top-4 bg-primary text-white rounded-full md:p-2 md:text-xl'>{clientData.timezone.country}</div>
+                    {!fullScreen && clientData?.timezone?.name !== clientData?.timezone?.country && (
+                        <div className='font-extrabold text-xs p-1 absolute -right-4 -top-4 bg-primary text-white rounded-full md:p-2 md:text-xl'>{clientData?.timezone?.country}</div>
                     )}
                 </div>
-                <time className='font-bold leading-none' style={{ fontSize }} dateTime={currentTime.toISOString()}>
+                <time className='font-bold leading-none' style={{ fontSize }} dateTime={currentTime?.toISOString()}>
                     {formattedTime}
                 </time>
                 <p className='text-lg md:text-4xl w-full text-right'>{formattedDate}</p>

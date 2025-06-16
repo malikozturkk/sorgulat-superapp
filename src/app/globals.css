@@ -54,6 +54,11 @@ body {
     contain: layout style paint;
     min-height: 100px;
   }
+  
+  .contain-layout {
+    contain: layout style paint;
+    will-change: auto;
+  }
 }
 
 button {

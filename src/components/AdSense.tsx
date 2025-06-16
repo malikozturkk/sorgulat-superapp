@@ -39,6 +39,7 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                     data-ad-format="auto"
                     data-full-width-responsive="true"
                     data-adtest="off"
+                    data-ad-region="auto"
                 />
             </div>
         </>

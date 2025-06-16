@@ -69,7 +69,7 @@ export default async function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                 YKS Tercih Robotu
               </h2>
-              <p className="text-gray-600 mb-6 max-w-2xl">
+              <p className="text-gray-700 mb-6 max-w-2xl">
                 Size en uygun üniversite ve bölümleri bulmak için akıllı tercih robotumuzu kullanın. 
                 Puanınıza, sıralamanıza ve tercihlerinize göre en iyi seçenekleri keşfedin.
               </p>
@@ -89,9 +89,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                       <FiTrendingUp className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Akıllı Filtreleme</h3>
+                    <h2 className="font-semibold text-gray-900">Akıllı Filtreleme</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Şehir, üniversite ve bölüm tercihlerinize göre filtreleme</p>
+                  <p className="text-sm text-gray-700">Şehir, üniversite ve bölüm tercihlerinize göre filtreleme</p>
                 </div>
                 
                 <div className="bg-white rounded-xl p-4 border border-purple-200">
@@ -99,9 +99,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center">
                       <FiSearch className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Detaylı Analiz</h3>
+                    <h2 className="font-semibold text-gray-900">Detaylı Analiz</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Puan ve sıralama analizi ile en uygun seçenekler</p>
+                  <p className="text-sm text-gray-700">Puan ve sıralama analizi ile en uygun seçenekler</p>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default async function Home() {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                   Saat Kaç?
                 </h2>
-                <p className="text-gray-600 mb-6 max-w-2xl">
+                <p className="text-gray-700 mb-6 max-w-2xl">
                   Dünyanın her yerinde anlık saat bilgisine ulaşın! Farklı zaman dilimlerini keşfedin ve global saat bilgilerini takip edin.
                 </p>
                 <div className="mb-6">
@@ -141,9 +141,9 @@ export default async function Home() {
                       <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                         <FiGlobe className="w-4 h-4 text-white" />
                       </div>
-                      <h3 className="font-semibold text-gray-900">Global Saat</h3>
+                      <h2 className="font-semibold text-gray-900">Global Saat</h2>
                     </div>
-                    <p className="text-sm text-gray-600">Dünyanın her yerindeki anlık saat bilgileri</p>
+                    <p className="text-sm text-gray-700">Dünyanın her yerindeki anlık saat bilgileri</p>
                   </div>
                   
                   <div className="bg-white rounded-xl p-4 border border-blue-200">
@@ -151,9 +151,9 @@ export default async function Home() {
                       <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center">
                         <FiSearch className="w-4 h-4 text-white" />
                       </div>
-                      <h3 className="font-semibold text-gray-900">Kolay Arama</h3>
+                      <h2 className="font-semibold text-gray-900">Kolay Arama</h2>
                     </div>
-                    <p className="text-sm text-gray-600">Şehir ve ülke bazında hızlı saat arama</p>
+                    <p className="text-sm text-gray-700">Şehir ve ülke bazında hızlı saat arama</p>
                   </div>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default async function Home() {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                   Türkiye Vize Haritası
                 </h2>
-                <p className="text-gray-600 mb-6 max-w-2xl">
+                <p className="text-gray-700 mb-6 max-w-2xl">
                   Türkiye'den vizesiz veya farklı vize türleriyle gidilebilen ülkeleri keşfedin! 
                   Seyahat planlarınızı kolayca yapın.
                 </p>
@@ -193,9 +193,9 @@ export default async function Home() {
                       <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                         <FiMapPin className="w-4 h-4 text-white" />
                       </div>
-                      <h3 className="font-semibold text-gray-900">Vize Durumu</h3>
+                      <h2 className="font-semibold text-gray-900">Vize Durumu</h2>
                     </div>
-                    <p className="text-sm text-gray-600">Ülkelere göre vize gereklilikleri</p>
+                    <p className="text-sm text-gray-700">Ülkelere göre vize gereklilikleri</p>
                   </div>
                   
                   <div className="bg-white rounded-xl p-4 border border-green-200">
@@ -203,9 +203,9 @@ export default async function Home() {
                       <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                         <FiTrendingUp className="w-4 h-4 text-white" />
                       </div>
-                      <h3 className="font-semibold text-gray-900">Güncel Bilgi</h3>
+                      <h2 className="font-semibold text-gray-900">Güncel Bilgi</h2>
                     </div>
-                    <p className="text-sm text-gray-600">En güncel vize ve pasaport bilgileri</p>
+                    <p className="text-sm text-gray-700">En güncel vize ve pasaport bilgileri</p>
                   </div>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default async function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                 Saat Farkı Bul
               </h2>
-              <p className="text-gray-600 mb-6 max-w-2xl">
+              <p className="text-gray-700 mb-6 max-w-2xl">
                 İki şehir seçerek, aralarındaki saat farkını öğrenin! 
                 Seyahat planlarınız için zaman hesaplamalarını kolayca yapın.
               </p>
@@ -246,9 +246,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                       <FiClock className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Hızlı Hesaplama</h3>
+                    <h2 className="font-semibold text-gray-900">Hızlı Hesaplama</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Anında saat farkı hesaplama</p>
+                  <p className="text-sm text-gray-700">Anında saat farkı hesaplama</p>
                 </div>
                 
                 <div className="bg-white rounded-xl p-4 border border-orange-200">
@@ -256,9 +256,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
                       <FiSearch className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Kolay Seçim</h3>
+                    <h2 className="font-semibold text-gray-900">Kolay Seçim</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Şehir listesinden kolay seçim</p>
+                  <p className="text-sm text-gray-700">Şehir listesinden kolay seçim</p>
                 </div>
               </div>
             </div>
@@ -274,7 +274,7 @@ export default async function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                 Seyahat Rehberleri
               </h2>
-              <p className="text-gray-600 mb-6 max-w-2xl">
+              <p className="text-gray-700 mb-6 max-w-2xl">
                 Ülkelere özel seyahat rehberleri, vize gereklilikleri ve kapsamlı seyahat bilgileriyle 
                 yolculuklarınızı planlamanıza yardımcı olacak bloglarımızı keşfedin.
               </p>
@@ -302,9 +302,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center">
                       <FiBookOpen className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Detaylı Rehberler</h3>
+                    <h2 className="font-semibold text-gray-900">Detaylı Rehberler</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Kapsamlı seyahat ve vize rehberleri</p>
+                  <p className="text-sm text-gray-700">Kapsamlı seyahat ve vize rehberleri</p>
                 </div>
                 
                 <div className="bg-white rounded-xl p-4 border border-indigo-200">
@@ -312,9 +312,9 @@ export default async function Home() {
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                       <FiTrendingUp className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900">Güncel İçerik</h3>
+                    <h2 className="font-semibold text-gray-900">Güncel İçerik</h2>
                   </div>
-                  <p className="text-sm text-gray-600">Sürekli güncellenen seyahat bilgileri</p>
+                  <p className="text-sm text-gray-700">Sürekli güncellenen seyahat bilgileri</p>
                 </div>
               </div>
             </div>

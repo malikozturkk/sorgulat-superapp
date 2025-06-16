@@ -1325,9 +1325,9 @@ export default function UniversityMatch() {
                                     <FiInfo className="w-5 h-5 text-blue-500" />
                                 </div>
                                 <div className="flex-1">
-                                    <h4 className="text-sm font-medium text-blue-900 mb-1">
+                                    <h3 className="text-sm font-medium text-blue-900 mb-1">
                                         İsteğe Bağlı Seçim
-                                    </h4>
+                                    </h3>
                                     <p className="text-sm text-blue-700 leading-relaxed">
                                         Seçim yapmak zorunda değilsiniz. Hiçbirini seçmezseniz, tüm seçenekler geçerli sayılır.
                                     </p>

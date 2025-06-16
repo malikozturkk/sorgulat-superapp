@@ -15,6 +15,7 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                 src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${pId}`}
                 crossOrigin="anonymous"
                 strategy="afterInteractive"
+                id="adsense-script"
             />
             <div 
                 className={`adsbygoogle-container ${className}`}
@@ -24,6 +25,7 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                     ...style
                 }}
                 aria-label="Reklam alanı"
+                data-ad-client={`ca-pub-${pId}`}
             >
                 <ins 
                     className="adsbygoogle"
@@ -36,6 +38,7 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                     data-ad-slot="auto"
                     data-ad-format="auto"
                     data-full-width-responsive="true"
+                    data-adtest="off"
                 />
             </div>
         </>

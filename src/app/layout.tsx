@@ -38,8 +38,22 @@ export default function RootLayout({
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
-          gtag('config', 'G-1VTVJYYXQR');
+          
+          // Consent mode setup
+          gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'personalization_storage': 'denied',
+            'functionality_storage': 'denied',
+            'security_storage': 'granted'
+          });
+          
+          gtag('config', 'G-1VTVJYYXQR', {
+            'anonymize_ip': true,
+            'allow_google_signals': false,
+            'allow_ad_personalization_signals': false,
+            'restricted_data_processing': true
+          });
         `}
       </Script>
       </head>

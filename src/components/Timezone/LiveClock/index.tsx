@@ -11,19 +11,26 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
     const [currentTime, setCurrentTime] = useState<Date>(new Date(initialTime.dateTime));
     const [fullScreen, setFullScreen] = useState<boolean>(false);
     const [isClient, setIsClient] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
     useEffect(() => {
         setIsClient(true);
     }, []);
 
     const formattedDate = useMemo(() => {
         if (!isClient) return '';
-        const date = new Date(clientData.dateTime);
-        return new Intl.DateTimeFormat('tr-TR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            weekday: 'long',
-        }).format(date);
+        try {
+            const date = new Date(clientData.dateTime);
+            return new Intl.DateTimeFormat('tr-TR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                weekday: 'long',
+            }).format(date);
+        } catch (error) {
+            console.error('Date formatting error:', error);
+            return '';
+        }
     }, [clientData.dateTime, isClient]);
 
     const fontSize = useMemo(() => {
@@ -41,6 +48,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             setClientData(response);
         } catch (error) {
             console.error('Time fetch error:', error);
+            setHasError(true);
         }
     }, [initialTime.timezone.slug]);
 
@@ -58,13 +66,18 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
 
     const formattedTime = useMemo(() => {
         if (!isClient) return '';
-        return new Intl.DateTimeFormat('tr-TR', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-            timeZone: clientData?.timezone.timezone,
-        }).format(currentTime);
+        try {
+            return new Intl.DateTimeFormat('tr-TR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: clientData?.timezone.timezone,
+            }).format(currentTime);
+        } catch (error) {
+            console.error('Time formatting error:', error);
+            return '';
+        }
     }, [currentTime, clientData?.timezone.timezone, isClient]);
 
     if (!isClient) {
@@ -75,6 +88,21 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
                         <div className="h-8 bg-gray-200 rounded mb-4 w-64"></div>
                         <div className="h-16 bg-gray-200 rounded mb-4 w-32"></div>
                         <div className="h-6 bg-gray-200 rounded w-48"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (hasError) {
+        return (
+            <div className='flex flex-col gap-4 w-full mx-auto max-w-7xl'>
+                <div className="flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-red-300 relative mx-4 sm:mx-6 lg:mx-8" style={{ minHeight: '200px' }}>
+                    <div className="text-center">
+                        <h1 className='font-extrabold text-xl md:text-4xl text-red-600 mb-4'>
+                            Saat bilgisi yüklenemedi
+                        </h1>
+                        <p className="text-gray-600">Lütfen sayfayı yenileyin</p>
                     </div>
                 </div>
             </div>

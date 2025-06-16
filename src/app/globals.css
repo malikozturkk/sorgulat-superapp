@@ -47,6 +47,12 @@ body {
   /* Reduce layout thrashing */
   .stable-layout {
     contain: layout style paint;
+    min-height: 100vh;
+  }
+  
+  .prevent-layout-shift {
+    contain: layout style paint;
+    min-height: 100px;
   }
 }
 
@@ -72,19 +78,67 @@ img {
 .clock-container {
   min-height: 200px;
   contain: layout style paint;
+  will-change: auto;
 }
 
 .time-difference-container {
   min-height: 400px;
   contain: layout style paint;
+  will-change: auto;
 }
 
 .cities-container {
   min-height: 300px;
   contain: layout style paint;
+  will-change: auto;
 }
 
 .info-container {
   min-height: 150px;
   contain: layout style paint;
+  will-change: auto;
+}
+
+.font-sans {
+  font-family: 'Sen', TimeTraveler, Arial, Helvetica, sans-serif;
+  font-display: swap;
+}
+
+@media (max-width: 768px) {
+  .clock-container {
+    min-height: 150px;
+  }
+  
+  .time-difference-container {
+    min-height: 300px;
+  }
+  
+  .cities-container {
+    min-height: 200px;
+  }
+  
+  .info-container {
+    min-height: 120px;
+  }
+}
+
+.critical-content {
+  contain: layout style paint;
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

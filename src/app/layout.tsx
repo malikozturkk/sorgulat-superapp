@@ -16,9 +16,30 @@ export default function RootLayout({
       <head>
       <AdSense pId="4912331234184158" />
       <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
           href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
           rel="stylesheet"
+          media="print"
+          onLoad={(e) => {
+            const target = e.target as HTMLLinkElement;
+            target.media = 'all';
+          }}
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-1VTVJYYXQR"

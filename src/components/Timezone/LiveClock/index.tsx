@@ -10,8 +10,13 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
     const [clientData, setClientData] = useState(initialTime)
     const [currentTime, setCurrentTime] = useState<Date>(new Date(initialTime.dateTime));
     const [fullScreen, setFullScreen] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const formattedDate = useMemo(() => {
+        if (!isClient) return '';
         const date = new Date(clientData.dateTime);
         return new Intl.DateTimeFormat('tr-TR', {
             day: 'numeric',
@@ -19,7 +24,7 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             year: 'numeric',
             weekday: 'long',
         }).format(date);
-    }, [clientData.dateTime]);
+    }, [clientData.dateTime, isClient]);
 
     const fontSize = useMemo(() => {
         return fullScreen ? "20vw" : fontSizeType === 'small' ? '6vw' : '12vw';
@@ -40,16 +45,19 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
     }, [initialTime.timezone.slug]);
 
     useEffect(() => {
+        if (!isClient) return;
         const interval = setInterval(updateTime, 1000);
         return () => clearInterval(interval);
-    }, [updateTime]);
+    }, [updateTime, isClient]);
 
     useEffect(() => {
+        if (!isClient) return;
         const fetchInterval = setInterval(fetchTime, 10000);
         return () => clearInterval(fetchInterval);
-    }, [fetchTime]);
+    }, [fetchTime, isClient]);
 
     const formattedTime = useMemo(() => {
+        if (!isClient) return '';
         return new Intl.DateTimeFormat('tr-TR', {
             hour: '2-digit',
             minute: '2-digit',
@@ -57,7 +65,21 @@ export default function LiveClock({ initialTime, fontSizeType = 'large' }: { ini
             hour12: false,
             timeZone: clientData?.timezone.timezone,
         }).format(currentTime);
-    }, [currentTime, clientData?.timezone.timezone]);
+    }, [currentTime, clientData?.timezone.timezone, isClient]);
+
+    if (!isClient) {
+        return (
+            <div className='flex flex-col gap-4 w-full mx-auto max-w-7xl'>
+                <div className="flex flex-col items-center justify-center text-xl p-4 border-4 rounded-2xl shadow-xl border-primary relative mx-4 sm:mx-6 lg:mx-8" style={{ minHeight: '200px' }}>
+                    <div className="animate-pulse">
+                        <div className="h-8 bg-gray-200 rounded mb-4 w-64"></div>
+                        <div className="h-16 bg-gray-200 rounded mb-4 w-32"></div>
+                        <div className="h-6 bg-gray-200 rounded w-48"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className='flex flex-col gap-4 w-full mx-auto max-w-7xl'>

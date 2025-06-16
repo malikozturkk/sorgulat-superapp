@@ -84,8 +84,8 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
         const calculatedDifference = timeDifferenceCalculator(getTime.hour, getTime.minute, getTime.populerCities[0].hour, getTime.populerCities[0].minute)
 
         return (
-            <LayoutShiftPrevention className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
-                <LayoutShiftPrevention className="text-center" minHeight="120px">
+            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12 stable-layout">
+                <LayoutShiftPrevention className="text-center" minHeight="120px" style={{ contain: 'layout style paint' }}>
                     <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
                         {getTime.timezone.name} Saat Kaç?
                     </h1>
@@ -95,14 +95,14 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                 </LayoutShiftPrevention>
 
                 <LazyLoad minHeight="200px">
-                    <LayoutShiftPrevention className="flex justify-center" minHeight="200px">
+                    <LayoutShiftPrevention className="flex justify-center clock-container" minHeight="200px">
                         <LiveClock initialTime={getTime} />
                     </LayoutShiftPrevention>
                 </LazyLoad>
 
                 <div className="space-y-8">
                     <LazyLoad minHeight="400px">
-                        <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100" minHeight="400px">
+                        <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 time-difference-container" minHeight="400px">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                                     <FiMapPin className="w-6 h-6 text-white" />
@@ -123,7 +123,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
 
                     {getTime.allCities && getTime.allCities.length > 0 && (
                         <LazyLoad minHeight="300px">
-                            <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100" minHeight="300px">
+                            <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 cities-container" minHeight="300px">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                                         <FiGlobe className="w-6 h-6 text-white" />
@@ -143,7 +143,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                         </LazyLoad>
                     )}
 
-                    <LayoutShiftPrevention className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100" minHeight="150px">
+                    <LayoutShiftPrevention className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100 info-container" minHeight="150px">
                         <div className="flex items-start gap-4">
                             <div className="flex-shrink-0 mt-1">
                                 <FiInfo className="w-6 h-6 text-blue-600" />
@@ -239,7 +239,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                         ]
                     })}
                 </script>
-            </LayoutShiftPrevention>
+            </div>
         );
     }
     catch (e) {

@@ -29,7 +29,7 @@ export default async function Passport() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900">İnteraktif Vize Haritası</h2>
-                        <p className="text-gray-600">Türk pasaportu ile gidilebilen ülkeleri harita üzerinden keşfedin</p>
+                        <p className="text-gray-700">Türk pasaportu ile gidilebilen ülkeleri harita üzerinden keşfedin</p>
                     </div>
                 </div>
                 <PassportMap countries={countries} counts={counts} />
@@ -50,7 +50,7 @@ export default async function Passport() {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900">Vizesiz Ülkeler</h2>
-                            <p className="text-gray-600">Türk pasaportu ile vizesiz seyahat edilebilen ülkeler</p>
+                            <p className="text-gray-700">Türk pasaportu ile vizesiz seyahat edilebilen ülkeler</p>
                         </div>
                     </div>
                     
@@ -83,7 +83,7 @@ export default async function Passport() {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900">Vize Gereken Ülkeler</h2>
-                            <p className="text-gray-600">Türk pasaportu ile vize alınması gereken ülkeler</p>
+                            <p className="text-gray-700">Türk pasaportu ile vize alınması gereken ülkeler</p>
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@ export default async function Passport() {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900">Kapıda Vize Veren Ülkeler</h2>
-                            <p className="text-gray-600">Havalimanında veya sınırda vize alınabilen ülkeler</p>
+                            <p className="text-gray-700">Havalimanında veya sınırda vize alınabilen ülkeler</p>
                         </div>
                     </div>
                     
@@ -151,7 +151,7 @@ export default async function Passport() {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900">eTA Gereken Ülkeler</h2>
-                            <p className="text-gray-600">Elektronik seyahat izni gerektiren ülkeler</p>
+                            <p className="text-gray-700">Elektronik seyahat izni gerektiren ülkeler</p>
                         </div>
                     </div>
                     

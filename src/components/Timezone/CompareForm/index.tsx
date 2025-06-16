@@ -215,7 +215,7 @@ const CompareForm = () => {
           <button
             type="button"
             onClick={handleExchange}
-            className="absolute -right-6 p-2 top-3 rounded-full bg-gradient-to-r from-primary to-primaryDark text-white border border-primary z-50 hidden sm:block hover:from-primaryDark hover:to-primary transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="absolute -right-7 p-2 top-3 rounded-full bg-gradient-to-r from-primary to-primaryDark text-white border border-primary z-50 hidden sm:block hover:from-primaryDark hover:to-primary transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             aria-label="Şehirleri değiştir"
           >
             <FaExchangeAlt className="w-4 h-4" />

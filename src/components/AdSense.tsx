@@ -21,7 +21,9 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                 className={`adsbygoogle-container ${className}`}
                 style={{
                     minHeight: '280px',
+                    height: '280px',
                     width: '100%',
+                    contain: 'layout style paint',
                     ...style
                 }}
                 aria-label="Reklam alanı"
@@ -32,6 +34,7 @@ const AdSense = ({ pId, className = "", style }: AdsenseTypes) => {
                     style={{ 
                         display: 'block',
                         minHeight: '280px',
+                        height: '280px',
                         width: '100%'
                     }}
                     data-ad-client={`ca-pub-${pId}`}

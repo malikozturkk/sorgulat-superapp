@@ -67,7 +67,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
                                             left: left,
                                             marginLeft: city.offset > 0 ? "12px" : "",
                                         } as React.CSSProperties}
-                                        aria-label={`${city.name} ile saat farkı: ${city.offset} saat`}
+                                        role="presentation"
                                     ></div>
                                 </div>
                                 <div className="w-28 text-left pl-4 h-6 font-semibold">

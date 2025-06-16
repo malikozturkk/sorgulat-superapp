@@ -5,7 +5,7 @@ import TimeDifferenceGraph from "@/components/Timezone/TimeDifferenceGraph";
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
 import AllCitiesByCountry from "@/components/Timezone/AllCitiesByCountry";
 import NotFound from "@/app/not-found";
-import { FiSun, FiSunrise, FiSunset, FiClock, FiMapPin, FiInfo, FiGlobe } from "react-icons/fi";
+import { FiMapPin, FiInfo, FiGlobe } from "react-icons/fi";
 import { Metadata } from "next";
 import LayoutShiftPrevention from "@/components/LayoutShiftPrevention";
 import LazyLoad from "@/components/LazyLoad";
@@ -84,7 +84,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
         const calculatedDifference = timeDifferenceCalculator(getTime.hour, getTime.minute, getTime.populerCities[0].hour, getTime.populerCities[0].minute)
 
         return (
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12 stable-layout">
+            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12 stable-layout prevent-shift">
                 <LayoutShiftPrevention className="text-center" minHeight="120px" style={{ contain: 'layout style paint' }}>
                     <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
                         {getTime.timezone.name} Saat Kaç?
@@ -100,7 +100,7 @@ export default async function WhatTimeIsIt({ params }: { params: Params }) {
                     </LayoutShiftPrevention>
                 </LazyLoad>
 
-                <div className="space-y-8">
+                <div className="space-y-8 min-h-[800px] contain-layout">
                     <LazyLoad minHeight="400px">
                         <LayoutShiftPrevention className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 time-difference-container" minHeight="400px">
                             <div className="flex items-center gap-3 mb-6">

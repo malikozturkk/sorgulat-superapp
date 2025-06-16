@@ -59,6 +59,26 @@ body {
     contain: layout style paint;
     will-change: auto;
   }
+  
+  /* Prevent layout shifts for dynamic content */
+  .prevent-shift {
+    min-height: 200px;
+    contain: layout style paint;
+    will-change: auto;
+  }
+  
+  /* Optimize for AdSense */
+  .adsbygoogle-container {
+    contain: layout style paint;
+    min-height: 280px;
+    height: 280px;
+  }
+  
+  /* Optimize for dynamic content */
+  .dynamic-content {
+    contain: layout style paint;
+    min-height: 100px;
+  }
 }
 
 button {

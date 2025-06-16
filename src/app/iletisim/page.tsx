@@ -20,7 +20,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                     {/* Contact Options */}
                     <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
                                 <FiMail className="w-6 h-6 text-white" />
                             </div>
                             <div>
@@ -79,7 +79,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                     {/* About Sorgulat */}
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                                 <FiShield className="w-6 h-6 text-white" />
                             </div>
                             <div>
@@ -124,7 +124,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                 {/* Contact Form */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                             <FiMessageSquare className="w-6 h-6 text-white" />
                         </div>
                         <div>

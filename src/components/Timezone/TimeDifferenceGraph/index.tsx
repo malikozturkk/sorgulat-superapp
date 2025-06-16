@@ -89,7 +89,7 @@ const TimeDifferenceGraph: React.FC<ITimeDifferenceGraph> = ({ differenceTime, i
             {/* Güneş Bilgileri */}
             <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl p-8 border border-orange-100">
                 <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center">
                         <FiSun className="w-6 h-6 text-white" />
                     </div>
                     <div>

@@ -90,7 +90,7 @@ export default async function WhatTime() {
                     <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
                         <div className="flex items-start gap-6">
                             <div className="flex-shrink-0">
-                                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                                <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
                                     <FiInfo className="w-6 h-6 text-white" />
                                 </div>
                             </div>

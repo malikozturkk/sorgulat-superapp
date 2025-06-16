@@ -55,7 +55,7 @@ export default async function Blog({ searchParams }: SearchParams) {
                         <div className="lg:w-2/3">
                             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                                         <FiBookOpen className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
@@ -87,7 +87,7 @@ export default async function Blog({ searchParams }: SearchParams) {
                                 </div>
                                 
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
+                                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
                                         <FiTrendingUp className="w-6 h-6 text-white" />
                                     </div>
                                     <div>

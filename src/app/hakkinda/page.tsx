@@ -15,7 +15,7 @@ export default async function Contact() {
                 {/* Image Section */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
                             <FiGlobe className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -85,7 +85,7 @@ export default async function Contact() {
             {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-4">
                         <FiGlobe className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Global Erişim</h3>
@@ -93,7 +93,7 @@ export default async function Contact() {
                 </div>
 
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
                         <FiShield className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Güvenli Platform</h3>
@@ -101,7 +101,7 @@ export default async function Contact() {
                 </div>
 
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
                         <FiTrendingUp className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Akıllı Özellikler</h3>
@@ -109,7 +109,7 @@ export default async function Contact() {
                 </div>
 
                 <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-4">
                         <FiStar className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Kullanıcı Dostu</h3>

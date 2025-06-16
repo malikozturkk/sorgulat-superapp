@@ -135,7 +135,7 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                                 <TbCalendarHeart className="w-6 h-6 text-white" />
                             </div>
                             <h3 className="text-lg font-bold text-gray-900">{from.name} Tarih Bilgisi</h3>
@@ -158,7 +158,7 @@ export default async function CompareTimeDetail({ params }: { params: Params }) 
 
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                                 <TbCalendarSearch className="w-6 h-6 text-white" />
                             </div>
                             <h3 className="text-lg font-bold text-gray-900">{to.name} Tarih Bilgisi</h3>

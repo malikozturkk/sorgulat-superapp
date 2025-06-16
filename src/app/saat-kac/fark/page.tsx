@@ -43,7 +43,7 @@ export default async function CompareTime() {
                 {/* Özellikler */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
                             <FiClock className="w-6 h-6 text-white" />
                         </div>
                         <h3 className="text-lg font-bold text-gray-900 mb-2">Anlık Saat Farkı</h3>
@@ -53,7 +53,7 @@ export default async function CompareTime() {
                     </div>
 
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
                             <FiGlobe className="w-6 h-6 text-white" />
                         </div>
                         <h3 className="text-lg font-bold text-gray-900 mb-2">Zaman Dilimi</h3>
@@ -63,7 +63,7 @@ export default async function CompareTime() {
                     </div>
 
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
                             <FiMapPin className="w-6 h-6 text-white" />
                         </div>
                         <h3 className="text-lg font-bold text-gray-900 mb-2">Detaylı Bilgi</h3>
@@ -73,7 +73,7 @@ export default async function CompareTime() {
                     </div>
 
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
                             <FiArrowRight className="w-6 h-6 text-white" />
                         </div>
                         <h3 className="text-lg font-bold text-gray-900 mb-2">Saat Tablosu</h3>
@@ -87,7 +87,7 @@ export default async function CompareTime() {
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
                     <div className="flex items-start gap-4">
                         <div className="flex-shrink-0">
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                            <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                                 <FiInfo className="w-6 h-6 text-white" />
                             </div>
                         </div>

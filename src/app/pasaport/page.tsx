@@ -25,7 +25,7 @@ export default async function Passport() {
             {/* Interactive Map Section */}
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                         <FiGlobe className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -48,7 +48,7 @@ export default async function Passport() {
                     </div>
                     
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                             <FiCheckCircle className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -82,7 +82,7 @@ export default async function Passport() {
                     </div>
                     
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
                             <FiShield className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -119,7 +119,7 @@ export default async function Passport() {
                     </div>
                     
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
                             <FiClock className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -153,7 +153,7 @@ export default async function Passport() {
                     </div>
                     
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 min-w-12 min-h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
                             <FiStar className="w-6 h-6 text-white" />
                         </div>
                         <div>

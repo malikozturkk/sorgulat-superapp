@@ -6,6 +6,7 @@ import { FaUniversity, FaStar, FaGlobe } from "react-icons/fa";
 import Link from "next/link";
 import { translate } from "@/utils/utils";
 import { University } from "../types";
+import { defaultGenerateMetadata } from "@/app/metadataConfig";
 
 type Params = Promise<{ slug: string }>;
 

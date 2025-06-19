@@ -7,9 +7,9 @@ import Link from "next/link";
 import { translate } from "@/utils/utils";
 import { University } from "../types";
 
-type Params = Promise<{ slug: string }>;
+type Params = { slug: string }
 export async function generateMetadata({ params }: { params: Params }) {
-  const { slug } = await params
+  const { slug } = params
   let university = null;
   try {
     const data = await getRequest(`/schools/universities?university=${slug}`);

@@ -512,26 +512,21 @@ export default function UniversityMatch() {
                 'languages': 'selectedLanguages',
                 'educationType': 'educationType'
             };
-            
             const key = keyMap[questionId];
             if (!key) {
                 console.error('Bilinmeyen soru ID:', questionId);
                 return prev;
             }
-            
             const currentValues = (prev[key] as string[]) || [];
-            
+            let newValues;
             if (currentValues.includes(value)) {
-                return {
-                    ...prev,
-                    [key]: currentValues.filter(v => v !== value)
-                };
+                newValues = currentValues.filter(v => v !== value);
             } else {
-                return {
-                    ...prev,
-                    [key]: [...currentValues, value]
-                };
+                newValues = [...currentValues, value];
             }
+            let newPrefs = { ...prev, [key]: newValues };
+            newPrefs = resetLowerFilters(newPrefs, key);
+            return newPrefs;
         });
     };
 
@@ -1323,6 +1318,29 @@ export default function UniversityMatch() {
                 </div>
             </div>
         );
+    };
+    
+    const resetLowerFilters = (prev: UserPreferences, changedKey: keyof UserPreferences) => {
+        const filterOrder: (keyof UserPreferences)[] = [
+            'selectedCities',
+            'selectedUniversityTypes',
+            'selectedUniversities',
+            'selectedFaculties',
+            'selectedDegreeLevels',
+            'selectedScoreTypes',
+            'selectedLanguages',
+            'educationType'
+        ];
+        const changedIndex = filterOrder.indexOf(changedKey);
+        if (changedIndex === -1) return prev;
+        const newPrefs = { ...prev };
+        for (let i = changedIndex + 1; i < filterOrder.length; i++) {
+            const key = filterOrder[i];
+            if (Array.isArray(prev[key])) {
+                (newPrefs as any)[key] = [];
+            }
+        }
+        return newPrefs;
     };
 
     if (loading) {

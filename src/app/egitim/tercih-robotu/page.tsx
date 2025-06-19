@@ -453,9 +453,9 @@ export default function UniversityMatch() {
             { ...prevQuestions[4], options: degreeLevels },
             { ...prevQuestions[5], options: scoreTypes },
             { ...prevQuestions[6], options: languages },
-            { ...prevQuestions[9], options: educationTypes },
-            { ...prevQuestions[7], options: [] },
+            { ...prevQuestions[7], options: educationTypes },
             { ...prevQuestions[8], options: [] },
+            { ...prevQuestions[9], options: [] },
         ]);
 
         type StringArrayKeys =

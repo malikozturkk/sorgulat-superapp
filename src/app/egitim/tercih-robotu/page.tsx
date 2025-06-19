@@ -54,11 +54,11 @@ interface UserPreferences {
     selectedUniversityTypes: string[];
     selectedDegreeLevels: string[];
     selectedScoreTypes: string[];
+    educationType: string[];
     minScore?: number;
     maxScore?: number;
     minRank?: number;
     maxRank?: number;
-    educationType: string[];
     sortBy?: string;
     sortOrder?: string;
 }
@@ -153,6 +153,14 @@ export default function UniversityMatch() {
             required: false
         },
         {
+            id: "educationType",
+            title: "Hangi eğitim türlerini tercih edersiniz?",
+            subtitle: "Eğitim türünü seçin",
+            type: "multiSelect",
+            options: [] as string[],
+            required: false
+        },
+        {
             id: "scoreRange",
             title: "Puan aralığınız nedir?",
             subtitle: "Minimum ve maksimum puanınızı belirtin",
@@ -165,21 +173,11 @@ export default function UniversityMatch() {
             subtitle: "Minimum ve maksimum sıralamanızı belirtin",
             type: "range",
             required: false
-        },
-        {
-            id: "educationType",
-            title: "Hangi eğitim türlerini tercih edersiniz?",
-            subtitle: "Eğitim türünü seçin",
-            type: "multiSelect",
-            options: [] as string[],
-            required: false
         }
     ]);
 
-    // Smooth scroll için ref
     const scrollToTop = useRef<HTMLDivElement>(null);
     
-    // Optimized scroll function
     const smoothScrollToTop = () => {
         if (scrollToTop.current) {
             scrollToTop.current.scrollIntoView({
@@ -187,7 +185,6 @@ export default function UniversityMatch() {
                 block: 'start'
             });
         } else {
-            // Fallback to window.scrollTo
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -328,10 +325,8 @@ export default function UniversityMatch() {
     };
 
     const updateQuestionOptions = () => {
-        // Şehir seçenekleri - her zaman tüm şehirler
         const cities = [...new Set(universities.map(uni => uni.city))].sort(turkishSort);
         
-        // Üniversite türü seçenekleri - seçili şehirlere göre filtrelenmiş
         let universityTypes: string[];
         if (preferences.selectedCities.length > 0) {
             universityTypes = [...new Set(universities
@@ -342,18 +337,15 @@ export default function UniversityMatch() {
             universityTypes = [...new Set(universities.map(uni => translateUniversityType(uni.university_type)))].sort(turkishSort);
         }
         
-        // Üniversite seçenekleri - seçili şehirlere ve üniversite türlerine göre filtrelenmiş
         let universityNames: string[];
         let filteredUniversities = universities;
         
-        // Şehir filtresi
         if (preferences.selectedCities.length > 0) {
             filteredUniversities = filteredUniversities.filter(uni => 
                 preferences.selectedCities.includes(uni.city)
             );
         }
         
-        // Üniversite türü filtresi
         if (preferences.selectedUniversityTypes.length > 0) {
             const selectedTypes = preferences.selectedUniversityTypes.map(turkishType => 
                 reverseTranslateUniversityType(turkishType)
@@ -365,7 +357,6 @@ export default function UniversityMatch() {
         
         universityNames = [...new Set(filteredUniversities.map(uni => uni.name))].sort(turkishSort);
         
-        // Bölüm seçenekleri - seçili üniversitelere göre filtrelenmiş
         let faculties: string[];
         if (preferences.selectedUniversities.length > 0) {
             faculties = [...new Set(universities
@@ -378,7 +369,6 @@ export default function UniversityMatch() {
             ))].sort(turkishSort);
         }
         
-        // Eğitim seviyesi seçenekleri - seçili üniversitelere ve bölümlere göre filtrelenmiş
         let degreeLevels: string[];
         let furtherFilteredUniversities = filteredUniversities;
         
@@ -401,7 +391,6 @@ export default function UniversityMatch() {
             .flatMap(uni => uni.departments.map(dept => translateDegreeLevel(dept.degree_level)))
         )].sort(turkishSort);
         
-        // Puan türü seçenekleri - seçili üniversitelere, bölümlere ve eğitim seviyelerine göre filtrelenmiş
         let scoreTypes: string[];
         let scoreFilteredUniversities = furtherFilteredUniversities;
         
@@ -421,7 +410,6 @@ export default function UniversityMatch() {
             .flatMap(uni => uni.departments.map(dept => translateScoreType(dept.score_type)))
         )].sort(turkishSort);
         
-        // Dil seçenekleri - seçili üniversitelere, bölümlere, eğitim seviyelerine ve puan türlerine göre filtrelenmiş
         let languages: string[];
         let languageFilteredUniversities = scoreFilteredUniversities;
         
@@ -441,7 +429,6 @@ export default function UniversityMatch() {
             .flatMap(uni => uni.departments.map(dept => dept.language))
         )].sort(turkishSort);
         
-        // Eğitim türü seçenekleri - seçili üniversitelere, bölümlere, eğitim seviyelerine, puan türlerine ve dillere göre filtrelenmiş
         let educationTypes: string[];
         let educationFilteredUniversities = languageFilteredUniversities;
         
@@ -466,9 +453,9 @@ export default function UniversityMatch() {
             { ...prevQuestions[4], options: degreeLevels },
             { ...prevQuestions[5], options: scoreTypes },
             { ...prevQuestions[6], options: languages },
-            { ...prevQuestions[7], options: [] }, // scoreRange - options yok
-            { ...prevQuestions[8], options: [] }, // rankRange - options yok
-            { ...prevQuestions[9], options: educationTypes }
+            { ...prevQuestions[9], options: educationTypes },
+            { ...prevQuestions[7], options: [] },
+            { ...prevQuestions[8], options: [] },
         ]);
 
         type StringArrayKeys =
@@ -508,14 +495,12 @@ export default function UniversityMatch() {
     const handleNext = async () => {
         if (currentStep < questions.length - 1) {
             setCurrentStep(currentStep + 1);
-            // Smooth scroll to top with performance optimization
             setTimeout(() => {
                 smoothScrollToTop();
-            }, 100); // Small delay to ensure state update completes
+            }, 100);
         } else {
             await filterResults(1);
             setShowResults(true);
-            // Smooth scroll to top when showing results
             setTimeout(() => {
                 smoothScrollToTop();
             }, 100);
@@ -525,7 +510,6 @@ export default function UniversityMatch() {
     const handlePrevious = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
-            // Smooth scroll to top when going back
             setTimeout(() => {
                 smoothScrollToTop();
             }, 100);
@@ -534,7 +518,6 @@ export default function UniversityMatch() {
 
     const handleMultiSelect = (value: string, questionId: string) => {
         setPreferences(prev => {
-            // Soru ID'lerini UserPreferences key'lerine eşle
             const keyMap: { [key: string]: keyof UserPreferences } = {
                 'cities': 'selectedCities',
                 'universityTypes': 'selectedUniversityTypes',
@@ -577,7 +560,6 @@ export default function UniversityMatch() {
             sortOrder
         };
         setPreferences(newPreferences);
-        // Yeni preferences ile filterResults'ı çağır
         await filterResultsWithPreferences(newPreferences, 1);
     };
 
@@ -595,12 +577,10 @@ export default function UniversityMatch() {
     const buildApiUrl = (prefs: UserPreferences, page: number = 1, limit: number = 5) => {
         const params = new URLSearchParams();
         
-        // Şehir filtreleri
         if (prefs.selectedCities.length > 0) {
             params.append('city', prefs.selectedCities.join(','));
         }
         
-        // Üniversite türü filtreleri
         if (prefs.selectedUniversityTypes.length > 0) {
             const universityTypes = prefs.selectedUniversityTypes.map(turkishType => 
                 reverseTranslateUniversityType(turkishType)
@@ -608,7 +588,6 @@ export default function UniversityMatch() {
             params.append('university_type', universityTypes.join(','));
         }
         
-        // Üniversite filtreleri - slug'lara çevirmemiz gerekiyor
         if (prefs.selectedUniversities.length > 0) {
             const universitySlugs = prefs.selectedUniversities.map(uniName => {
                 const university = universities.find(u => u.name === uniName);
@@ -625,9 +604,7 @@ export default function UniversityMatch() {
             params.append('university', universitySlugs.join(','));
         }
         
-        // Fakülte filtreleri - department parametresi olarak gönderilecek
         if (prefs.selectedFaculties.length > 0) {
-            // Fakülteleri bölüm slug'larına çevirmemiz gerekiyor
             const departmentSlugs = prefs.selectedFaculties.flatMap(name => {
                 return universities.flatMap(uni => 
                     uni.departments
@@ -640,7 +617,6 @@ export default function UniversityMatch() {
             }
         }
         
-        // Eğitim seviyesi filtreleri
         if (prefs.selectedDegreeLevels.length > 0) {
             const degreeLevels = prefs.selectedDegreeLevels.map(turkishLevel => 
                 reverseTranslateDegreeLevel(turkishLevel)
@@ -648,7 +624,6 @@ export default function UniversityMatch() {
             params.append('degree_level', degreeLevels.join(','));
         }
         
-        // Puan türü filtreleri
         if (prefs.selectedScoreTypes.length > 0) {
             const scoreTypes = prefs.selectedScoreTypes.map(turkishType => 
                 reverseTranslateScoreType(turkishType)
@@ -656,12 +631,10 @@ export default function UniversityMatch() {
             params.append('score_type', scoreTypes.join(','));
         }
         
-        // Dil filtreleri
         if (prefs.selectedLanguages.length > 0) {
             params.append('language', prefs.selectedLanguages.join(','));
         }
         
-        // Eğitim türü filtreleri
         if (prefs.educationType.length > 0) {
             const englishTypes = prefs.educationType.map(turkishType => 
                 reverseTranslateEducationType(turkishType)
@@ -669,7 +642,6 @@ export default function UniversityMatch() {
             params.append('education_type', englishTypes.join(','));
         }
         
-        // Puan aralığı
         if (prefs.minScore) {
             params.append('base_score_min', prefs.minScore.toString());
         }
@@ -677,7 +649,6 @@ export default function UniversityMatch() {
             params.append('base_score_max', prefs.maxScore.toString());
         }
         
-        // Sıralama aralığı
         if (prefs.minRank) {
             params.append('base_rank_min', prefs.minRank.toString());
         }
@@ -685,11 +656,9 @@ export default function UniversityMatch() {
             params.append('base_rank_max', prefs.maxRank.toString());
         }
         
-        // Sayfalama parametreleri
         params.append('page', page.toString());
         params.append('limit', limit.toString());
         
-        // Sıralama parametreleri
         if (prefs.sortBy) {
             params.append('sort_by', prefs.sortBy);
         }
@@ -710,9 +679,7 @@ export default function UniversityMatch() {
             const apiUrl = buildApiUrl(prefs, page, pagination.limit);
             const data = await getRequest(apiUrl);
             
-            // API'den gelen veri yapısını kontrol et
             if (data && typeof data === 'object' && 'data' in data) {
-                // API pagination bilgileri ile birlikte veri döndürüyorsa
                 const results = data.data || [];
                 const totalResults = data.totalResults || data.total || results.length;
                 const totalPages = data.totalPages || Math.ceil(totalResults / pagination.limit);
@@ -725,7 +692,6 @@ export default function UniversityMatch() {
                     totalResults: totalResults
                 }));
             } else if (data && Array.isArray(data)) {
-                // API sadece array döndürüyorsa (eski format)
                 setFilteredResults(data);
                 setPagination(prev => ({
                     ...prev,
@@ -799,7 +765,6 @@ export default function UniversityMatch() {
     const renderQuestion = () => {
         const question = questions[currentStep];
         
-        // Soru ID'lerini UserPreferences key'lerine eşle
         const keyMap: { [key: string]: keyof UserPreferences } = {
             'cities': 'selectedCities',
             'universityTypes': 'selectedUniversityTypes',
@@ -815,7 +780,6 @@ export default function UniversityMatch() {
         const currentValues = key ? (preferences[key] as string[]) || [] : [];
         const filteredOptions = getFilteredOptions(question.options || []);
 
-        // Aktif filtreleri göster
         const getActiveFiltersInfo = () => {
             const activeFilters = [];
             
@@ -857,7 +821,6 @@ export default function UniversityMatch() {
         const activeFilters = getActiveFiltersInfo();
 
         if (question.type === "multiSelect") {
-            // Eğer seçenekler boşsa ve bu arama terimi nedeniyle değilse
             const hasNoOptions = (question.options || []).length === 0;
             const hasNoFilteredOptions = filteredOptions.length === 0;
             const isSearchFiltered = searchTerm.trim() !== "";
@@ -893,10 +856,8 @@ export default function UniversityMatch() {
                                     </p>
                                     <button
                                         onClick={() => {
-                                            // Önceki adıma git ve seçimleri temizle
                                             if (currentStep > 0) {
                                                 setCurrentStep(currentStep - 1);
-                                                // İlgili seçimleri temizle
                                                 const keyMap: { [key: string]: keyof UserPreferences } = {
                                                     'cities': 'selectedCities',
                                                     'universities': 'selectedUniversities',
@@ -1215,11 +1176,9 @@ export default function UniversityMatch() {
             ...prev,
             currentPage: 1
         }));
-        // Smooth scroll to top when returning to filters
         setTimeout(() => {
             smoothScrollToTop();
         }, 100);
-        // Önceki seçimler korunacak, sadece sonuç sayfasından filtre seçim sayfasına dönüyoruz
     };
 
     const renderPagination = () => {
@@ -1229,7 +1188,6 @@ export default function UniversityMatch() {
             );
         }
         
-        // Eğer sadece 1 sayfa varsa basit bir bilgi göster
         if (pagination.totalPages <= 1) {
             return (
                 <div className="flex items-center justify-center mt-8">
@@ -1249,7 +1207,6 @@ export default function UniversityMatch() {
             startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
 
-        // İlk sayfa
         if (startPage > 1) {
             pages.push(
                 <button
@@ -1269,7 +1226,6 @@ export default function UniversityMatch() {
             }
         }
 
-        // Orta sayfalar
         for (let i = startPage; i <= endPage; i++) {
             pages.push(
                 <button
@@ -1286,7 +1242,6 @@ export default function UniversityMatch() {
             );
         }
 
-        // Son sayfa
         if (endPage < pagination.totalPages) {
             if (endPage < pagination.totalPages - 1) {
                 pages.push(

@@ -46,6 +46,7 @@ const footerData = [
     url: "/egitim/tercih-robotu",
     icon: <FiBookOpen className="w-4 h-4" />,
     subItems: [
+      { title: "Tüm Üniversiteler", url: "/egitim/universiteler" },
       { title: "YKS Tercih Robotu", url: "/egitim/tercih-robotu" },
       { title: "Üniversite Tercihleri", url: "/egitim/tercih-robotu" },
       { title: "Bölüm Seçimi", url: "/egitim/tercih-robotu" },

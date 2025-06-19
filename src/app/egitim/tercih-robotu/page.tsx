@@ -2,73 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { getRequest } from "@/utils/api";
 import { FiArrowRight, FiArrowLeft, FiCheck, FiX, FiSettings, FiInfo } from "react-icons/fi";
-
-interface University {
-    id: string;
-    name: string;
-    slug: string;
-    city: string;
-    district: string;
-    university_type: string;
-    contacts: {
-        phone: string;
-        faks: string;
-        website: string;
-        mail: string;
-        address: string;
-        rector: {
-            name: string;
-            surname: string;
-        };
-    };
-    departments: Department[];
-}
-
-interface Department {
-    name: string;
-    slug: string;
-    faculty: string;
-    language: string;
-    duration: string;
-    degree_level: string;
-    score_type: string;
-    education_type: string;
-    yearly_data: YearlyData[];
-}
-
-interface YearlyData {
-    year: number;
-    quota: number;
-    base_score: number;
-    top_score: number;
-    base_rank: number;
-    top_rank: number;
-    placement: number;
-}
-
-interface UserPreferences {
-    selectedCities: string[];
-    selectedUniversities: string[];
-    selectedFaculties: string[];
-    selectedLanguages: string[];
-    selectedUniversityTypes: string[];
-    selectedDegreeLevels: string[];
-    selectedScoreTypes: string[];
-    educationType: string[];
-    minScore?: number;
-    maxScore?: number;
-    minRank?: number;
-    maxRank?: number;
-    sortBy?: string;
-    sortOrder?: string;
-}
-
-interface PaginationInfo {
-    currentPage: number;
-    totalPages: number;
-    totalResults: number;
-    limit: number;
-}
+import Link from "next/link";
+import { reverseTranslate, translate, turkishSort } from "@/utils/utils";
 
 export default function UniversityMatch() {
     const [universities, setUniversities] = useState<University[]>([]);
@@ -217,113 +152,6 @@ export default function UniversityMatch() {
         }
     };
 
-    const turkishSort = (a: string, b: string) => {
-        const turkishChars = {
-            'ç': 'c', 'Ç': 'C',
-            'ğ': 'g', 'Ğ': 'G', 
-            'ı': 'i', 'I': 'I',
-            'İ': 'I', 'i': 'i',
-            'ö': 'o', 'Ö': 'O',
-            'ş': 's', 'Ş': 'S',
-            'ü': 'u', 'Ü': 'U'
-        };
-        
-        const normalize = (str: string) => {
-            return str.split('').map(char => turkishChars[char as keyof typeof turkishChars] || char).join('');
-        };
-        
-        const aNormalized = normalize(a.toLowerCase());
-        const bNormalized = normalize(b.toLowerCase());
-        
-        return aNormalized.localeCompare(bNormalized, 'tr');
-    };
-
-    const translateEducationType = (type: string) => {
-        const translations: { [key: string]: string } = {
-            'formal': 'Örgün Öğretim',
-            'distance': 'Uzaktan Öğretim',
-            'second_education': 'İkinci Öğretim',
-        };
-        return translations[type] || type;
-    };
-
-    const translateUniversityType = (type: string) => {
-        const translations: { [key: string]: string } = {
-            'state': 'Devlet Üniversitesi',
-            'private': 'Özel Üniversite',
-            'kktc': 'KKTC Üniversitesi',
-            'abroad': 'Yurtdışı Üniversitesi',
-        };
-        return translations[type] || type;
-    };
-
-    const translateDegreeLevel = (level: string) => {
-        const translations: { [key: string]: string } = {
-            'licence': '4 Yıllık (Lisans)',
-            'associate': '2 Yıllık (Ön Lisans)',
-        };
-        return translations[level] || level;
-    };
-
-    const translateScoreType = (type: string) => {
-        const translations: { [key: string]: string } = {
-            'numerical': 'Sayısal Bölümü',
-            'verbal': 'Sözel Bölümü',
-            'equal_weight': 'Eşit Ağırlık Bölümü',
-            'tyt': 'TYT Bölümü',
-            'language': 'Dil Bölümü',
-        };
-        return translations[type] || type;
-    };
-
-    const formatUniversityType = (type: string) => {
-        const translations: { [key: string]: string } = {
-            'state': 'Devlet Üniversitesi',
-            'private': 'Özel Üniversite',
-            'kktc': 'KKTC Üniversitesi',
-            'abroad': 'Yurtdışı Üniversitesi',
-        };
-        return translations[type] || type;
-    };
-
-    const reverseTranslateEducationType = (turkishType: string) => {
-        const reverseTranslations: { [key: string]: string } = {
-            'Örgün Öğretim': 'formal',
-            'Uzaktan Öğretim': 'distance',
-            'İkinci Öğretim': 'second_education',
-        };
-        return reverseTranslations[turkishType] || turkishType;
-    };
-
-    const reverseTranslateUniversityType = (turkishType: string) => {
-        const reverseTranslations: { [key: string]: string } = {
-            'Devlet Üniversitesi': 'state',
-            'Özel Üniversite': 'private',
-            'KKTC Üniversitesi': 'kktc',
-            'Yurtdışı Üniversitesi': 'abroad',
-        };
-        return reverseTranslations[turkishType] || turkishType;
-    };
-
-    const reverseTranslateDegreeLevel = (turkishLevel: string) => {
-        const reverseTranslations: { [key: string]: string } = {
-            '4 Yıllık (Lisans)': 'licence',
-            '2 Yıllık (Ön Lisans)': 'associate',
-        };
-        return reverseTranslations[turkishLevel] || turkishLevel;
-    };
-
-    const reverseTranslateScoreType = (turkishType: string) => {
-        const reverseTranslations: { [key: string]: string } = {
-            'Sayısal Bölümü': 'numerical',
-            'Sözel Bölümü': 'verbal',
-            'Eşit Ağırlık Bölümü': 'equal_weight',
-            'TYT Bölümü': 'tyt',
-            'Dil Bölümü': 'language',
-        };
-        return reverseTranslations[turkishType] || turkishType;
-    };
-
     const updateQuestionOptions = () => {
         const cities = [...new Set(universities.map(uni => uni.city))].sort(turkishSort);
         
@@ -331,10 +159,10 @@ export default function UniversityMatch() {
         if (preferences.selectedCities.length > 0) {
             universityTypes = [...new Set(universities
                 .filter(uni => preferences.selectedCities.includes(uni.city))
-                .map(uni => translateUniversityType(uni.university_type))
+                .map(uni => translate.universityType(uni.university_type))
             )].sort(turkishSort);
         } else {
-            universityTypes = [...new Set(universities.map(uni => translateUniversityType(uni.university_type)))].sort(turkishSort);
+            universityTypes = [...new Set(universities.map(uni => translate.universityType(uni.university_type)))].sort(turkishSort);
         }
         
         let universityNames: string[];
@@ -348,7 +176,7 @@ export default function UniversityMatch() {
         
         if (preferences.selectedUniversityTypes.length > 0) {
             const selectedTypes = preferences.selectedUniversityTypes.map(turkishType => 
-                reverseTranslateUniversityType(turkishType)
+                reverseTranslate.universityType(turkishType)
             );
             filteredUniversities = filteredUniversities.filter(uni => 
                 selectedTypes.includes(uni.university_type)
@@ -388,7 +216,7 @@ export default function UniversityMatch() {
         }
         
         degreeLevels = [...new Set(furtherFilteredUniversities
-            .flatMap(uni => uni.departments.map(dept => translateDegreeLevel(dept.degree_level)))
+            .flatMap(uni => uni.departments.map(dept => translate.degreeLevel(dept.degree_level)))
         )].sort(turkishSort);
         
         let scoreTypes: string[];
@@ -396,7 +224,7 @@ export default function UniversityMatch() {
         
         if (preferences.selectedDegreeLevels.length > 0) {
             const selectedLevels = preferences.selectedDegreeLevels.map(turkishLevel => 
-                reverseTranslateDegreeLevel(turkishLevel)
+                reverseTranslate.degreeLevel(turkishLevel)
             );
             scoreFilteredUniversities = scoreFilteredUniversities.map(uni => ({
                 ...uni,
@@ -407,7 +235,7 @@ export default function UniversityMatch() {
         }
         
         scoreTypes = [...new Set(scoreFilteredUniversities
-            .flatMap(uni => uni.departments.map(dept => translateScoreType(dept.score_type)))
+            .flatMap(uni => uni.departments.map(dept => translate.scoreType(dept.score_type)))
         )].sort(turkishSort);
         
         let languages: string[];
@@ -415,7 +243,7 @@ export default function UniversityMatch() {
         
         if (preferences.selectedScoreTypes.length > 0) {
             const selectedScoreTypes = preferences.selectedScoreTypes.map(turkishType => 
-                reverseTranslateScoreType(turkishType)
+                reverseTranslate.scoreType(turkishType)
             );
             languageFilteredUniversities = languageFilteredUniversities.map(uni => ({
                 ...uni,
@@ -442,7 +270,7 @@ export default function UniversityMatch() {
         }
         
         educationTypes = [...new Set(educationFilteredUniversities
-            .flatMap(uni => uni.departments.map(dept => translateEducationType(dept.education_type)))
+            .flatMap(uni => uni.departments.map(dept => translate.educationType(dept.education_type)))
         )].sort(turkishSort);
 
         setQuestions(prevQuestions => [
@@ -563,17 +391,6 @@ export default function UniversityMatch() {
         await filterResultsWithPreferences(newPreferences, 1);
     };
 
-    const getSortDisplayName = (sortBy: string) => {
-        const sortNames: { [key: string]: string } = {
-            'name': 'Üniversite Adı',
-            'score': 'Taban Puan',
-            'rank': 'Taban Sıralama',
-            'quota': 'Kontenjan',
-            'placed': 'Yerleşen Sayısı'
-        };
-        return sortNames[sortBy] || sortBy;
-    };
-
     const buildApiUrl = (prefs: UserPreferences, page: number = 1, limit: number = 5) => {
         const params = new URLSearchParams();
         
@@ -583,7 +400,7 @@ export default function UniversityMatch() {
         
         if (prefs.selectedUniversityTypes.length > 0) {
             const universityTypes = prefs.selectedUniversityTypes.map(turkishType => 
-                reverseTranslateUniversityType(turkishType)
+                reverseTranslate.universityType(turkishType)
             );
             params.append('university_type', universityTypes.join(','));
         }
@@ -619,14 +436,14 @@ export default function UniversityMatch() {
         
         if (prefs.selectedDegreeLevels.length > 0) {
             const degreeLevels = prefs.selectedDegreeLevels.map(turkishLevel => 
-                reverseTranslateDegreeLevel(turkishLevel)
+                reverseTranslate.degreeLevel(turkishLevel)
             );
             params.append('degree_level', degreeLevels.join(','));
         }
         
         if (prefs.selectedScoreTypes.length > 0) {
             const scoreTypes = prefs.selectedScoreTypes.map(turkishType => 
-                reverseTranslateScoreType(turkishType)
+                reverseTranslate.scoreType(turkishType)
             );
             params.append('score_type', scoreTypes.join(','));
         }
@@ -637,7 +454,7 @@ export default function UniversityMatch() {
         
         if (prefs.educationType.length > 0) {
             const englishTypes = prefs.educationType.map(turkishType => 
-                reverseTranslateEducationType(turkishType)
+                reverseTranslate.educationType(turkishType)
             );
             params.append('education_type', englishTypes.join(','));
         }
@@ -1079,9 +896,21 @@ export default function UniversityMatch() {
                     <div key={uni.id} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
                         <div className="flex items-start justify-between mb-4">
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-xl font-bold text-gray-900 mb-1 truncate">{uni.name}</h3>
+                                <h3 className="text-xl font-bold text-gray-900 mb-1 truncate">
+                                    <Link 
+                                        href={`/egitim/${uni.slug}`}
+                                        target="_blank"
+                                        className="group inline-flex items-center gap-1 hover:underline text-primary transition-colors duration-200"
+                                        aria-label={`${uni.name} detay sayfasına git`}
+                                    >
+                                        {uni.name}
+                                        <span className="ml-1 group-hover:translate-x-1 transition-transform">
+                                            <FiArrowRight className="w-4 h-4 inline-block" />
+                                        </span>
+                                    </Link>
+                                </h3>
                                 <p className="text-gray-600 truncate">{uni.city} / {uni.district}</p>
-                                <p className="text-sm text-gray-500 capitalize">{formatUniversityType(uni.university_type)}</p>
+                                <p className="text-sm text-gray-500 capitalize">{translate.universityType(uni.university_type)}</p>
                             </div>
                             <div className="text-right flex-shrink-0 ml-4">
                                 <p className="text-sm text-gray-600">{uni.contacts.phone}</p>
@@ -1110,7 +939,7 @@ export default function UniversityMatch() {
                                                 </h4>
                                                 <p className="text-gray-700 truncate">{dept.name}</p>
                                                 <p className="text-sm text-gray-600">
-                                                    {translateEducationType(dept.education_type)} • {dept.duration}
+                                                    {translate.educationType(dept.education_type)} • {dept.duration}
                                                 </p>
                                             </div>
                                         </div>

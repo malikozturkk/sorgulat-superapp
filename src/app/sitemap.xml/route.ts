@@ -1,7 +1,4 @@
 import { NextResponse } from "next/server";
-import { getRequest } from "@/utils/api";
-import { TimezoneData } from "../saat-kac/types/Timezone.types";
-import { TravelArticle } from "@/components/Blog/blog.types";
 
 export const dynamic = "force-dynamic";
 

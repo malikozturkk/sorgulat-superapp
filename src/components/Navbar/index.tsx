@@ -8,6 +8,7 @@ const Navbar = () => {
     const [open, setOpen] = React.useState(false)
     const itemStyle = "text-base font-medium text-gray-700 transition-all duration-200 hover:text-primary focus:text-primary relative group"
     const items = [
+        { href: "/egitim/universiteler", title: "Üniversiteler", isNew: false },
         { href: "/egitim/tercih-robotu", title: "YKS Tercih Robotu", isNew: true },
         { href: "/saat-kac", title: "Saat Kaç" },
         { href: "/pasaport", title: "Pasaport" },

@@ -121,8 +121,8 @@ export default function SearchForm() {
         <>
             <button
                 onClick={() => setShowInput(true)}
-                className="lg:hidden inline-flex p-3 text-gray-700 transition-all duration-200 rounded-xl focus:bg-gray-100 hover:bg-gray-100 border border-gray-200 hover:border-gray-300">
-                <FiSearch className="w-5 h-5" />
+                className="lg:hidden inline-flex p-2 sm:p-3 text-gray-700 transition-all duration-200 rounded-xl focus:bg-gray-100 hover:bg-gray-100 border border-gray-200 hover:border-gray-300">
+                <FiSearch className="w-4 h-4" />
             </button>
             {showInput && createPortal(inputElement, document.body)}
             <div className="relative hidden lg:block">

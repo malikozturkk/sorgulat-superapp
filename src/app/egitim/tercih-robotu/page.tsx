@@ -470,6 +470,39 @@ export default function UniversityMatch() {
             { ...prevQuestions[8], options: [] }, // rankRange - options yok
             { ...prevQuestions[9], options: educationTypes }
         ]);
+
+        type StringArrayKeys =
+            'selectedCities' |
+            'selectedUniversityTypes' |
+            'selectedUniversities' |
+            'selectedFaculties' |
+            'selectedDegreeLevels' |
+            'selectedScoreTypes' |
+            'selectedLanguages' |
+            'educationType';
+
+        setPreferences(prev => {
+            let updated = { ...prev };
+            let changed = false;
+            const autoSelect: { key: StringArrayKeys, options: string[] }[] = [
+                { key: 'selectedCities', options: cities },
+                { key: 'selectedUniversityTypes', options: universityTypes },
+                { key: 'selectedUniversities', options: universityNames },
+                { key: 'selectedFaculties', options: faculties },
+                { key: 'selectedDegreeLevels', options: degreeLevels },
+                { key: 'selectedScoreTypes', options: scoreTypes },
+                { key: 'selectedLanguages', options: languages },
+                { key: 'educationType', options: educationTypes },
+            ];
+            autoSelect.forEach(({ key, options }) => {
+                const current = prev[key];
+                if (options.length === 1 && (!current || current.length === 0)) {
+                    updated[key] = [options[0]];
+                    changed = true;
+                }
+            });
+            return changed ? updated : prev;
+        });
     };
 
     const handleNext = async () => {

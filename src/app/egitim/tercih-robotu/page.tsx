@@ -4,6 +4,7 @@ import { getRequest } from "@/utils/api";
 import { FiArrowRight, FiArrowLeft, FiCheck, FiX, FiSettings, FiInfo } from "react-icons/fi";
 import Link from "next/link";
 import { reverseTranslate, translate, turkishSort } from "@/utils/utils";
+import { PaginationInfo, University, UserPreferences } from "../types";
 
 export default function UniversityMatch() {
     const [universities, setUniversities] = useState<University[]>([]);

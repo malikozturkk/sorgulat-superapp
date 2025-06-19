@@ -1,4 +1,4 @@
-interface University {
+export interface University {
     id: string;
     name: string;
     slug: string;
@@ -19,7 +19,7 @@ interface University {
     departments: Department[];
 }
 
-interface Department {
+export interface Department {
     name: string;
     slug: string;
     faculty: string;
@@ -31,7 +31,7 @@ interface Department {
     yearly_data: YearlyData[];
 }
 
-interface YearlyData {
+export interface YearlyData {
     year: number;
     quota: number;
     base_score: number;
@@ -41,7 +41,7 @@ interface YearlyData {
     placement: number;
 }
 
-interface UserPreferences {
+export interface UserPreferences {
     selectedCities: string[];
     selectedUniversities: string[];
     selectedFaculties: string[];
@@ -58,7 +58,7 @@ interface UserPreferences {
     sortOrder?: string;
 }
 
-interface PaginationInfo {
+export interface PaginationInfo {
     currentPage: number;
     totalPages: number;
     totalResults: number;

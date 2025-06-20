@@ -8,87 +8,86 @@ import { translate } from "@/utils/utils";
 import { University } from "../types";
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
 
-// type Params = Promise<{ slug: string[] }>;
-
-// export async function generateMetadata({ params }: { params: Params }) {
-//   const { slug } = await params;
-//   let university = null;
-//   try {
-//     const data = await getRequest(`/schools/universities?university=${slug}`);
-//     if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
-//       university = data.data[0];
-//     } else if (Array.isArray(data) && data.length > 0) {
-//       university = data[0];
-//     }
-//   } catch (e) {
-//     return defaultGenerateMetadata();
-//   }
-
-//   if (!university) {
-//     return {
-//       title: "Üniversite Detayı | Sorgulat",
-//       description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
-//       robots: "index, follow",
-//       openGraph: {
-//         title: "Üniversite Detayı | Sorgulat",
-//         description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
-//         url: `https://www.sorgulat.com/egitim/${slug}`,
-//         images: "/images/openGraph/university.png",
-//         type: "website",
-//         siteName: "Sorgulat"
-//       },
-//       twitter: {
-//         card: "summary_large_image",
-//         title: "Üniversite Detayı | Sorgulat",
-//         description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
-//         images: "/images/openGraph/university.png",
-//         site: "@Sorgulat"
-//       },
-//       alternates: {
-//         canonical: `/egitim/${slug}`,
-//         types: {
-//           "application/opensearchdescription+xml": "/opensearch.xml",
-//           "application/rss+xml": "https://sorgulat.com/rss.xml"
-//         }
-//       }
-//     }
-//   }
-
-//   const title = `${university.name} | Sorgulat`;
-//   const description = `${university.name} (${university.city}, ${university.district}) üniversitesinin tüm bölümleri, taban puanları, kontenjanları ve iletişim bilgileri. Sorgulat ile üniversite tercihine dair detaylı bilgi alın.`;
-//   const image = "/images/openGraph/university.png";
-//   const url = `https://www.sorgulat.com/egitim/${university.slug}`;
-
-//   return {
-//     title,
-//     description,
-//     robots: "index, follow",
-//     openGraph: {
-//       title,
-//       description,
-//       url,
-//       images: image,
-//       type: "website",
-//       siteName: "Sorgulat"
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       images: image,
-//       site: "@Sorgulat"
-//     },
-//     alternates: {
-//       canonical: `/egitim/${university.slug}`,
-//       types: {
-//         "application/opensearchdescription+xml": "/opensearch.xml",
-//         "application/rss+xml": "https://sorgulat.com/rss.xml"
-//       }
-//     }
-//   }
-// }
 
 type Params = Promise<{ slug: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+    const { slug } = await params
+  let university = null;
+  try {
+    const data = await getRequest(`/schools/universities?university=${slug}`);
+    if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
+      university = data.data[0];
+    } else if (Array.isArray(data) && data.length > 0) {
+      university = data[0];
+    }
+  } catch (e) {
+    return defaultGenerateMetadata();
+  }
+
+  if (!university) {
+    return {
+      title: "Üniversite Detayı | Sorgulat",
+      description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
+      robots: "index, follow",
+      openGraph: {
+        title: "Üniversite Detayı | Sorgulat",
+        description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
+        url: `https://www.sorgulat.com/egitim/${slug}`,
+        images: "/images/openGraph/university.png",
+        type: "website",
+        siteName: "Sorgulat"
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Üniversite Detayı | Sorgulat",
+        description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
+        images: "/images/openGraph/university.png",
+        site: "@Sorgulat"
+      },
+      alternates: {
+        canonical: `/egitim/${slug}`,
+        types: {
+          "application/opensearchdescription+xml": "/opensearch.xml",
+          "application/rss+xml": "https://sorgulat.com/rss.xml"
+        }
+      }
+    }
+  }
+
+  const title = `${university.name} | Sorgulat`;
+  const description = `${university.name} (${university.city}, ${university.district}) üniversitesinin tüm bölümleri, taban puanları, kontenjanları ve iletişim bilgileri. Sorgulat ile üniversite tercihine dair detaylı bilgi alın.`;
+  const image = "/images/openGraph/university.png";
+  const url = `https://www.sorgulat.com/egitim/${university.slug}`;
+
+  return {
+    title,
+    description,
+    robots: "index, follow",
+    openGraph: {
+      title,
+      description,
+      url,
+      images: image,
+      type: "website",
+      siteName: "Sorgulat"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: image,
+      site: "@Sorgulat"
+    },
+    alternates: {
+      canonical: `/egitim/${university.slug}`,
+      types: {
+        "application/opensearchdescription+xml": "/opensearch.xml",
+        "application/rss+xml": "https://sorgulat.com/rss.xml"
+      }
+    }
+  }
+}
 
 export default async function UniversityDetailPage({ params }: { params: Params }) {
     const { slug } = await params

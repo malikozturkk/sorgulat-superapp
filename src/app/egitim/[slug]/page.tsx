@@ -8,10 +8,10 @@ import { translate } from "@/utils/utils";
 import { University } from "../types";
 import { defaultGenerateMetadata } from "@/app/metadataConfig";
 
-type Params = Promise<{ slug: string }>;
+type Params = Promise<{ slug: string[] }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
-  const { slug } = await params
+  const { slug } = await params;
   let university = null;
   try {
     const data = await getRequest(`/schools/universities?university=${slug}`);

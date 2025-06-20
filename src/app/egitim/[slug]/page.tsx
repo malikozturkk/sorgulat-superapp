@@ -163,7 +163,7 @@ export default async function UniversityDetailPage({ params }: { params: Params 
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(university.contacts.address)}&output=embed`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(university.name + university.contacts.address)}&output=embed`}
               ></iframe>
             </div>
           </div>

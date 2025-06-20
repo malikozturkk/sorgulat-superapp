@@ -1,6 +1,6 @@
 import { getRequest } from "@/utils/api";
-import UniversitelerPage from "./UniversitelerPageClient";
 import { Metadata } from "next";
+import UniversityClient from "./UniversityClient";
 
 export const metadata: Metadata = {
   title: "Tüm Üniversiteler | Sorgulat",
@@ -28,5 +28,10 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const universities = await getRequest("/schools/universities");
-  return <UniversitelerPage universities={universities} />;
+  return (
+    <div className="px-4 mx-auto max-w-6xl py-8">
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Tüm Üniversiteler</h1>
+      <UniversityClient universities={universities} />
+    </div>
+  );
 } 

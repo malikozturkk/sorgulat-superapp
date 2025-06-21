@@ -284,17 +284,19 @@ export default function UniversityClient({ universities: initialUniversities }: 
             </div>
           </Link>
         )) : (
-          <div className="col-span-full text-center py-16">
-            <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiSearch className="w-12 h-12 text-gray-400" />
+          !loading && (
+            <div className="col-span-full text-center py-16">
+              <div className="max-w-md mx-auto">
+                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FiSearch className="w-12 h-12 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Üniversite Bulunamadı</h3>
+                <p className="text-gray-600">
+                  {search ? "Arama kriterlerinize uygun üniversite bulunamadı. Farklı anahtar kelimeler deneyebilirsiniz." : "Henüz üniversite verisi yüklenmedi."}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Üniversite Bulunamadı</h3>
-              <p className="text-gray-600">
-                {search ? "Arama kriterlerinize uygun üniversite bulunamadı. Farklı anahtar kelimeler deneyebilirsiniz." : "Henüz üniversite verisi yüklenmedi."}
-              </p>
             </div>
-          </div>
+          )
         )}
       </div>
 

@@ -115,7 +115,7 @@ export default async function UniversityDetailPage({ params }: { params: Params 
       <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{university.name} Bölümleri</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{university.name}</h1>
             <div className="flex flex-wrap gap-2 text-gray-600 text-sm mb-2">
               <span className="flex items-center gap-1"><FiMapPin className="min-w-3.5 min-h-3.5" /> {university.city} / {university.district}</span>
               <span className="flex items-center gap-1"><FiUser className="min-w-3.5 min-h-3.5" /> Rektör: {university.contacts.rector.name} {university.contacts.rector.surname}</span>
@@ -171,7 +171,7 @@ export default async function UniversityDetailPage({ params }: { params: Params 
       </div>
 
       <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Bölümler</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">{university.name} Bölümleri</h2>
         {university.departments.length === 0 ? (
           <div className="text-gray-500">Bu üniversiteye ait bölüm bulunamadı.</div>
         ) : (

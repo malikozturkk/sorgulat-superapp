@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { getRequest } from "@/utils/api";
 import { FiArrowRight, FiArrowLeft, FiCheck, FiX, FiSettings, FiInfo } from "react-icons/fi";
 import Link from "next/link";
@@ -31,6 +31,12 @@ export default function UniversityMatch() {
         limit: 5
     });
     const [showAllSelected, setShowAllSelected] = useState(false);
+    const [isSelectingAll, setIsSelectingAll] = useState(false);
+    const [selectAllProgress, setSelectAllProgress] = useState(0);
+    const [displayedOptions, setDisplayedOptions] = useState<string[]>([]);
+    const [displayCount, setDisplayCount] = useState(50);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const optionsContainerRef = useRef<HTMLDivElement>(null);
     const [questions, setQuestions] = useState([
         {
             id: "cities",
@@ -105,6 +111,7 @@ export default function UniversityMatch() {
     ]);
 
     const scrollToTop = useRef<HTMLDivElement>(null);
+    const selectAllTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     
     const smoothScrollToTop = () => {
         if (scrollToTop.current) {
@@ -133,6 +140,20 @@ export default function UniversityMatch() {
     useEffect(() => {
         setSearchTerm(""); 
     }, [currentStep]);
+
+    useEffect(() => {
+        const filteredOptions = getFilteredOptions(questions[currentStep]?.options || []);
+        const end = Math.min(displayCount, filteredOptions.length);
+        setDisplayedOptions(filteredOptions.slice(0, end));
+    }, [currentStep, searchTerm, displayCount, questions]);
+
+    useEffect(() => {
+        return () => {
+            if (selectAllTimeoutRef.current) {
+                clearTimeout(selectAllTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const fetchUniversities = async () => {
         try {
@@ -277,6 +298,56 @@ export default function UniversityMatch() {
         });
     };
 
+    const selectAllOptions = useCallback(async (questionId: string, options: string[]) => {
+        if (options.length === 0) return;
+
+        setIsSelectingAll(true);
+        setSelectAllProgress(0);
+        
+        const keyMap: { [key: string]: keyof UserPreferences } = {
+            'cities': 'selectedCities',
+            'departments': 'selectedDepartments',
+            'universityTypes': 'selectedUniversityTypes',
+            'degreeLevels': 'selectedDegreeLevels',
+            'languages': 'selectedLanguages',
+            'educationType': 'educationType',
+            'universities': 'selectedUniversities',
+        };
+        
+        const key = keyMap[questionId];
+        if (!key) return;
+
+        // For large datasets, use batch processing
+        const batchSize = 100;
+        const totalBatches = Math.ceil(options.length / batchSize);
+        
+        for (let i = 0; i < totalBatches; i++) {
+            const start = i * batchSize;
+            const end = Math.min(start + batchSize, options.length);
+            const batch = options.slice(start, end);
+            
+            // Update progress
+            setSelectAllProgress((i + 1) / totalBatches);
+            
+            // Use setTimeout to allow UI to update
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    setPreferences(prev => {
+                        const currentValues = (prev[key] as string[]) || [];
+                        const newValues = [...new Set([...currentValues, ...batch])];
+                        let newPrefs = { ...prev, [key]: newValues };
+                        newPrefs = resetLowerFilters(newPrefs, key);
+                        return newPrefs;
+                    });
+                    resolve(true);
+                }, 0);
+            });
+        }
+        
+        setIsSelectingAll(false);
+        setSelectAllProgress(0);
+    }, []);
+
     const handleNext = async () => {
         const currentQuestion = questions[currentStep];
         const keyMap: { [key: string]: keyof UserPreferences } = {
@@ -294,11 +365,16 @@ export default function UniversityMatch() {
         const hasSelections = currentValues.length > 0;
         const hasOptions = (currentQuestion.options || []).length > 0;
         
-        // Eğer hiçbir seçenek seçilmemişse ve seçenekler varsa, "Tümünü Seç" modunu aktifleştir
         if (!hasSelections && hasOptions && currentQuestion.type === "multiSelect") {
             setShowAllSelected(true);
-            // 800ms sonra bir sonraki adıma geç
-            setTimeout(() => {
+            
+            await selectAllOptions(currentQuestion.id, currentQuestion.options || []);
+            
+            if (selectAllTimeoutRef.current) {
+                clearTimeout(selectAllTimeoutRef.current);
+            }
+            
+            selectAllTimeoutRef.current = setTimeout(() => {
                 setShowAllSelected(false);
                 if (currentStep < questions.length - 1) {
                     setCurrentStep(currentStep + 1);
@@ -313,7 +389,7 @@ export default function UniversityMatch() {
                         }, 100);
                     });
                 }
-            }, 800);
+            }, 500); // Reduced from 800ms to 500ms
             return;
         }
         
@@ -575,6 +651,46 @@ export default function UniversityMatch() {
         );
     };
 
+    const handleScroll = useCallback(() => {
+        if (!optionsContainerRef.current || isLoadingMore) return;
+        
+        const container = optionsContainerRef.current;
+        const scrollTop = container.scrollTop;
+        const containerHeight = container.clientHeight;
+        const scrollHeight = container.scrollHeight;
+        
+        // Check if we're near the bottom (within 100px)
+        const isNearBottom = scrollTop + containerHeight >= scrollHeight - 100;
+        
+        if (isNearBottom) {
+            const filteredOptions = getFilteredOptions(questions[currentStep]?.options || []);
+            
+            if (displayCount < filteredOptions.length) {
+                setIsLoadingMore(true);
+                
+                setTimeout(() => {
+                    setDisplayCount(prev => Math.min(prev + 20, filteredOptions.length));
+                    setIsLoadingMore(false);
+                }, 200);
+            }
+        }
+    }, [isLoadingMore, currentStep, questions, displayCount]);
+
+    // Throttled scroll handler
+    const throttledScrollHandler = useCallback(() => {
+        let ticking = false;
+        
+        return () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+    }, [handleScroll]);
+
     const renderQuestion = () => {
         const question = questions[currentStep];
         
@@ -717,27 +833,90 @@ export default function UniversityMatch() {
                         </p>
                     )}
 
+                    {!searchTerm && filteredOptions.length > 0 && (
+                        <div className="flex items-center justify-between text-sm text-gray-600">
+                            <span>{filteredOptions.length} seçenek</span>
+                            {filteredOptions.length > 200 && (
+                                <div className="flex items-center gap-2 text-yellow-600">
+                                    <FiInfo className="w-4 h-4" />
+                                    <span>Çok fazla seçenek var. Arama yaparak filtreleyebilirsiniz.</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     {/* Seçenekler */}
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                    <div 
+                        ref={optionsContainerRef}
+                        onScroll={throttledScrollHandler()}
+                        className="space-y-3 max-h-96 overflow-y-auto"
+                    >
+                        {/* Progress Indicator for Select All */}
+                        {isSelectingAll && (
+                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <div className="flex items-center gap-3">
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+                                    <div className="flex-1">
+                                        <p className="text-sm font-medium text-blue-900">
+                                            Tüm seçenekler seçiliyor...
+                                        </p>
+                                        <div className="w-full bg-blue-200 rounded-full h-2 mt-2">
+                                            <div 
+                                                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                                                style={{ width: `${selectAllProgress * 100}%` }}
+                                            ></div>
+                                        </div>
+                                        <p className="text-xs text-blue-700 mt-1">
+                                            %{Math.round(selectAllProgress * 100)} tamamlandı
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         {filteredOptions.length > 0 ? (
-                            filteredOptions.map((option) => (
-                                <button
-                                    key={option}
-                                    onClick={() => handleMultiSelect(option, question.id)}
-                                    className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
-                                        showAllSelected || currentValues.includes(option)
-                                            ? "border-primary bg-primaryLight text-primary"
-                                            : "border-gray-200 bg-white hover:border-primaryLight"
-                                    }`}
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-medium truncate pr-2">{option}</span>
-                                        {(showAllSelected || currentValues.includes(option)) && (
-                                            <FiCheck className="w-5 h-5 flex-shrink-0" />
+                            <>
+                                {/* Virtual scrolling - only render visible options */}
+                                {displayedOptions.map((option, index) => (
+                                    <button
+                                        key={`${option}-${index}`}
+                                        onClick={() => handleMultiSelect(option, question.id)}
+                                        disabled={isSelectingAll}
+                                        className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
+                                            showAllSelected || currentValues.includes(option)
+                                                ? "border-primary bg-primaryLight text-primary"
+                                                : "border-gray-200 bg-white hover:border-primaryLight"
+                                        } ${isSelectingAll ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <span className="font-medium truncate pr-2">{option}</span>
+                                            {(showAllSelected || currentValues.includes(option)) && (
+                                                <FiCheck className="w-5 h-5 flex-shrink-0" />
+                                            )}
+                                        </div>
+                                    </button>
+                                ))}
+                                
+                                {/* Loading more indicator */}
+                                {isLoadingMore && displayedOptions.length < filteredOptions.length && (
+                                    <div className="flex items-center justify-center py-4">
+                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                                        <span className="ml-2 text-sm text-gray-600">Daha fazla yükleniyor...</span>
+                                    </div>
+                                )}
+                                
+                                {/* Show total count for all datasets */}
+                                {filteredOptions.length > 20 && (
+                                    <div className="text-center py-4 text-sm text-gray-500 border-t border-gray-100">
+                                        <span className="font-medium">{displayedOptions.length}</span> / <span className="font-medium">{filteredOptions.length}</span> seçenek gösteriliyor
+                                        {displayedOptions.length < filteredOptions.length && (
+                                            <div className="text-xs text-gray-400 mt-1">
+                                                Daha fazla görmek için aşağı kaydırın
+                                            </div>
                                         )}
                                     </div>
-                                </button>
-                            ))
+                                )}
+                            </>
                         ) : (
                             <div className="text-center py-8 text-gray-500">
                                 {isSearchFiltered ? (
@@ -1262,16 +1441,27 @@ export default function UniversityMatch() {
                             onClick={handleNext}
                             disabled={
                                 questions[currentStep].type === "multiSelect" && 
-                                (questions[currentStep].options || []).length === 0
+                                (questions[currentStep].options || []).length === 0 ||
+                                isSelectingAll
                             }
                             className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-colors ${
                                 questions[currentStep].type === "multiSelect" && 
-                                (questions[currentStep].options || []).length === 0
+                                (questions[currentStep].options || []).length === 0 ||
+                                isSelectingAll
                                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                                     : "bg-primary text-white hover:bg-primaryDark"
                             }`}
                         >
                             {(() => {
+                                if (isSelectingAll) {
+                                    return (
+                                        <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                            Seçiliyor...
+                                        </>
+                                    );
+                                }
+                                
                                 const currentQuestion = questions[currentStep];
                                 const keyMap: { [key: string]: keyof UserPreferences } = {
                                     'cities': 'selectedCities',
@@ -1298,7 +1488,7 @@ export default function UniversityMatch() {
                                 
                                 return "İleri";
                             })()}
-                            <FiArrowRight className="w-4 h-4" />
+                            {!isSelectingAll && <FiArrowRight className="w-4 h-4" />}
                         </button>
                     </div>
                 </div>

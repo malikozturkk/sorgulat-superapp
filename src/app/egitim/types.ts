@@ -44,11 +44,9 @@ export interface YearlyData {
 export interface UserPreferences {
     selectedCities: string[];
     selectedUniversities: string[];
-    selectedFaculties: string[];
     selectedLanguages: string[];
     selectedUniversityTypes: string[];
     selectedDegreeLevels: string[];
-    selectedScoreTypes: string[];
     educationType: string[];
     minScore?: number;
     maxScore?: number;

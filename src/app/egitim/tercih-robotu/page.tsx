@@ -336,6 +336,23 @@ export default function UniversityMatch() {
         }));
     };
 
+    const handleRankInputChange = (type: 'min' | 'max', value: string, questionId: string) => {
+        const cleaned = value.replace(/[^\d]/g, '');
+        const formattedValue = cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        const numericValue = formattedValue.replace(/\./g, '');
+        const finalValue = numericValue ? parseInt(numericValue, 10) : null;
+        
+        setPreferences(prev => ({
+            ...prev,
+            [type === 'min' ? 'minRank' : 'maxRank']: finalValue
+        }));
+    };
+
+    const getDisplayRank = (value: number | undefined): string => {
+        if (value === undefined || value === null) return '';
+        return value.toLocaleString('tr-TR');
+    };
+
     const handleSortChange = async (sortBy: string, sortOrder: string) => {
         const newPreferences = {
             ...preferences,
@@ -710,25 +727,45 @@ export default function UniversityMatch() {
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Minimum {isScore ? "Puan" : "Sıralama"}
                             </label>
-                            <input
-                                type="number"
-                                value={minValue || ""}
-                                onChange={(e) => handleRangeChange('min', Number(e.target.value), question.id)}
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                placeholder={`Min ${isScore ? "puan" : "sıralama"}`}
-                            />
+                            {isScore ? (
+                                <input
+                                    type="number"
+                                    value={minValue || ""}
+                                    onChange={(e) => handleRangeChange('min', Number(e.target.value), question.id)}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder="Min puan"
+                                />
+                            ) : (
+                                <input
+                                    type="text"
+                                    value={getDisplayRank(minValue)}
+                                    onChange={(e) => handleRankInputChange('min', e.target.value, question.id)}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder="Min sıralama (örn: 850.000)"
+                                />
+                            )}
                         </div>
                         <div>
                             <label className="text-sm font-medium text-gray-700 mb-2">
                                 Maksimum {isScore ? "Puan" : "Sıralama"}
                             </label>
-                            <input
-                                type="number"
-                                value={maxValue || ""}
-                                onChange={(e) => handleRangeChange('max', Number(e.target.value), question.id)}
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                placeholder={`Max ${isScore ? "puan" : "sıralama"}`}
-                            />
+                            {isScore ? (
+                                <input
+                                    type="number"
+                                    value={maxValue || ""}
+                                    onChange={(e) => handleRangeChange('max', Number(e.target.value), question.id)}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder="Max puan"
+                                />
+                            ) : (
+                                <input
+                                    type="text"
+                                    value={getDisplayRank(maxValue)}
+                                    onChange={(e) => handleRankInputChange('max', e.target.value, question.id)}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder="Max sıralama (örn: 1.250.000)"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

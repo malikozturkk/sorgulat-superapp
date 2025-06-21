@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const universities = await getRequest("/schools/universities");
+  const universities = await getRequest("/schools/universities?limit=12");
   return (
     <div className="px-4 mx-auto max-w-6xl py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Tüm Üniversiteler</h1>

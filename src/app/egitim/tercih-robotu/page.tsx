@@ -30,6 +30,7 @@ export default function UniversityMatch() {
         totalResults: 0,
         limit: 5
     });
+    const [showAllSelected, setShowAllSelected] = useState(false);
     const [questions, setQuestions] = useState([
         {
             id: "cities",
@@ -277,6 +278,45 @@ export default function UniversityMatch() {
     };
 
     const handleNext = async () => {
+        const currentQuestion = questions[currentStep];
+        const keyMap: { [key: string]: keyof UserPreferences } = {
+            'cities': 'selectedCities',
+            'departments': 'selectedDepartments',
+            'universityTypes': 'selectedUniversityTypes',
+            'degreeLevels': 'selectedDegreeLevels',
+            'languages': 'selectedLanguages',
+            'educationType': 'educationType',
+            'universities': 'selectedUniversities',
+        };
+        
+        const key = keyMap[currentQuestion.id];
+        const currentValues = key ? (preferences[key] as string[]) || [] : [];
+        const hasSelections = currentValues.length > 0;
+        const hasOptions = (currentQuestion.options || []).length > 0;
+        
+        // Eğer hiçbir seçenek seçilmemişse ve seçenekler varsa, "Tümünü Seç" modunu aktifleştir
+        if (!hasSelections && hasOptions && currentQuestion.type === "multiSelect") {
+            setShowAllSelected(true);
+            // 800ms sonra bir sonraki adıma geç
+            setTimeout(() => {
+                setShowAllSelected(false);
+                if (currentStep < questions.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                    setTimeout(() => {
+                        smoothScrollToTop();
+                    }, 100);
+                } else {
+                    filterResults(1).then(() => {
+                        setShowResults(true);
+                        setTimeout(() => {
+                            smoothScrollToTop();
+                        }, 100);
+                    });
+                }
+            }, 800);
+            return;
+        }
+        
         if (currentStep < questions.length - 1) {
             setCurrentStep(currentStep + 1);
             setTimeout(() => {
@@ -685,14 +725,14 @@ export default function UniversityMatch() {
                                     key={option}
                                     onClick={() => handleMultiSelect(option, question.id)}
                                     className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
-                                        currentValues.includes(option)
+                                        showAllSelected || currentValues.includes(option)
                                             ? "border-primary bg-primaryLight text-primary"
                                             : "border-gray-200 bg-white hover:border-primaryLight"
                                     }`}
                                 >
                                     <div className="flex items-center justify-between">
                                         <span className="font-medium truncate pr-2">{option}</span>
-                                        {currentValues.includes(option) && (
+                                        {(showAllSelected || currentValues.includes(option)) && (
                                             <FiCheck className="w-5 h-5 flex-shrink-0" />
                                         )}
                                     </div>
@@ -1231,7 +1271,33 @@ export default function UniversityMatch() {
                                     : "bg-primary text-white hover:bg-primaryDark"
                             }`}
                         >
-                            {currentStep === questions.length - 1 ? "Sonuçları Göster" : "İleri"}
+                            {(() => {
+                                const currentQuestion = questions[currentStep];
+                                const keyMap: { [key: string]: keyof UserPreferences } = {
+                                    'cities': 'selectedCities',
+                                    'departments': 'selectedDepartments',
+                                    'universityTypes': 'selectedUniversityTypes',
+                                    'degreeLevels': 'selectedDegreeLevels',
+                                    'languages': 'selectedLanguages',
+                                    'educationType': 'educationType',
+                                    'universities': 'selectedUniversities',
+                                };
+                                
+                                const key = keyMap[currentQuestion.id];
+                                const currentValues = key ? (preferences[key] as string[]) || [] : [];
+                                const hasSelections = currentValues.length > 0;
+                                const hasOptions = (currentQuestion.options || []).length > 0;
+                                
+                                if (currentStep === questions.length - 1) {
+                                    return "Sonuçları Göster";
+                                }
+                                
+                                if (currentQuestion.type === "multiSelect" && !hasSelections && hasOptions) {
+                                    return "Tümünü Seç";
+                                }
+                                
+                                return "İleri";
+                            })()}
                             <FiArrowRight className="w-4 h-4" />
                         </button>
                     </div>

@@ -12,6 +12,7 @@ export default function UniversityMatch() {
     const [preferences, setPreferences] = useState<UserPreferences>({
         selectedCities: [],
         selectedUniversityTypes: [],
+        selectedDepartments: [],
         selectedLanguages: [],
         selectedDegreeLevels: [],
         educationType: [],
@@ -34,6 +35,14 @@ export default function UniversityMatch() {
             id: "cities",
             title: "Hangi şehirlerde okumak istiyorsunuz?",
             subtitle: "Birden fazla şehir seçebilirsiniz",
+            type: "multiSelect",
+            options: [] as string[],
+            required: false
+        },
+        {
+            id: "departments",
+            title: "Hangi bölümlerde okumak istiyorsunuz?",
+            subtitle: "İlgilendiğiniz bölümleri seçin",
             type: "multiSelect",
             options: [] as string[],
             required: false
@@ -138,37 +147,47 @@ export default function UniversityMatch() {
     const updateQuestionOptions = () => {
         const cities = [...new Set(universities.map(uni => uni.city))].sort(turkishSort);
         
-        let universityTypes: string[];
+        let cityFilteredUniversities = universities;
         if (preferences.selectedCities.length > 0) {
-            universityTypes = [...new Set(universities
-                .filter(uni => preferences.selectedCities.includes(uni.city))
-                .map(uni => translate.universityType(uni.university_type))
-            )].sort(turkishSort);
-        } else {
-            universityTypes = [...new Set(universities.map(uni => translate.universityType(uni.university_type)))].sort(turkishSort);
-        }
-
-        let filteredUniversities = universities;
-        if (preferences.selectedCities.length > 0) {
-            filteredUniversities = filteredUniversities.filter(uni => 
+            cityFilteredUniversities = cityFilteredUniversities.filter(uni => 
                 preferences.selectedCities.includes(uni.city)
             );
         }
+        
+        const departments = [...new Set(cityFilteredUniversities
+            .flatMap(uni => uni.departments.map(dept => dept.name))
+        )].sort(turkishSort);
+        
+        let departmentFilteredUniversities = cityFilteredUniversities;
+        if (preferences.selectedDepartments.length > 0) {
+            departmentFilteredUniversities = departmentFilteredUniversities.map(uni => ({
+                ...uni,
+                departments: uni.departments.filter(dept => 
+                    preferences.selectedDepartments.includes(dept.name)
+                )
+            })).filter(uni => uni.departments.length > 0);
+        }
+
+        const universityTypes = [...new Set(departmentFilteredUniversities
+            .map(uni => translate.universityType(uni.university_type))
+        )].sort(turkishSort);
+        
+        let universityTypeFilteredUniversities = departmentFilteredUniversities;
         if (preferences.selectedUniversityTypes.length > 0) {
             const selectedTypes = preferences.selectedUniversityTypes.map(turkishType => 
                 reverseTranslate.universityType(turkishType)
             );
-            filteredUniversities = filteredUniversities.filter(uni => 
+            universityTypeFilteredUniversities = universityTypeFilteredUniversities.filter(uni => 
                 selectedTypes.includes(uni.university_type)
             );
         }
         
-        let degreeLevels: string[] = [...new Set(filteredUniversities
+        let degreeLevels: string[] = [...new Set(universityTypeFilteredUniversities
             .flatMap(uni => uni.departments.map(dept => translate.degreeLevel(dept.degree_level)))
         )].sort(turkishSort);
 
         // Dil
-        let degreeFilteredUniversities = filteredUniversities;
+        let degreeFilteredUniversities = universityTypeFilteredUniversities;
         if (preferences.selectedDegreeLevels.length > 0) {
             const selectedLevels = preferences.selectedDegreeLevels.map(turkishLevel => 
                 reverseTranslate.degreeLevel(turkishLevel)
@@ -215,17 +234,19 @@ export default function UniversityMatch() {
 
         setQuestions(prevQuestions => [
             { ...prevQuestions[0], options: cities },
-            { ...prevQuestions[1], options: universityTypes },
-            { ...prevQuestions[2], options: degreeLevels },
-            { ...prevQuestions[3], options: languages },
-            { ...prevQuestions[4], options: educationTypes },
-            { ...prevQuestions[5], options: universityNames },
-            { ...prevQuestions[6], options: [] },
+            { ...prevQuestions[1], options: departments },
+            { ...prevQuestions[2], options: universityTypes },
+            { ...prevQuestions[3], options: degreeLevels },
+            { ...prevQuestions[4], options: languages },
+            { ...prevQuestions[5], options: educationTypes },
+            { ...prevQuestions[6], options: universityNames },
             { ...prevQuestions[7], options: [] },
+            { ...prevQuestions[8], options: [] },
         ]);
 
         type StringArrayKeys =
             'selectedCities' |
+            'selectedDepartments' |
             'selectedUniversityTypes' |
             'selectedDegreeLevels' |
             'selectedLanguages' |
@@ -237,6 +258,7 @@ export default function UniversityMatch() {
             let changed = false;
             const autoSelect: { key: StringArrayKeys, options: string[] }[] = [
                 { key: 'selectedCities', options: cities },
+                { key: 'selectedDepartments', options: departments },
                 { key: 'selectedUniversityTypes', options: universityTypes },
                 { key: 'selectedDegreeLevels', options: degreeLevels },
                 { key: 'selectedLanguages', options: languages },
@@ -282,6 +304,7 @@ export default function UniversityMatch() {
         setPreferences(prev => {
             const keyMap: { [key: string]: keyof UserPreferences } = {
                 'cities': 'selectedCities',
+                'departments': 'selectedDepartments',
                 'universityTypes': 'selectedUniversityTypes',
                 'degreeLevels': 'selectedDegreeLevels',
                 'languages': 'selectedLanguages',
@@ -328,6 +351,18 @@ export default function UniversityMatch() {
         
         if (prefs.selectedCities.length > 0) {
             params.append('city', prefs.selectedCities.join(','));
+        }
+        if (prefs.selectedDepartments.length > 0) {
+            const departmentSlugs = prefs.selectedDepartments.flatMap(name => {
+                return universities.flatMap(uni => 
+                    uni.departments
+                        .filter(dept => dept.name === name)
+                        .map(dept => dept.slug)
+                );
+            });
+            if (departmentSlugs.length > 0) {
+                params.append('department', [...new Set(departmentSlugs)].join(','));
+            }
         }
         if (prefs.selectedUniversityTypes.length > 0) {
             const universityTypes = prefs.selectedUniversityTypes.map(turkishType => 
@@ -451,6 +486,7 @@ export default function UniversityMatch() {
         setPreferences({
             selectedCities: [],
             selectedUniversityTypes: [],
+            selectedDepartments: [],
             selectedDegreeLevels: [],
             selectedLanguages: [],
             educationType: [],
@@ -484,6 +520,7 @@ export default function UniversityMatch() {
         
         const keyMap: { [key: string]: keyof UserPreferences } = {
             'cities': 'selectedCities',
+            'departments': 'selectedDepartments',
             'universityTypes': 'selectedUniversityTypes',
             'degreeLevels': 'selectedDegreeLevels',
             'languages': 'selectedLanguages',
@@ -500,6 +537,10 @@ export default function UniversityMatch() {
             
             if (preferences.selectedCities.length > 0) {
                 activeFilters.push(`${preferences.selectedCities.length} şehir seçili`);
+            }
+            
+            if (preferences.selectedDepartments.length > 0) {
+                activeFilters.push(`${preferences.selectedDepartments.length} bölüm seçili`);
             }
             
             if (preferences.selectedUniversityTypes.length > 0) {
@@ -569,7 +610,8 @@ export default function UniversityMatch() {
                                                     'cities': 'selectedCities',
                                                     'universities': 'selectedUniversities',
                                                     'languages': 'selectedLanguages',
-                                                    'educationType': 'educationType'
+                                                    'educationType': 'educationType',
+                                                    'departments': 'selectedDepartments'
                                                 };
                                                 const key = keyMap[questions[currentStep - 1].id];
                                                 if (key) {
@@ -1029,6 +1071,7 @@ export default function UniversityMatch() {
     const resetLowerFilters = (prev: UserPreferences, changedKey: keyof UserPreferences) => {
         const filterOrder: (keyof UserPreferences)[] = [
             'selectedCities',
+            'selectedDepartments',
             'selectedUniversityTypes',
             'selectedDegreeLevels',
             'selectedLanguages',

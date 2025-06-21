@@ -496,6 +496,9 @@ export default function UniversityMatch() {
     const handlePageChange = (newPage: number) => {
         if (newPage >= 1 && newPage <= pagination.totalPages) {
             filterResultsWithPreferences(preferences, newPage);
+            setTimeout(() => {
+                smoothScrollToTop();
+            }, 100);
         }
     };
 
@@ -1033,6 +1036,7 @@ export default function UniversityMatch() {
                             ? "bg-primary text-white border-primary"
                             : "text-gray-500 bg-white border-gray-300 hover:bg-gray-50"
                     }`}
+                    aria-current={i === pagination.currentPage ? 'page' : undefined}
                 >
                     {i}
                 </button>
@@ -1059,47 +1063,45 @@ export default function UniversityMatch() {
         }
 
         return (
-            <div>
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-8 p-4 bg-gray-50 rounded-lg gap-4">
-                    <div className="text-sm text-gray-700 text-center lg:text-left">
-                        Toplam <span className="font-medium">{pagination.totalResults}</span> üniversiteden{" "}
-                        <span className="font-medium">
-                            {((pagination.currentPage - 1) * pagination.limit) + 1}
-                        </span>-
-                        <span className="font-medium">
-                            {Math.min(pagination.currentPage * pagination.limit, pagination.totalResults)}
-                        </span> arası gösteriliyor
-                    </div>
-                    
-                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-1">
+            <div className="flex flex-col items-center gap-4">
+                <nav aria-label="Sayfalama">
+                    <div className="flex items-center space-x-1">
                         <button
                             onClick={() => handlePageChange(pagination.currentPage - 1)}
                             disabled={pagination.currentPage === 1}
-                            className={`w-full sm:w-auto px-3 py-2 text-sm font-medium rounded-lg border ${
+                            className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg border ${
                                 pagination.currentPage === 1
                                     ? "text-gray-300 bg-gray-100 border-gray-200 cursor-not-allowed"
                                     : "text-gray-500 bg-white border-gray-300 hover:bg-gray-50"
                             }`}
                         >
+                            <FiArrowLeft className="w-4 h-4 mr-1" />
                             Önceki
                         </button>
                         
-                        <div className="flex flex-wrap justify-center">
+                        <div className="hidden sm:flex items-center space-x-1">
                             {pages}
                         </div>
-                        
+         
                         <button
                             onClick={() => handlePageChange(pagination.currentPage + 1)}
                             disabled={pagination.currentPage === pagination.totalPages}
-                            className={`w-full sm:w-auto px-3 py-2 text-sm font-medium rounded-lg border ${
+                            className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg border ${
                                 pagination.currentPage === pagination.totalPages
                                     ? "text-gray-300 bg-gray-100 border-gray-200 cursor-not-allowed"
                                     : "text-gray-500 bg-white border-gray-300 hover:bg-gray-50"
                             }`}
                         >
                             Sonraki
+                            <FiArrowRight className="w-4 h-4 ml-1" />
                         </button>
                     </div>
+                </nav>
+                <div className="text-sm text-gray-700 text-center">
+                    Sayfa <span className="font-medium">{pagination.currentPage}</span> / <span className="font-medium">{pagination.totalPages}</span>
+                    <span className="hidden sm:inline">
+                    {" "}&bull; Toplam <span className="font-medium">{pagination.totalResults}</span> sonuç
+                    </span>
                 </div>
             </div>
         );

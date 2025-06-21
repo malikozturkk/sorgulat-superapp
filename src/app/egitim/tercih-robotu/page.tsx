@@ -1144,7 +1144,7 @@ export default function UniversityMatch() {
         <div ref={scrollToTop} className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-6 pb-6 md:pb-12">
             <div className="text-center">
                 <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-                    {showResults ? "Üniversite Tercih Sonuçları" : "Üniversite Tercih Robotu"}
+                    {showResults ? "Üniversite Tercih Sonuçları" : "YKS Tercih Robotu"}
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                     {showResults 

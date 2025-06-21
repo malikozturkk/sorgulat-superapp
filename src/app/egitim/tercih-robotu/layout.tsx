@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Üniversite Tercih Robotu - Üniversiteleri Bize Sorgulatın!',
-    description: 'Üniversite tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın. YKS tercih sürecinizi kolaylaştırın!',
+    title: 'YKS Tercih Robotu - Üniversiteleri Bize Sorgulatın!',
+    description: 'YKS tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın. YKS tercih sürecinizi kolaylaştırın!',
     keywords: [
-        'üniversite tercih robotu',
         'YKS tercih robotu',
+        'üniversite tercih robotu',
         'YKS tercih',
         'üniversite seçimi',
         'bölüm tercihi',
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
         canonical: '/egitim/tercih-robotu',
     },
     openGraph: {
-        title: 'Üniversite Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
-        description: 'Üniversite tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın.',
+        title: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
+        description: 'YKS tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın.',
         url: 'https://sorgulat.com/egitim/tercih-robotu',
         siteName: 'Sorgulat',
         images: [
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
                 url: '/images/tercih-robotu-og.jpg',
                 width: 1200,
                 height: 630,
-                alt: 'Üniversite Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
+                alt: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
             },
         ],
         locale: 'tr_TR',
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Üniversite Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
-        description: 'Üniversite tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın.',
+        title: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
+        description: 'YKS tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın.',
         images: ['/images/tercih-robotu-twitter.jpg'],
         creator: '@sorgulat',
     },
@@ -74,14 +74,14 @@ export const metadata: Metadata = {
     category: 'education',
     classification: 'University Selection Tool',
     other: {
-        'application-name': 'Sorgulat Üniversite Tercih Robotu',
+        'application-name': 'YKS Tercih Robotu',
         'mobile-web-app-capable': 'yes',
         'apple-mobile-web-app-capable': 'yes',
         'apple-mobile-web-app-status-bar-style': 'default',
-        'apple-mobile-web-app-title': 'Tercih Robotu',
-        'msapplication-TileColor': '#3B82F6',
+        'apple-mobile-web-app-title': 'YKS Tercih Robotu',
+        'msapplication-TileColor': '#646ecb',
         'msapplication-config': '/browserconfig.xml',
-        'theme-color': '#3B82F6',
+        'theme-color': '#646ecb',
     },
 };
 

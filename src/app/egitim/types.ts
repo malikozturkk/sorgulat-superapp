@@ -55,6 +55,15 @@ export interface UserPreferences {
     maxRank?: number;
     sortBy?: string;
     sortOrder?: string;
+    selectAllFlags?: {
+        cities: boolean;
+        departments: boolean;
+        universityTypes: boolean;
+        degreeLevels: boolean;
+        languages: boolean;
+        educationType: boolean;
+        universities: boolean;
+    };
 }
 
 export interface PaginationInfo {

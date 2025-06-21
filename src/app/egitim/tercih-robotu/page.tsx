@@ -18,7 +18,16 @@ export default function UniversityMatch() {
         educationType: [],
         selectedUniversities: [],
         sortBy: "score",
-        sortOrder: "desc"
+        sortOrder: "desc",
+        selectAllFlags: {
+            cities: false,
+            departments: false,
+            universityTypes: false,
+            degreeLevels: false,
+            languages: false,
+            educationType: false,
+            universities: false
+        }
     });
     const [filteredResults, setFilteredResults] = useState<University[]>([]);
     const [showResults, setShowResults] = useState(false);
@@ -37,6 +46,23 @@ export default function UniversityMatch() {
     const [displayCount, setDisplayCount] = useState(50);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const optionsContainerRef = useRef<HTMLDivElement>(null);
+    const [allOptions, setAllOptions] = useState<{
+        cities: string[];
+        departments: string[];
+        universityTypes: string[];
+        degreeLevels: string[];
+        languages: string[];
+        educationTypes: string[];
+        universities: string[];
+    }>({
+        cities: [],
+        departments: [],
+        universityTypes: [],
+        degreeLevels: [],
+        languages: [],
+        educationTypes: [],
+        universities: []
+    });
     const [questions, setQuestions] = useState([
         {
             id: "cities",
@@ -254,6 +280,25 @@ export default function UniversityMatch() {
         }
         let universityNames: string[] = [...new Set(educationTypeFilteredUniversities.map(uni => uni.name))].sort(turkishSort);
 
+        // Orijinal tüm seçenekleri sakla
+        const allCities = [...new Set(universities.map(uni => uni.city))].sort(turkishSort);
+        const allDepartments = [...new Set(universities.flatMap(uni => uni.departments.map(dept => dept.name)))].sort(turkishSort);
+        const allUniversityTypes = [...new Set(universities.map(uni => translate.universityType(uni.university_type)))].sort(turkishSort);
+        const allDegreeLevels = [...new Set(universities.flatMap(uni => uni.departments.map(dept => translate.degreeLevel(dept.degree_level))))].sort(turkishSort);
+        const allLanguages = [...new Set(universities.flatMap(uni => uni.departments.map(dept => dept.language)))].sort(turkishSort);
+        const allEducationTypes = [...new Set(universities.flatMap(uni => uni.departments.map(dept => translate.educationType(dept.education_type))))].sort(turkishSort);
+        const allUniversities = [...new Set(universities.map(uni => uni.name))].sort(turkishSort);
+
+        setAllOptions({
+            cities: allCities,
+            departments: allDepartments,
+            universityTypes: allUniversityTypes,
+            degreeLevels: allDegreeLevels,
+            languages: allLanguages,
+            educationTypes: allEducationTypes,
+            universities: allUniversities
+        });
+
         setQuestions(prevQuestions => [
             { ...prevQuestions[0], options: cities },
             { ...prevQuestions[1], options: departments },
@@ -314,8 +359,21 @@ export default function UniversityMatch() {
             'universities': 'selectedUniversities',
         };
         
-        const key = keyMap[questionId];
-        if (!key) return;
+        const flagMap = {
+            cities: 'cities',
+            departments: 'departments',
+            universityTypes: 'universityTypes',
+            degreeLevels: 'degreeLevels',
+            languages: 'languages',
+            educationType: 'educationType',
+            universities: 'universities',
+        } as const;
+        
+        type KeyKeys = keyof typeof keyMap;
+        type FlagKeys = keyof typeof flagMap;
+        const key = keyMap[questionId as KeyKeys];
+        const flagKey = flagMap[questionId as FlagKeys];
+        if (!key || !flagKey) return;
 
         // For large datasets, use batch processing
         const batchSize = 100;
@@ -337,6 +395,15 @@ export default function UniversityMatch() {
                         const newValues = [...new Set([...currentValues, ...batch])];
                         let newPrefs = { ...prev, [key]: newValues };
                         newPrefs = resetLowerFilters(newPrefs, key);
+                        
+                        // Set selectAll flag
+                        if (flagKey && newPrefs.selectAllFlags) {
+                            newPrefs.selectAllFlags = {
+                                ...newPrefs.selectAllFlags,
+                                [flagKey]: true
+                            };
+                        }
+                        
                         return newPrefs;
                     });
                     resolve(true);
@@ -427,11 +494,25 @@ export default function UniversityMatch() {
                 'educationType': 'educationType',
                 'universities': 'selectedUniversities',
             };
+            
+            const flagMap = {
+                cities: 'cities',
+                departments: 'departments',
+                universityTypes: 'universityTypes',
+                degreeLevels: 'degreeLevels',
+                languages: 'languages',
+                educationType: 'educationType',
+                universities: 'universities',
+            } as const;
+            
             const key = keyMap[questionId];
+            const flagKey = flagMap[questionId as keyof typeof flagMap];
+            
             if (!key) {
                 console.error('Bilinmeyen soru ID:', questionId);
                 return prev;
             }
+            
             const currentValues = (prev[key] as string[]) || [];
             let newValues;
             if (currentValues.includes(value)) {
@@ -439,8 +520,18 @@ export default function UniversityMatch() {
             } else {
                 newValues = [...currentValues, value];
             }
+            
             let newPrefs = { ...prev, [key]: newValues };
             newPrefs = resetLowerFilters(newPrefs, key);
+            
+            // Manuel seçim yapıldığında selectAll flag'ini false yap
+            if (flagKey && newPrefs.selectAllFlags) {
+                newPrefs.selectAllFlags = {
+                    ...newPrefs.selectAllFlags,
+                    [flagKey]: false
+                };
+            }
+            
             return newPrefs;
         });
     };
@@ -482,56 +573,91 @@ export default function UniversityMatch() {
     const buildApiUrl = (prefs: UserPreferences, page: number = 1, limit: number = 5) => {
         const params = new URLSearchParams();
         
-        if (prefs.selectedCities.length > 0) {
-            params.append('city', prefs.selectedCities.join(','));
-        }
-        if (prefs.selectedDepartments.length > 0) {
-            const departmentSlugs = prefs.selectedDepartments.flatMap(name => {
-                return universities.flatMap(uni => 
-                    uni.departments
-                        .filter(dept => dept.name === name)
-                        .map(dept => dept.slug)
-                );
-            });
-            if (departmentSlugs.length > 0) {
-                params.append('department', [...new Set(departmentSlugs)].join(','));
+        // Şehir filtresi - eğer tümünü seç flag'i true ise filtre ekleme
+        if (prefs.selectedCities.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.cities)) {
+            const isAllCitiesSelected = prefs.selectedCities.length === allOptions.cities.length && 
+                allOptions.cities.every(city => prefs.selectedCities.includes(city));
+            if (!isAllCitiesSelected) {
+                params.append('city', prefs.selectedCities.join(','));
             }
         }
-        if (prefs.selectedUniversityTypes.length > 0) {
-            const universityTypes = prefs.selectedUniversityTypes.map(turkishType => 
-                reverseTranslate.universityType(turkishType)
-            );
-            params.append('university_type', universityTypes.join(','));
+        // Bölüm filtresi
+        if (prefs.selectedDepartments.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.departments)) {
+            const isAllDepartmentsSelected = prefs.selectedDepartments.length === allOptions.departments.length && 
+                allOptions.departments.every(dept => prefs.selectedDepartments.includes(dept));
+            if (!isAllDepartmentsSelected) {
+                const departmentSlugs = prefs.selectedDepartments.flatMap(name => {
+                    return universities.flatMap(uni => 
+                        uni.departments
+                            .filter(dept => dept.name === name)
+                            .map(dept => dept.slug)
+                    );
+                });
+                if (departmentSlugs.length > 0) {
+                    params.append('department', [...new Set(departmentSlugs)].join(','));
+                }
+            }
         }
-        if (prefs.selectedDegreeLevels.length > 0) {
-            const degreeLevels = prefs.selectedDegreeLevels.map(turkishLevel => 
-                reverseTranslate.degreeLevel(turkishLevel)
-            );
-            params.append('degree_level', degreeLevels.join(','));
+        // Üniversite türü filtresi
+        if (prefs.selectedUniversityTypes.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.universityTypes)) {
+            const isAllUniversityTypesSelected = prefs.selectedUniversityTypes.length === allOptions.universityTypes.length && 
+                allOptions.universityTypes.every(type => prefs.selectedUniversityTypes.includes(type));
+            if (!isAllUniversityTypesSelected) {
+                const universityTypes = prefs.selectedUniversityTypes.map(turkishType => 
+                    reverseTranslate.universityType(turkishType)
+                );
+                params.append('university_type', universityTypes.join(','));
+            }
         }
-        if (prefs.selectedLanguages.length > 0) {
-            params.append('language', prefs.selectedLanguages.join(','));
+        // Eğitim seviyesi filtresi
+        if (prefs.selectedDegreeLevels.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.degreeLevels)) {
+            const isAllDegreeLevelsSelected = prefs.selectedDegreeLevels.length === allOptions.degreeLevels.length && 
+                allOptions.degreeLevels.every(level => prefs.selectedDegreeLevels.includes(level));
+            if (!isAllDegreeLevelsSelected) {
+                const degreeLevels = prefs.selectedDegreeLevels.map(turkishLevel => 
+                    reverseTranslate.degreeLevel(turkishLevel)
+                );
+                params.append('degree_level', degreeLevels.join(','));
+            }
         }
-        if (prefs.educationType.length > 0) {
-            const englishTypes = prefs.educationType.map(turkishType => 
-                reverseTranslate.educationType(turkishType)
-            );
-            params.append('education_type', englishTypes.join(','));
+        // Dil filtresi
+        if (prefs.selectedLanguages.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.languages)) {
+            const isAllLanguagesSelected = prefs.selectedLanguages.length === allOptions.languages.length && 
+                allOptions.languages.every(lang => prefs.selectedLanguages.includes(lang));
+            if (!isAllLanguagesSelected) {
+                params.append('language', prefs.selectedLanguages.join(','));
+            }
         }
-        if (prefs.selectedUniversities.length > 0) {
-            const universitySlugs = prefs.selectedUniversities.map(uniName => {
-                const university = universities.find(u => u.name === uniName);
-                return university?.slug || uniName.toLowerCase()
-                    .replace(/[çğıöşü]/g, (match) => {
-                        const map: { [key: string]: string } = {
-                            'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u'
-                        };
-                        return map[match] || match;
-                    })
-                    .replace(/\s+/g, '-')
-                    .replace(/[^a-z0-9-]/g, '');
-            });
-            params.append('university', universitySlugs.join(','));
+        // Eğitim türü filtresi
+        if (prefs.educationType.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.educationType)) {
+            const isAllEducationTypesSelected = prefs.educationType.length === allOptions.educationTypes.length && 
+                allOptions.educationTypes.every(type => prefs.educationType.includes(type));
+            if (!isAllEducationTypesSelected) {
+                const englishTypes = prefs.educationType.map(turkishType => 
+                    reverseTranslate.educationType(turkishType)
+                );
+                params.append('education_type', englishTypes.join(','));
+            }
+        }
+        // Üniversite adı filtresi
+        if (prefs.selectedUniversities.length > 0 && !(prefs.selectAllFlags && prefs.selectAllFlags.universities)) {
+            const isAllUniversitiesSelected = prefs.selectedUniversities.length === allOptions.universities.length && 
+                allOptions.universities.every(uni => prefs.selectedUniversities.includes(uni));
+            if (!isAllUniversitiesSelected) {
+                const universitySlugs = prefs.selectedUniversities.map(uniName => {
+                    const university = universities.find(u => u.name === uniName);
+                    return university?.slug || uniName.toLowerCase()
+                        .replace(/[çğıöşü]/g, (match) => {
+                            const map: { [key: string]: string } = {
+                                'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u'
+                            };
+                            return map[match] || match;
+                        })
+                        .replace(/\s+/g, '-')
+                        .replace(/[^a-z0-9-]/g, '');
+                });
+                params.append('university', universitySlugs.join(','));
+            }
         }
         if (prefs.minScore) {
             params.append('base_score_min', prefs.minScore.toString());
@@ -628,7 +754,16 @@ export default function UniversityMatch() {
             educationType: [],
             selectedUniversities: [],
             sortBy: "score",
-            sortOrder: "desc"
+            sortOrder: "desc",
+            selectAllFlags: {
+                cities: false,
+                departments: false,
+                universityTypes: false,
+                degreeLevels: false,
+                languages: false,
+                educationType: false,
+                universities: false
+            }
         });
         setCurrentStep(0);
         setShowResults(false);

@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     }
   }
 
-  const title = `${university.name} | Sorgulat`;
+  const title = `${university.name} Bölümleri | Sorgulat`;
   const description = `${university.name} (${university.city}, ${university.district}) üniversitesinin tüm bölümleri, taban puanları, kontenjanları ve iletişim bilgileri. Sorgulat ile üniversite tercihine dair detaylı bilgi alın.`;
   const image = "/images/openGraph/university.png";
   const url = `https://www.sorgulat.com/egitim/${university.slug}`;
@@ -115,7 +115,7 @@ export default async function UniversityDetailPage({ params }: { params: Params 
       <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{university.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{university.name} Bölümleri</h1>
             <div className="flex flex-wrap gap-2 text-gray-600 text-sm mb-2">
               <span className="flex items-center gap-1"><FiMapPin className="min-w-3.5 min-h-3.5" /> {university.city} / {university.district}</span>
               <span className="flex items-center gap-1"><FiUser className="min-w-3.5 min-h-3.5" /> Rektör: {university.contacts.rector.name} {university.contacts.rector.surname}</span>

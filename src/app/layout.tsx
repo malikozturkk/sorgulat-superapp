@@ -34,9 +34,7 @@ export default function RootLayout({
       </Script>
       </head>
       <body className="font-sans">
-        <Navbar />
-        {children}
-        <Footer />
+        Verification: 96dd6c199b3f276d
       </body>
     </html >
   );

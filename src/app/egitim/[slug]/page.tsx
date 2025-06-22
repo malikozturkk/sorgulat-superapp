@@ -85,7 +85,22 @@ export async function generateMetadata({ params }: { params: Params }) {
         "application/opensearchdescription+xml": "/opensearch.xml",
         "application/rss+xml": "https://sorgulat.com/rss.xml"
       }
-    }
+    },
+    verification: {
+      yandex: '96dd6c199b3f276d',
+    },
+    category: 'education',
+    classification: `${university.name} Detail`,
+    other: {
+      'application-name': university.name,
+      'mobile-web-app-capable': 'yes',
+      'apple-mobile-web-app-capable': 'yes',
+      'apple-mobile-web-app-status-bar-style': 'default',
+      'apple-mobile-web-app-title': university.name,
+      'msapplication-TileColor': '#646ecb',
+      'msapplication-config': '/browserconfig.xml',
+      'theme-color': '#646ecb',
+    },
   }
 }
 

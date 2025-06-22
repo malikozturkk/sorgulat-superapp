@@ -70,8 +70,7 @@ export const metadata: Metadata = {
         },
     },
     verification: {
-        google: 'your-google-verification-code',
-        yandex: 'your-yandex-verification-code',
+        yandex: '96dd6c199b3f276d',
     },
     category: 'education',
     classification: 'University Selection Tool',

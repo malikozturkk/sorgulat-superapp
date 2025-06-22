@@ -24,7 +24,22 @@ export const metadata: Metadata = {
   robots: "index, follow",
   alternates: {
     canonical: "/egitim/universiteler"
-  }
+  },
+  verification: {
+    yandex: '96dd6c199b3f276d',
+  },
+  category: 'education',
+  classification: 'All Universities',
+  other: {
+    'application-name': "Türkiye'deki Tüm Üniversiteler",
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+    'apple-mobile-web-app-title': "Türkiye'deki Tüm Üniversiteler",
+    'msapplication-TileColor': '#646ecb',
+    'msapplication-config': '/browserconfig.xml',
+    'theme-color': '#646ecb',
+  }, 
 };
 
 export default async function Page() {

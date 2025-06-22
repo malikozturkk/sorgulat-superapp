@@ -70,6 +70,9 @@ export const defaultGenerateMetadata = () => {
         alternates: {
             canonical: '/', 
         },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
     }
 }
 

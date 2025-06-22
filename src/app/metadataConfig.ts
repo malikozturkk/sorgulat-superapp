@@ -24,6 +24,11 @@ interface MetadataConfig {
       canonical: string;
       types: Record<string, string>;
     };
+    verification?: {
+        yandex?: string
+        google?: string
+    },
+    other?: any
   }
 
 export const defaultMetadata = {
@@ -102,13 +107,41 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Anasayfa',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Anasayfa',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     '/saat-kac': {
         title: 'Saat Kaç | Sorgulat',
         description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
         robots: "index, follow",
         keywords: 'saat kaç?, sorgulat, sorgula, sorgu, saati sorgulat, hangi yıldayız, saat kaç, sorgulat.com',
+        openGraph: {
+            title: 'Saat Kaç | Sorgulat',
+            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+            url: 'https://www.sorgulat.com/saat-kac',
+            images: '/images/openGraph/time.png',
+            type: 'website',
+            siteName: 'Sorgulat',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: 'Saat Kaç | Sorgulat',
+            description: 'Dünyadaki binlerce lokasyon için atomik saate göre senkronize olmuş en doğru yerel saat bilgisi.',
+            images: '/images/openGraph/time.png',
+            site: '@Sorgulat',
+        },
         authors: [
             {
                 name: 'Saat Kaç | Sorgulat',
@@ -116,6 +149,19 @@ export const metadataConfig: Record<string, MetadataConfig> = {
             },
         ],
         icon: '/favicon.ico',
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Saat Kaç',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Saat Kaç',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     '/gizlilik': {
         title: 'Gizlilik Koşulları | Sorgulat',
@@ -152,6 +198,19 @@ export const metadataConfig: Record<string, MetadataConfig> = {
               "application/rss+xml": "https://sorgulat.com/rss.xml",
             },
           },
+          verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Gizlilik',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Gizlilik',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     '/iletisim': {
         title: 'İletişim | Sorgulat',
@@ -188,6 +247,19 @@ export const metadataConfig: Record<string, MetadataConfig> = {
               "application/rss+xml": "https://sorgulat.com/rss.xml",
             },
           },
+          verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'İletişim',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'İletişim',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     "/pasaport": {
         title: "Pasaport Vize Durumu | Sorgulat",
@@ -222,7 +294,20 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Pasaport',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Pasaport',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     "/blog": {
         title: "Blog | Sorgulat",
@@ -257,7 +342,20 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Blog',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Blog',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     "/pasaport-blog": {
         title: "Pasaport Blog Rehberi | Sorgulat",
@@ -292,7 +390,20 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Pasaport Blogları',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Pasaport Blogları',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     "/hakkinda": {
         title: "Sorgulat Hakkında | Sorgulat",
@@ -327,7 +438,20 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Hakkında',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Hakkında',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     },
     '/fark': {
         title: "Saat Farkı Hesapla | Sorgulat",
@@ -362,6 +486,19 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        }
+        },
+        verification: {
+            yandex: '96dd6c199b3f276d',
+        },
+        other: {
+            'application-name': 'Saat Farkı',
+            'mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-capable': 'yes',
+            'apple-mobile-web-app-status-bar-style': 'default',
+            'apple-mobile-web-app-title': 'Saat Farkı',
+            'msapplication-TileColor': '#646ecb',
+            'msapplication-config': '/browserconfig.xml',
+            'theme-color': '#646ecb',
+        },
     }
 }

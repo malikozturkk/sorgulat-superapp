@@ -24,10 +24,6 @@ interface MetadataConfig {
       canonical: string;
       types: Record<string, string>;
     };
-    verification?: {
-        yandex?: string
-        google?: string
-    },
     other?: any
   }
 
@@ -70,9 +66,6 @@ export const defaultGenerateMetadata = () => {
         alternates: {
             canonical: '/', 
         },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
     }
 }
 
@@ -110,10 +103,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },   
         other: {
             'application-name': 'Anasayfa',
             'mobile-web-app-capable': 'yes',
@@ -151,10 +141,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 url: 'https://www.sorgulat.com',
             },
         ],
-        icon: '/favicon.ico',
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        icon: '/favicon.ico',      
         other: {
             'application-name': 'Saat Kaç',
             'mobile-web-app-capable': 'yes',
@@ -200,10 +187,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
               "application/opensearchdescription+xml": "/opensearch.xml",
               "application/rss+xml": "https://sorgulat.com/rss.xml",
             },
-          },
-          verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+          },         
         other: {
             'application-name': 'Gizlilik',
             'mobile-web-app-capable': 'yes',
@@ -249,10 +233,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
               "application/opensearchdescription+xml": "/opensearch.xml",
               "application/rss+xml": "https://sorgulat.com/rss.xml",
             },
-          },
-          verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+          },        
         other: {
             'application-name': 'İletişim',
             'mobile-web-app-capable': 'yes',
@@ -297,10 +278,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },   
         other: {
             'application-name': 'Pasaport',
             'mobile-web-app-capable': 'yes',
@@ -345,10 +323,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },       
         other: {
             'application-name': 'Blog',
             'mobile-web-app-capable': 'yes',
@@ -393,10 +368,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },      
         other: {
             'application-name': 'Pasaport Blogları',
             'mobile-web-app-capable': 'yes',
@@ -441,10 +413,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },       
         other: {
             'application-name': 'Hakkında',
             'mobile-web-app-capable': 'yes',
@@ -489,10 +458,7 @@ export const metadataConfig: Record<string, MetadataConfig> = {
                 "application/opensearchdescription+xml": "/opensearch.xml",
                 "application/rss+xml": "https://sorgulat.com/rss.xml"
             }
-        },
-        verification: {
-            yandex: '96dd6c199b3f276d',
-        },
+        },       
         other: {
             'application-name': 'Saat Farkı',
             'mobile-web-app-capable': 'yes',

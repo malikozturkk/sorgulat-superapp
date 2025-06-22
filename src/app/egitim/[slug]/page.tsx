@@ -86,9 +86,6 @@ export async function generateMetadata({ params }: { params: Params }) {
         "application/rss+xml": "https://sorgulat.com/rss.xml"
       }
     },
-    verification: {
-      yandex: '96dd6c199b3f276d',
-    },
     category: 'education',
     classification: `${university.name} Detail`,
     other: {

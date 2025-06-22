@@ -25,9 +25,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/egitim/universiteler"
   },
-  verification: {
-    yandex: '96dd6c199b3f276d',
-  },
   category: 'education',
   classification: 'All Universities',
   other: {

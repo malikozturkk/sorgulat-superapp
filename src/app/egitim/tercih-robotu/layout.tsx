@@ -69,9 +69,6 @@ export const metadata: Metadata = {
             'max-snippet': -1,
         },
     },
-    verification: {
-        yandex: '96dd6c199b3f276d',
-    },
     category: 'education',
     classification: 'University Selection Tool',
     other: {

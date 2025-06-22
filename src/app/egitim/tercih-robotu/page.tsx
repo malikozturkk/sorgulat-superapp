@@ -536,28 +536,11 @@ export default function UniversityMatch() {
         });
     };
 
-    const handleRangeChange = (type: 'min' | 'max', value: number, questionId: string) => {
+    const handleRangeChange = (type: 'min' | 'max', value: number | string, questionId: string) => {
         setPreferences(prev => ({
             ...prev,
             [questionId === 'scoreRange' ? (type === 'min' ? 'minScore' : 'maxScore') : (type === 'min' ? 'minRank' : 'maxRank')]: value
         }));
-    };
-
-    const handleRankInputChange = (type: 'min' | 'max', value: string, questionId: string) => {
-        const cleaned = value.replace(/[^\d]/g, '');
-        const formattedValue = cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        const numericValue = formattedValue.replace(/\./g, '');
-        const finalValue = numericValue ? parseInt(numericValue, 10) : null;
-        
-        setPreferences(prev => ({
-            ...prev,
-            [type === 'min' ? 'minRank' : 'maxRank']: finalValue
-        }));
-    };
-
-    const getDisplayRank = (value: number | undefined): string => {
-        if (value === undefined || value === null) return '';
-        return value.toLocaleString('tr-TR');
     };
 
     const handleSortChange = async (sortBy: string, sortOrder: string) => {
@@ -826,6 +809,26 @@ export default function UniversityMatch() {
         };
     }, [handleScroll]);
 
+    const [minScoreInput, setMinScoreInput] = useState("");
+    const [maxScoreInput, setMaxScoreInput] = useState("");
+    const [minRankInput, setMinRankInput] = useState("");
+    const [maxRankInput, setMaxRankInput] = useState("");
+
+    useEffect(() => {
+        setMinScoreInput(preferences.minScore !== undefined && preferences.minScore !== null ? String(preferences.minScore) : "");
+        setMaxScoreInput(preferences.maxScore !== undefined && preferences.maxScore !== null ? String(preferences.maxScore) : "");
+        setMinRankInput(preferences.minRank !== undefined && preferences.minRank !== null ? String(preferences.minRank) : "");
+        setMaxRankInput(preferences.maxRank !== undefined && preferences.maxRank !== null ? String(preferences.maxRank) : "");
+    }, [preferences]);
+
+    const handleRankInputChange = (setter: (val: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        let numeric = e.target.value.replace(/\D/g, "");
+        numeric = numeric.replace(/^0+/, "");
+        const formatted = numeric.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        setter(formatted);
+    };
+    const getRankValue = (val: string) => val.replace(/\./g, "");
+
     const renderQuestion = () => {
         const question = questions[currentStep];
         
@@ -879,257 +882,257 @@ export default function UniversityMatch() {
 
         const activeFilters = getActiveFiltersInfo();
 
-        if (question.type === "multiSelect") {
-            const hasNoOptions = (question.options || []).length === 0;
-            const hasNoFilteredOptions = filteredOptions.length === 0;
-            const isSearchFiltered = searchTerm.trim() !== "";
+        switch (question.type) {
+            case "multiSelect": {
+                const hasNoOptions = (question.options || []).length === 0;
+                const hasNoFilteredOptions = filteredOptions.length === 0;
+                const isSearchFiltered = searchTerm.trim() !== "";
 
-            return (
-                <div className="space-y-4">
-                    {/* Aktif Filtreler Bilgisi */}
-                    {activeFilters.length > 0 && (
-                        <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p className="text-sm text-blue-800">
-                                <span className="font-medium">Aktif Filtreler:</span> {activeFilters.join(', ')}
-                            </p>
-                            <p className="text-xs text-blue-600 mt-1">
-                                Seçenekler bu filtrelere göre güncellenmiştir.
-                            </p>
-                        </div>
-                    )}
-
-                    {/* Seçenek Yok Uyarısı */}
-                    {hasNoOptions && !isSearchFiltered && (
-                        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                            <div className="flex items-start gap-3">
-                                <div className="flex-shrink-0 mt-0.5">
-                                    <FiInfo className="w-5 h-5 text-yellow-500" />
-                                </div>
-                                <div className="flex-1">
-                                    <h4 className="text-sm font-medium text-yellow-900 mb-1">
-                                        Seçenek Bulunamadı
-                                    </h4>
-                                    <p className="text-sm text-yellow-700 leading-relaxed mb-3">
-                                        Seçtiğiniz önceki filtreler bu adım için hiç seçenek bırakmadı. 
-                                        Daha fazla seçenek görmek için önceki adımlardaki seçimlerinizi genişletebilirsiniz.
-                                    </p>
-                                    <button
-                                        onClick={() => {
-                                            if (currentStep > 0) {
-                                                setCurrentStep(currentStep - 1);
-                                                const keyMap: { [key: string]: keyof UserPreferences } = {
-                                                    'cities': 'selectedCities',
-                                                    'universities': 'selectedUniversities',
-                                                    'languages': 'selectedLanguages',
-                                                    'educationType': 'educationType',
-                                                    'departments': 'selectedDepartments'
-                                                };
-                                                const key = keyMap[questions[currentStep - 1].id];
-                                                if (key) {
-                                                    setPreferences(prev => ({
-                                                        ...prev,
-                                                        [key]: []
-                                                    }));
-                                                }
-                                            }
-                                        }}
-                                        className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded-md hover:bg-yellow-200 transition-colors"
-                                    >
-                                        Önceki Adıma Dön ve Seçimleri Temizle
-                                    </button>
-                                </div>
+                return (
+                    <div className="space-y-4">
+                        {/* Aktif Filtreler Bilgisi */}
+                        {activeFilters.length > 0 && (
+                            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p className="text-sm text-blue-800">
+                                    <span className="font-medium">Aktif Filtreler:</span> {activeFilters.join(', ')}
+                                </p>
+                                <p className="text-xs text-blue-600 mt-1">
+                                    Seçenekler bu filtrelere göre güncellenmiştir.
+                                </p>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    {/* Arama Inputu */}
-                    <div className="relative">
-                        <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder={question.title}
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                        />
-                        <svg 
-                            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-
-                    {/* Sonuç Sayısı */}
-                    {searchTerm && (
-                        <p className="text-sm text-gray-600">
-                            {filteredOptions.length} sonuç bulundu
-                        </p>
-                    )}
-
-                    {!searchTerm && filteredOptions.length > 0 && (
-                        <div className="flex items-center justify-between text-sm text-gray-600">
-                            <span>{filteredOptions.length} seçenek</span>
-                            {filteredOptions.length > 200 && (
-                                <div className="flex items-center gap-2 text-yellow-600">
-                                    <FiInfo className="w-4 h-4" />
-                                    <span>Çok fazla seçenek var. Arama yaparak filtreleyebilirsiniz.</span>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {/* Seçenekler */}
-                    <div 
-                        ref={optionsContainerRef}
-                        onScroll={throttledScrollHandler()}
-                        className="space-y-3 max-h-96 overflow-y-auto"
-                    >
-                        {/* Progress Indicator for Select All */}
-                        {isSelectingAll && (
-                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                <div className="flex items-center gap-3">
-                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+                        {/* Seçenek Yok Uyarısı */}
+                        {hasNoOptions && !isSearchFiltered && (
+                            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <div className="flex items-start gap-3">
+                                    <div className="flex-shrink-0 mt-0.5">
+                                        <FiInfo className="w-5 h-5 text-yellow-500" />
+                                    </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-medium text-blue-900">
-                                            Tüm seçenekler seçiliyor...
+                                        <h4 className="text-sm font-medium text-yellow-900 mb-1">
+                                            Seçenek Bulunamadı
+                                        </h4>
+                                        <p className="text-sm text-yellow-700 leading-relaxed mb-3">
+                                            Seçtiğiniz önceki filtreler bu adım için hiç seçenek bırakmadı. 
+                                            Daha fazla seçenek görmek için önceki adımlardaki seçimlerinizi genişletebilirsiniz.
                                         </p>
-                                        <div className="w-full bg-blue-200 rounded-full h-2 mt-2">
-                                            <div 
-                                                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                                                style={{ width: `${selectAllProgress * 100}%` }}
-                                            ></div>
-                                        </div>
-                                        <p className="text-xs text-blue-700 mt-1">
-                                            %{Math.round(selectAllProgress * 100)} tamamlandı
-                                        </p>
+                                        <button
+                                            onClick={() => {
+                                                if (currentStep > 0) {
+                                                    setCurrentStep(currentStep - 1);
+                                                    const keyMap: { [key: string]: keyof UserPreferences } = {
+                                                        'cities': 'selectedCities',
+                                                        'universities': 'selectedUniversities',
+                                                        'languages': 'selectedLanguages',
+                                                        'educationType': 'educationType',
+                                                        'departments': 'selectedDepartments'
+                                                    };
+                                                    const key = keyMap[questions[currentStep - 1].id];
+                                                    if (key) {
+                                                        setPreferences(prev => ({
+                                                            ...prev,
+                                                            [key]: []
+                                                        }));
+                                                    }
+                                                }
+                                            }}
+                                            className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded-md hover:bg-yellow-200 transition-colors"
+                                        >
+                                            Önceki Adıma Dön ve Seçimleri Temizle
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        {filteredOptions.length > 0 ? (
-                            <>
-                                {/* Virtual scrolling - only render visible options */}
-                                {displayedOptions.map((option, index) => (
-                                    <button
-                                        key={`${option}-${index}`}
-                                        onClick={() => handleMultiSelect(option, question.id)}
-                                        disabled={isSelectingAll}
-                                        className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
-                                            showAllSelected || currentValues.includes(option)
-                                                ? "border-primary bg-primaryLight text-primary"
-                                                : "border-gray-200 bg-white hover:border-primaryLight"
-                                        } ${isSelectingAll ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span className="font-medium truncate pr-2">{option}</span>
-                                            {(showAllSelected || currentValues.includes(option)) && (
-                                                <FiCheck className="w-5 h-5 flex-shrink-0" />
+                        {/* Arama Inputu */}
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder={question.title}
+                                className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                            />
+                            <svg 
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+
+                        {/* Sonuç Sayısı */}
+                        {searchTerm && (
+                            <p className="text-sm text-gray-600">
+                                {filteredOptions.length} sonuç bulundu
+                            </p>
+                        )}
+
+                        {!searchTerm && filteredOptions.length > 0 && (
+                            <div className="flex items-center justify-between text-sm text-gray-600">
+                                <span>{filteredOptions.length} seçenek</span>
+                                {filteredOptions.length > 200 && (
+                                    <div className="flex items-center gap-2 text-yellow-600">
+                                        <FiInfo className="w-4 h-4" />
+                                        <span>Çok fazla seçenek var. Arama yaparak filtreleyebilirsiniz.</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Seçenekler */}
+                        <div 
+                            ref={optionsContainerRef}
+                            onScroll={throttledScrollHandler()}
+                            className="space-y-3 max-h-96 overflow-y-auto"
+                        >
+                            {/* Progress Indicator for Select All */}
+                            {isSelectingAll && (
+                                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+                                        <div className="flex-1">
+                                            <p className="text-sm font-medium text-blue-900">
+                                                Tüm seçenekler seçiliyor...
+                                            </p>
+                                            <div className="w-full bg-blue-200 rounded-full h-2 mt-2">
+                                                <div 
+                                                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                                                    style={{ width: `${selectAllProgress * 100}%` }}
+                                                ></div>
+                                            </div>
+                                            <p className="text-xs text-blue-700 mt-1">
+                                                %{Math.round(selectAllProgress * 100)} tamamlandı
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {filteredOptions.length > 0 ? (
+                                <>
+                                    {/* Virtual scrolling - only render visible options */}
+                                    {displayedOptions.map((option, index) => (
+                                        <button
+                                            key={`${option}-${index}`}
+                                            onClick={() => handleMultiSelect(option, question.id)}
+                                            disabled={isSelectingAll}
+                                            className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
+                                                showAllSelected || currentValues.includes(option)
+                                                    ? "border-primary bg-primaryLight text-primary"
+                                                    : "border-gray-200 bg-white hover:border-primaryLight"
+                                            } ${isSelectingAll ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-medium truncate pr-2">{option}</span>
+                                                {(showAllSelected || currentValues.includes(option)) && (
+                                                    <FiCheck className="w-5 h-5 flex-shrink-0" />
+                                                )}
+                                            </div>
+                                        </button>
+                                    ))}
+                                    
+                                    {/* Loading more indicator */}
+                                    {isLoadingMore && displayedOptions.length < filteredOptions.length && (
+                                        <div className="flex items-center justify-center py-4">
+                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                                            <span className="ml-2 text-sm text-gray-600">Daha fazla yükleniyor...</span>
+                                        </div>
+                                    )}
+                                    
+                                    {/* Show total count for all datasets */}
+                                    {filteredOptions.length > 20 && (
+                                        <div className="text-center py-4 text-sm text-gray-500 border-t border-gray-100">
+                                            <span className="font-medium">{displayedOptions.length}</span> / <span className="font-medium">{filteredOptions.length}</span> seçenek gösteriliyor
+                                            {displayedOptions.length < filteredOptions.length && (
+                                                <div className="text-xs text-gray-400 mt-1">
+                                                    Daha fazla görmek için aşağı kaydırın
+                                                </div>
                                             )}
                                         </div>
-                                    </button>
-                                ))}
-                                
-                                {/* Loading more indicator */}
-                                {isLoadingMore && displayedOptions.length < filteredOptions.length && (
-                                    <div className="flex items-center justify-center py-4">
-                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                                        <span className="ml-2 text-sm text-gray-600">Daha fazla yükleniyor...</span>
-                                    </div>
-                                )}
-                                
-                                {/* Show total count for all datasets */}
-                                {filteredOptions.length > 20 && (
-                                    <div className="text-center py-4 text-sm text-gray-500 border-t border-gray-100">
-                                        <span className="font-medium">{displayedOptions.length}</span> / <span className="font-medium">{filteredOptions.length}</span> seçenek gösteriliyor
-                                        {displayedOptions.length < filteredOptions.length && (
-                                            <div className="text-xs text-gray-400 mt-1">
-                                                Daha fazla görmek için aşağı kaydırın
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <div className="text-center py-8 text-gray-500">
-                                {isSearchFiltered ? (
-                                    <>
-                                        <p>Arama kriterinize uygun sonuç bulunamadı.</p>
-                                        <p className="text-sm mt-1">Farklı bir arama terimi deneyin.</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p>Bu adım için seçenek bulunamadı.</p>
-                                        <p className="text-sm mt-1">Önceki adımlardaki seçimlerinizi genişletin.</p>
-                                    </>
-                                )}
+                                    )}
+                                </>
+                            ) : (
+                                <div className="text-center py-8 text-gray-500">
+                                    {isSearchFiltered ? (
+                                        <>
+                                            <p>Arama kriterinize uygun sonuç bulunamadı.</p>
+                                            <p className="text-sm mt-1">Farklı bir arama terimi deneyin.</p>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p>Bu adım için seçenek bulunamadı.</p>
+                                            <p className="text-sm mt-1">Önceki adımlardaki seçimlerinizi genişletin.</p>
+                                        </>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+            case "range": {
+                const isScore = question.id === "scoreRange";
+                const minValue = isScore ? minScoreInput : minRankInput;
+                const maxValue = isScore ? maxScoreInput : maxRankInput;
+                return (
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Minimum {isScore ? "Puan" : "Sıralama"}
+                                </label>
+                                <input
+                                    type={isScore ? "number" : "text"}
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    min={isScore ? 0 : undefined}
+                                    value={minValue}
+                                    onChange={isScore
+                                        ? (e) => {
+                                            const val = e.target.value.replace(/\D/g, '');
+                                            setMinScoreInput(val);
+                                        }
+                                        : handleRankInputChange(setMinRankInput)
+                                    }
+                                    onBlur={() => handleRangeChange('min', isScore ? minValue : getRankValue(minValue), question.id)}
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder={isScore ? "Min puan" : "Min sıralama (örn: 850.000)"}
+                                />
                             </div>
-                        )}
-                    </div>
-                </div>
-            );
-        }
-
-        if (question.type === "range") {
-            const isScore = question.id === "scoreRange";
-            const minValue = isScore ? preferences.minScore : preferences.minRank;
-            const maxValue = isScore ? preferences.maxScore : preferences.maxRank;
-
-            return (
-                <div className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Minimum {isScore ? "Puan" : "Sıralama"}
-                            </label>
-                            {isScore ? (
+                            <div>
+                                <label className="text-sm font-medium text-gray-700 mb-2">
+                                    Maksimum {isScore ? "Puan" : "Sıralama"}
+                                </label>
                                 <input
-                                    type="number"
-                                    value={minValue || ""}
-                                    onChange={(e) => handleRangeChange('min', Number(e.target.value), question.id)}
+                                    type={isScore ? "number" : "text"}
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    min={isScore ? 0 : undefined}
+                                    value={maxValue}
+                                    onChange={isScore
+                                        ? (e) => {
+                                            const val = e.target.value.replace(/\D/g, '');
+                                            setMaxScoreInput(val);
+                                        }
+                                        : handleRankInputChange(setMaxRankInput)
+                                    }
+                                    onBlur={() => handleRangeChange('max', isScore ? maxValue : getRankValue(maxValue), question.id)}
                                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    placeholder="Min puan"
+                                    placeholder={isScore ? "Max puan" : "Max sıralama (örn: 1.250.000)"}
                                 />
-                            ) : (
-                                <input
-                                    type="text"
-                                    value={getDisplayRank(minValue)}
-                                    onChange={(e) => handleRankInputChange('min', e.target.value, question.id)}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    placeholder="Min sıralama (örn: 850.000)"
-                                />
-                            )}
-                        </div>
-                        <div>
-                            <label className="text-sm font-medium text-gray-700 mb-2">
-                                Maksimum {isScore ? "Puan" : "Sıralama"}
-                            </label>
-                            {isScore ? (
-                                <input
-                                    type="number"
-                                    value={maxValue || ""}
-                                    onChange={(e) => handleRangeChange('max', Number(e.target.value), question.id)}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    placeholder="Max puan"
-                                />
-                            ) : (
-                                <input
-                                    type="text"
-                                    value={getDisplayRank(maxValue)}
-                                    onChange={(e) => handleRankInputChange('max', e.target.value, question.id)}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    placeholder="Max sıralama (örn: 1.250.000)"
-                                />
-                            )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+            }
+            default:
+                return null;
         }
-
-        return null;
     };
 
     const renderResults = () => {

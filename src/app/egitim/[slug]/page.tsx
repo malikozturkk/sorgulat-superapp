@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Params }) {
         title: "Üniversite Detayı | Sorgulat",
         description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
         url: `https://www.sorgulat.com/egitim/${slug}`,
-        images: "/images/openGraph/university.png",
+        images: "/images/openGraph/university-detail.png",
         type: "website",
         siteName: "Sorgulat"
       },
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }) {
         card: "summary_large_image",
         title: "Üniversite Detayı | Sorgulat",
         description: "Üniversite detaylarını ve bölümlerini görüntüleyin.",
-        images: "/images/openGraph/university.png",
+        images: "/images/openGraph/university-detail.png",
         site: "@Sorgulat"
       },
       alternates: {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   const title = `${university.name} Bölümleri | Sorgulat`;
   const description = `${university.name} (${university.city}, ${university.district}) üniversitesinin tüm bölümleri, taban puanları, kontenjanları ve iletişim bilgileri. Sorgulat ile üniversite tercihine dair detaylı bilgi alın.`;
-  const image = "/images/openGraph/university.png";
+  const images = "/images/openGraph/university-detail.png";
   const url = `https://www.sorgulat.com/egitim/${university.slug}`;
 
   return {
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       title,
       description,
       url,
-      images: image,
+      images,
       type: "website",
       siteName: "Sorgulat"
     },
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       card: "summary_large_image",
       title,
       description,
-      images: image,
+      images,
       site: "@Sorgulat"
     },
     alternates: {

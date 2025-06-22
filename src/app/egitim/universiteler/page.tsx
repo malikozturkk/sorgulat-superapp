@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: "Türkiye'deki Tüm Üniversiteler | Sorgulat",
     description: "Türkiye'deki tüm üniversiteleri keşfedin: Devlet üniversiteleri, özel üniversiteler, KKTC üniversiteleri ve yurtdışı üniversiteleri. Şehir bazlı filtreleme ve detaylı üniversite bilgileri.",
     url: "https://www.sorgulat.com/egitim/universiteler",
-    images: "/images/openGraph/university.png",
+    images: "/images/openGraph/all-universities.png",
     type: "website",
     siteName: "Sorgulat"
   },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Türkiye'deki Tüm Üniversiteler | Sorgulat",
     description: "Türkiye'deki tüm üniversiteleri keşfedin: Devlet üniversiteleri, özel üniversiteler, KKTC üniversiteleri ve yurtdışı üniversiteleri. Şehir bazlı filtreleme ve detaylı üniversite bilgileri.",
-    images: "/images/openGraph/university.png",
+    images: "/images/openGraph/all-universities.png",
     site: "@Sorgulat"
   },
   robots: "index, follow",

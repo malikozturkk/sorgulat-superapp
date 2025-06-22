@@ -40,9 +40,11 @@ export const metadata: Metadata = {
         siteName: 'Sorgulat',
         images: [
             {
-                url: '/images/tercih-robotu-og.jpg',
-                width: 1200,
-                height: 630,
+                url: "/images/openGraph/yks-bot.png",
+                alt: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
+            },
+            {
+                url: "/images/openGraph/yks-bot-result.png",
                 alt: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
             },
         ],
@@ -53,7 +55,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'YKS Tercih Robotu - Size En Uygun Üniversiteyi Bulun',
         description: 'YKS tercih robotu ile size en uygun üniversite ve bölümleri keşfedin. Puan, sıralama, şehir ve bölüm filtreleri ile kişiselleştirilmiş tercih önerileri alın.',
-        images: ['/images/tercih-robotu-twitter.jpg'],
+        images: "/images/openGraph/yks-bot.png",
         creator: '@sorgulat',
     },
     robots: {

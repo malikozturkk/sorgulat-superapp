@@ -36,6 +36,10 @@ export async function GET() {
             <lastmod>${new Date().toISOString()}</lastmod>
         </sitemap>
         <sitemap>
+            <loc>${baseUrl}/sitemap-compare-7.xml</loc>
+            <lastmod>${new Date().toISOString()}</lastmod>
+        </sitemap>        
+        <sitemap>
             <loc>${baseUrl}/sitemap-universities.xml</loc>
             <lastmod>${new Date().toISOString()}</lastmod>
         </sitemap>

@@ -17,7 +17,8 @@ export default function RootLayout({
       <AdSense pId="4912331234184158" />
       <link
           href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          as="style"
         />
       <Script
         strategy="afterInteractive"

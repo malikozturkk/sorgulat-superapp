@@ -16,10 +16,17 @@ export default function RootLayout({
       <head>
       <AdSense pId="4912331234184158" />
       <link
-          href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
-          rel="preload"
-          as="style"
-        />
+        rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
+        as="style"
+        // @ts-ignore
+        onLoad={(e) => { e.currentTarget.rel = 'stylesheet'; }}
+      />
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap" />`,
+        }}
+      />
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-1VTVJYYXQR"
